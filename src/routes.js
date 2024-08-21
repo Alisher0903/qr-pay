@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Icon } from '@chakra-ui/react';
 import {
   MdBarChart,
@@ -9,28 +7,24 @@ import {
   MdOutlineShoppingCart,
 } from 'react-icons/md';
 
-// Admin Imports
 import MainDashboard from 'views/admin/default';
 import NFTMarketplace from 'views/admin/marketplace';
 import Profile from 'views/admin/profile';
 import DataTables from 'views/admin/dataTables';
-// import RTL from 'views/admin/rtl';
-
-// Auth Imports
 import SignInCentered from 'views/auth/signIn';
 
 const routes = [
   {
     name: 'Dashboard',
     layout: '/admin',
-    path: '/default',
+    path: '/dashboard',
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <MainDashboard />,
   },
   {
-    name: 'NFT Marketplace',
+    name: 'Partner',
     layout: '/admin',
-    path: '/nft-marketplace',
+    path: '/partners',
     icon: (
       <Icon
         as={MdOutlineShoppingCart}
@@ -40,19 +34,19 @@ const routes = [
       />
     ),
     component: <NFTMarketplace />,
-    secondary: true,
+    // secondary: true,
   },
   {
-    name: 'Data Tables',
+    name: 'Payment',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/data-tables',
+    path: '/payments',
     component: <DataTables />,
   },
   {
-    name: 'Profile',
+    name: 'Terminal',
     layout: '/admin',
-    path: '/profile',
+    path: '/terminal',
     icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
     component: <Profile />,
   },
@@ -63,13 +57,6 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: <SignInCentered />,
   },
-  // {
-  //   name: 'RTL Admin',
-  //   layout: '/rtl',
-  //   path: '/rtl-default',
-  //   icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-  //   component: <RTL />,
-  // },
 ];
 
 export default routes;
