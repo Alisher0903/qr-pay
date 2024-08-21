@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 
 import MainDashboard from 'views/admin/default';
+import SellerDashboard from 'views/seller/default';
 import NFTMarketplace from 'views/admin/marketplace';
 import Profile from 'views/admin/profile';
 import DataTables from 'views/admin/dataTables';
@@ -49,6 +50,34 @@ const routes = [
     path: '/terminal',
     icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
     component: <Profile />,
+  },
+  {
+    name: 'Seller-dashboard',
+    layout: '/seller',
+    path: '/main',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <SellerDashboard />,
+  },
+  {
+    name: 'Seller-terminal',
+    layout: '/seller',
+    path: '/sellerterminal',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <SellerDashboard />,
+  },
+  {
+    name: 'Seller-orders',
+    layout: '/seller',
+    path: '/order',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <SellerDashboard />,
+  },
+  {
+    name: 'Seller-refund',
+    layout: '/seller',
+    path: '/refund',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <SellerDashboard />,
   },
   {
     name: 'Sign In',
