@@ -1,18 +1,18 @@
 
 // Chakra imports
 import { Box, Button, Progress, SimpleGrid, Td, Tr } from "@chakra-ui/react";
-import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
-import CheckTable from "views/admin/dataTables/components/CheckTable";
-import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
+// import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
+// import CheckTable from "views/admin/dataTables/components/CheckTable";
+// import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
-import {
-  columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-} from "views/admin/dataTables/variables/columnsData";
-import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
-import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
-import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
+// import {
+//   columnsDataDevelopment,
+//   columnsDataCheck,
+//   columnsDataColumns,
+// } from "views/admin/dataTables/variables/columnsData";
+// import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
+// import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
+// import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 import React from "react";
 
 export default function SellerTerminal() {
@@ -21,9 +21,9 @@ export default function SellerTerminal() {
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
         mb='20px'
-        columns={{ sm: 1, md: 2 }}
+        columns={{ sm: 1 }}
         spacing={{ base: "20px", xl: "20px" }}>
-        <DevelopmentTable
+        {/* <DevelopmentTable
           columnsData={columnsDataDevelopment}
           tableData={tableDataDevelopment}
         />
@@ -31,7 +31,7 @@ export default function SellerTerminal() {
         <ColumnsTable
           columnsData={columnsDataColumns}
           tableData={tableDataColumns}
-        />
+        /> */}
         <ComplexTable name="Table" buttonChild={
           <Button name="Add" textColor={"#fff"} color={"#fff"} background={"#000"}/>
         } thead={['Name', 'Status', 'Date', 'Progress']}>

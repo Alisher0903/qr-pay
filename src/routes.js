@@ -6,6 +6,7 @@ import {
   MdLock,
   MdOutlineShoppingCart,
 } from 'react-icons/md';
+import { TbCashRegister } from "react-icons/tb";
 
 import MainDashboard from 'views/admin/default';
 import SellerDashboard from 'views/seller/default';
@@ -13,6 +14,11 @@ import NFTMarketplace from 'views/admin/marketplace';
 import Profile from 'views/admin/profile';
 import DataTables from 'views/admin/dataTables';
 import SignInCentered from 'views/auth/signIn';
+import { IoQrCode } from 'react-icons/io5';
+import { RiRefund2Line } from 'react-icons/ri';
+import SellerTerminal from 'views/seller/terminal';
+import SellerOrder from 'views/seller/order';
+import SellerRefund from 'views/seller/refund';
 
 const routes = [
   {
@@ -62,22 +68,22 @@ const routes = [
     name: 'Seller-terminal',
     layout: '/seller',
     path: '/sellerterminal',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <SellerDashboard />,
+    icon: <Icon as={TbCashRegister} width="20px" height="20px" color="inherit" />,
+    component: <SellerTerminal />,
   },
   {
     name: 'Seller-orders',
     layout: '/seller',
     path: '/order',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <SellerDashboard />,
+    icon: <Icon as={IoQrCode} width="20px" height="20px" color="inherit" />,
+    component: <SellerOrder />,
   },
   {
     name: 'Seller-refund',
     layout: '/seller',
     path: '/refund',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <SellerDashboard />,
+    icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit" />,
+    component: <SellerRefund />,
   },
   {
     name: 'Sign In',
