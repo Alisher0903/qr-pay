@@ -1,27 +1,6 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 // Chakra imports
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, Progress, SimpleGrid, Td, Tr } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
 import CheckTable from "views/admin/dataTables/components/CheckTable";
 import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
@@ -30,7 +9,6 @@ import {
   columnsDataDevelopment,
   columnsDataCheck,
   columnsDataColumns,
-  columnsDataComplex,
 } from "views/admin/dataTables/variables/columnsData";
 import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
 import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
@@ -55,10 +33,19 @@ export default function Settings() {
           columnsData={columnsDataColumns}
           tableData={tableDataColumns}
         />
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
+        <ComplexTable name="Table" buttonChild={
+          <Button name="Add" textColor={"#fff"} color={"#fff"} background={"#000"}/>
+        } thead={['Name', 'Status', 'Date', 'Progress']}>
+          <Tr>
+            <Td>John Doe</Td>
+            <Td>Approved</Td>
+            <Td>2024-08-21</Td>
+            <Td>
+              <Progress variant="table" colorScheme="brandScheme" h="8px" w="108px" value={70} />
+            </Td>
+          </Tr>
+          {/* Add more rows as needed */}
+        </ComplexTable>
       </SimpleGrid>
     </Box>
   );
