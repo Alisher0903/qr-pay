@@ -111,17 +111,14 @@ function SignIn() {
                     {/*  <Icon as={FcGoogle} w='20px' h='20px' me='10px' />*/}
                     {/*  Sign in with Google*/}
                     {/*</Button>*/}
-                    <Flex align='center' mb='25px'>
+                    <Flex align='center' mb='30px'>
                         <HSeparator/>
-                        <Text color='gray.400' mx='14px'>
-                            or
-                        </Text>
+                        {/*<Text color='gray.400' mx='14px'>*/}
+                        {/*    or*/}
+                        {/*</Text>*/}
                         <HSeparator/>
                     </Flex>
-                    <FormControl onSubmit={e => {
-                        e.preventDefault()
-                        console.log(auth)
-                    }}>
+                    <FormControl>
                         <FormLabel
                             display='flex'
                             ms='4px'
