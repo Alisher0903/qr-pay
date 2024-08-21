@@ -25,12 +25,16 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import toast from "react-hot-toast";
+import {sliceNumber} from "../../../contexts/allRequest";
+import axios from "axios";
+import {user_login} from "../../../contexts/api";
 
-const defVal = {number: '', password: ''}
+const defVal = {phone: '', password: ''}
 
 function SignIn() {
     // Chakra color mode
-    const [auth, setAuth] = useState({number: '', password: ''})
+    const [auth, setAuth] = useState({phone: '', password: ''});
+    const [show, setShow] = useState(false);
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const brandStars = useColorModeValue("brand.500", "brand.400");
@@ -48,7 +52,20 @@ function SignIn() {
     //   { bg: "whiteAlpha.200" }
     // );
 
-    const [show, setShow] = React.useState(false);
+    const authLogin = async () => {
+        try {
+            const res = await axios.post(user_login, {
+                phone: `+${auth.phone}`,
+                password: auth.password
+            })
+            console.log(res.data.error.code)
+            if (res.data) console.log('ishladi')
+            else console.log('ishlamadi')
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     const handleClick = () => setShow(!show);
 
     const handleAuth = (name, val) => {
@@ -138,7 +155,8 @@ function SignIn() {
                             mb='24px'
                             fontWeight='500'
                             size='lg'
-                            onChange={e => handleAuth('number', e.target.value)}
+                            value={auth.phone}
+                            onChange={e => handleAuth('phone', e.target.value)}
                         />
                         <FormLabel
                             ms='4px'
@@ -157,6 +175,7 @@ function SignIn() {
                                 size='lg'
                                 type={show ? "text" : "password"}
                                 variant='auth'
+                                value={auth.password}
                                 onChange={e => handleAuth('password', e.target.value)}
                             />
                             <InputRightElement display='flex' alignItems='center' mt='4px'>
@@ -201,9 +220,10 @@ function SignIn() {
                             w='100%'
                             h='50'
                             mb='24px'
-                            onClick={() => {
-                                if (auth.number && auth.password) console.log(auth)
-                                else toast.error('Malumotlar tuliq emas')
+                            onClick={async () => {
+                                if (sliceNumber(auth.phone) && auth.password) {
+                                    await authLogin()
+                                } else toast.error('Check the data integrity');
                             }}
                         >
                             Sign In
