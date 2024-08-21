@@ -24,6 +24,7 @@ import illustration from "assets/img/auth/auth.png";
 // import { FcGoogle } from "react-icons/fc";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const defVal = {number: '', password: ''}
 
@@ -117,7 +118,10 @@ function SignIn() {
                         </Text>
                         <HSeparator/>
                     </Flex>
-                    <FormControl>
+                    <FormControl onSubmit={e => {
+                        e.preventDefault()
+                        console.log(auth)
+                    }}>
                         <FormLabel
                             display='flex'
                             ms='4px'
@@ -199,7 +203,12 @@ function SignIn() {
                             fontWeight='500'
                             w='100%'
                             h='50'
-                            mb='24px'>
+                            mb='24px'
+                            onClick={() => {
+                                if (auth.number && auth.password) console.log(auth)
+                                else toast.error('Malumotlar tuliq emas')
+                            }}
+                        >
                             Sign In
                         </Button>
                     </FormControl>
