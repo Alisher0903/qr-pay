@@ -15,7 +15,7 @@ import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json
 import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 import React from "react";
 
-export default function Settings() {
+export default function SellerOrder() {
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
