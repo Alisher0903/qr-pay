@@ -25,6 +25,8 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 
+const defVal = {number: '', password: ''}
+
 function SignIn() {
     // Chakra color mode
     const [auth, setAuth] = useState({number: '', password: ''})
@@ -149,11 +151,12 @@ function SignIn() {
                             <Input
                                 isRequired={true}
                                 fontSize='sm'
-                                placeholder='Min. 8 characters'
+                                placeholder='Min. 5 characters'
                                 mb='24px'
                                 size='lg'
                                 type={show ? "text" : "password"}
                                 variant='auth'
+                                onChange={e => handleAuth('password', e.target.value)}
                             />
                             <InputRightElement display='flex' alignItems='center' mt='4px'>
                                 <Icon
