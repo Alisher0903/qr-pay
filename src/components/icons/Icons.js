@@ -16,6 +16,7 @@ export const AdobexdLogo = createIcon({
     </g>
   ),
 });
+
 export const AppleLogo = createIcon({
   displayName: "AppleLogo",
   viewBox: "0 0 15 18",
@@ -35,6 +36,7 @@ export const AppleLogo = createIcon({
     </g>
   ),
 });
+
 export const AndroidLogo = createIcon({
   displayName: "AndroidLogo",
   viewBox: "0 0 16 18",
@@ -59,6 +61,7 @@ export const AndroidLogo = createIcon({
     </g>
   ),
 });
+
 export const WindowsLogo = createIcon({
   displayName: "WindowsLogo",
   viewBox: "0 0 19 18",
@@ -580,6 +583,7 @@ export const DashCurveUp = createIcon({
     </g>
   ),
 });
+
 export const DashCurveDown = createIcon({
   displayName: "DashCurveDown",
   viewBox: "0 0 134 22",
