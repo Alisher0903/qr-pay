@@ -1,4 +1,4 @@
-'use client';
+'use seller';
 /* eslint-disable */
 
 import {

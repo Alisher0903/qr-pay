@@ -90,7 +90,7 @@ export default function Dashboard(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/admin') {
+      if (route.layout === '/seller') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -133,7 +133,7 @@ export default function Dashboard(props) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={'Horizon UI Dashboard PRO'}
+                  logoText={'Seller dashboard'}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
@@ -155,7 +155,7 @@ export default function Dashboard(props) {
                   {getRoutes(routes)}
                   <Route
                     path="/"
-                    element={<Navigate to="/admin/default" replace />}
+                    element={<Navigate to="/seller/default" replace />}
                   />
                 </Routes>
               </Box>

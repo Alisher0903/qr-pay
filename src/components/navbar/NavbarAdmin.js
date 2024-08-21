@@ -6,6 +6,7 @@ import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 import {useLocation} from "react-router-dom";
 
 export default function AdminNavbar(props) {
+    const {secondary, message, brandText} = props;
     const {pathname} = useLocation()
     const [scrolled, setScrolled] = useState(false);
 
@@ -13,8 +14,6 @@ export default function AdminNavbar(props) {
         window.addEventListener('scroll', changeNavbar);
         return () => window.removeEventListener('scroll', changeNavbar);
     });
-
-    const {secondary, message, brandText} = props;
 
     // let mainText = useColorModeValue('navy.700', 'white');
     let secondaryText = useColorModeValue('gray.700', 'white');
