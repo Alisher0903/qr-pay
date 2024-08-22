@@ -88,9 +88,9 @@ export default function SellerTerminal() {
             <Td>2024-08-21</Td>
             <Td>2024-08-21</Td>
             <Td>
-              <Box ms={5}>
-                <button>
-                  <FaEdit/>
+              <Box ms={3}>
+                <button onClick={onOpen}>
+                  <FaEdit size={23} />
                 </button>
               </Box>
             </Td>
