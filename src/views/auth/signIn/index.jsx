@@ -82,8 +82,7 @@ function SignIn() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
-            }
-            else {
+            } else {
                 setLoading(false)
                 const expiryTime = new Date().getTime() + 12 * 60 * 60 * 1000;
                 localStorage.setItem('tokenExpiry', expiryTime.toString());
@@ -258,7 +257,7 @@ function SignIn() {
                                 } else toast.error('Check the data integrity');
                             }}
                         >
-                            Sign In
+                            {loading ? 'Loading...' : 'Sign In'}
                         </Button>
                     </FormControl>
                     {/*<Flex*/}
