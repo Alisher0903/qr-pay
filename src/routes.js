@@ -8,11 +8,11 @@ import {
 } from 'react-icons/md';
 import {TbCashRegister} from "react-icons/tb";
 
-import MainDashboard from 'views/admin/default';
+import AdminDashboard from 'views/admin/default';
 import SellerDashboard from 'views/seller/default';
-import NFTMarketplace from 'views/admin/marketplace';
-import Profile from 'views/admin/profile';
-import DataTables from 'views/admin/dataTables';
+import Partner from 'views/admin/partner';
+import TerminalAdmin from 'views/admin/terminal';
+import Payment from 'views/admin/dataTables';
 import SignInCentered from 'views/auth/signIn';
 import {IoQrCode} from 'react-icons/io5';
 import {RiRefund2Line} from 'react-icons/ri';
@@ -27,7 +27,7 @@ const routes = [
         layout: '/admin',
         path: '/dashboard',
         icon: <Icon as={MdHome} width="20px" height="20px" color="inherit"/>,
-        component: <MainDashboard/>,
+        component: <AdminDashboard/>,
     },
     {
         name: 'Partner',
@@ -41,7 +41,7 @@ const routes = [
                 color="inherit"
             />
         ),
-        component: <NFTMarketplace/>,
+        component: <Partner/>,
         // secondary: true,
     },
     {
@@ -49,14 +49,14 @@ const routes = [
         layout: '/admin',
         icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
         path: '/payments',
-        component: <DataTables/>,
+        component: <Payment/>,
     },
     {
         name: 'Terminal',
         layout: '/admin',
         path: '/terminal_lists',
         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
-        component: <Profile/>,
+        component: <TerminalAdmin/>,
     },
     //  Seller panel route
     {

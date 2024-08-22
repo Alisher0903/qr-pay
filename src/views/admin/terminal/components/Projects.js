@@ -7,7 +7,7 @@ import Project3 from "assets/img/profile/Project3.png";
 // Custom components
 import Card from "components/card/Card.js";
 import React from "react";
-import Project from "views/admin/profile/components/Project";
+import Project from "views/admin/terminal/components/Project";
 
 export default function Projects(props) {
   // Chakra Color Mode

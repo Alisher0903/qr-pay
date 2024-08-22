@@ -1,5 +1,3 @@
-
-// Chakra imports
 import { Box, Button, Progress, SimpleGrid, Td, Tr } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
 import CheckTable from "views/admin/dataTables/components/CheckTable";
@@ -15,7 +13,7 @@ import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json
 import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 import React from "react";
 
-export default function Settings() {
+export default function Payment() {
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
