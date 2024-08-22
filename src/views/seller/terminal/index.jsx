@@ -23,6 +23,7 @@ export default function SellerTerminal() {
   const textColor = useColorModeValue('white', 'white');
   const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
 
+  
 
   // State to manage form values and validation
   const [formValues, setFormValues] = useState({

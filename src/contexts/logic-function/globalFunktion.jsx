@@ -10,7 +10,7 @@ async function globalCrudFunction({ method, url, data, setData, setLoading }) {
       method,
       url,
       data,
-      config, // Bu yerda config dan foydalanamiz
+      ...config, // Bu yerda config dan foydalanamiz
     });
     if (data?.error?.code) {
         setLoading(false)
