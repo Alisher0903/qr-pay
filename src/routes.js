@@ -30,7 +30,7 @@ const routes = [
         component: <AdminDashboard/>,
     },
     {
-        name: 'Partner',
+        name: 'Merchant',
         layout: '/admin',
         path: '/partners',
         icon: (

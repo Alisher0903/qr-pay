@@ -14,7 +14,7 @@ function SidebarBrand() {
   return (
     <Flex direction='column'>
       {/*<HorizonLogo h='26px' w='175px' my='32px' color={logoColor} />*/}
-        <Box ms={`30px`} mb={`10px`} fontWeight={`900`} fontSize={`25px`}>Bank Integration</Box>
+        <Box ms={`30px`} mb={`10px`} fontWeight={`900`} fontSize={`25px`}>СБП QR</Box>
       <HSeparator mb='20px' />
     </Flex>
   );
