@@ -1,281 +1,217 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Link,
-  Text,
-  useColorModeValue,
-  SimpleGrid,
+    Box,
+    Button,
+    Flex,
+    FormControl,
+    FormLabel,
+    Grid,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    ModalFooter,
+    Text,
+    useColorModeValue,
+    useDisclosure,
 } from "@chakra-ui/react";
 
-// Custom components
-import Banner from "views/admin/partner/components/Banner";
 import TableTopCreators from "views/admin/partner/components/TableTopCreators";
-import HistoryItem from "views/admin/partner/components/HistoryItem";
-import NFT from "components/card/NFT";
 import Card from "components/card/Card.js";
 
-// Assets
-import Nft1 from "assets/img/nfts/Nft1.png";
-import Nft2 from "assets/img/nfts/Nft2.png";
-import Nft3 from "assets/img/nfts/Nft3.png";
-import Nft4 from "assets/img/nfts/Nft4.png";
-import Nft5 from "assets/img/nfts/Nft5.png";
-import Nft6 from "assets/img/nfts/Nft6.png";
-import Avatar1 from "assets/img/avatars/avatar1.png";
-import Avatar2 from "assets/img/avatars/avatar2.png";
-import Avatar3 from "assets/img/avatars/avatar3.png";
-import Avatar4 from "assets/img/avatars/avatar4.png";
 import tableDataTopCreators from "views/admin/partner/variables/tableDataTopCreators.json";
-import { tableColumnsTopCreators } from "views/admin/partner/variables/tableColumnsTopCreators";
+import {tableColumnsTopCreators} from "views/admin/partner/variables/tableColumnsTopCreators";
+import axios from "axios";
+import {config} from "../../../contexts/token";
+import {user_register} from "../../../contexts/api";
+import {consoleClear, toastMessage} from "../../../contexts/toast-message";
+import toast from "react-hot-toast";
 
 export default function Partner() {
-  // Chakra Color Mode
-  const textColor = useColorModeValue("secondaryGray.900", "white");
-  const textColorBrand = useColorModeValue("brand.500", "white");
-  return (
-    <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
-      {/* Main Fields */}
-      <Grid
-        mb='20px'
-        gridTemplateColumns={{ xl: "repeat(3, 1fr)", "2xl": "1fr 0.46fr" }}
-        gap={{ base: "20px", xl: "20px" }}
-        display={{ base: "block", xl: "grid" }}>
-        <Flex
-          flexDirection='column'
-          gridArea={{ xl: "1 / 1 / 2 / 3", "2xl": "1 / 1 / 2 / 2" }}>
-          <Banner />
-          <Flex direction='column'>
-            <Flex
-              mt='45px'
-              mb='20px'
-              justifyContent='space-between'
-              direction={{ base: "column", md: "row" }}
-              align={{ base: "start", md: "center" }}>
-              <Text color={textColor} fontSize='2xl' ms='24px' fontWeight='700'>
-                Trending NFTs
-              </Text>
-              <Flex
-                align='center'
-                me='20px'
-                ms={{ base: "24px", md: "0px" }}
-                mt={{ base: "20px", md: "0px" }}>
-                <Link
-                  color={textColorBrand}
-                  fontWeight='500'
-                  me={{ base: "34px", md: "44px" }}
-                  to='#art'>
-                  Art
-                </Link>
-                <Link
-                  color={textColorBrand}
-                  fontWeight='500'
-                  me={{ base: "34px", md: "44px" }}
-                  to='#music'>
-                  Music
-                </Link>
-                <Link
-                  color={textColorBrand}
-                  fontWeight='500'
-                  me={{ base: "34px", md: "44px" }}
-                  to='#collectibles'>
-                  Collectibles
-                </Link>
-                <Link color={textColorBrand} fontWeight='500' to='#sports'>
-                  Sports
-                </Link>
-              </Flex>
-            </Flex>
-            <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
-              <NFT
-                name='Abstract Colors'
-                author='By Esthera Jackson'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft1}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-              <NFT
-                name='ETH AI Brain'
-                author='By Nick Wilson'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft2}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-              <NFT
-                name='Mesh Gradients '
-                author='By Will Smith'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft3}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-            </SimpleGrid>
-            <Text
-              mt='45px'
-              mb='36px'
-              color={textColor}
-              fontSize='2xl'
-              ms='24px'
-              fontWeight='700'>
-              Recently Added
-            </Text>
-            <SimpleGrid
-              columns={{ base: 1, md: 3 }}
-              gap='20px'
-              mb={{ base: "20px", xl: "0px" }}>
-              <NFT
-                name='Swipe Circles'
-                author='By Peter Will'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft4}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-              <NFT
-                name='Colorful Heaven'
-                author='By Mark Benjamin'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft5}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-              <NFT
-                name='3D Cubes Art'
-                author='By Manny Gates'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft6}
-                currentbid='0.91 ETH'
-                download='#'
-              />
-            </SimpleGrid>
-          </Flex>
-        </Flex>
-        <Flex
-          flexDirection='column'
-          gridArea={{ xl: "1 / 3 / 2 / 4", "2xl": "1 / 2 / 2 / 3" }}>
-          <Card px='0px' mb='20px'>
-            <TableTopCreators
-              tableData={tableDataTopCreators}
-              columnsData={tableColumnsTopCreators}
-            />
-          </Card>
-          <Card p='0px'>
-            <Flex
-              align={{ sm: "flex-start", lg: "center" }}
-              justify='space-between'
-              w='100%'
-              px='22px'
-              py='18px'>
-              <Text color={textColor} fontSize='xl' fontWeight='600'>
-                History
-              </Text>
-              <Button variant='action'>See all</Button>
-            </Flex>
+    const inputTextColor = useColorModeValue('gray.800', 'white');
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const initialRef = useRef(null);
+    const finalRef = useRef(null);
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        password: ''
+    });
+    const [formErrors, setFormErrors] = useState({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        password: ''
+    });
+    const [isLoading, setIsLoading] = useState(false)
 
-            <HistoryItem
-              name='Colorful Heaven'
-              author='By Mark Benjamin'
-              date='30s ago'
-              image={Nft5}
-              price='0.91 ETH'
-            />
-            <HistoryItem
-              name='Abstract Colors'
-              author='By Esthera Jackson'
-              date='58s ago'
-              image={Nft1}
-              price='0.91 ETH'
-            />
-            <HistoryItem
-              name='ETH AI Brain'
-              author='By Nick Wilson'
-              date='1m ago'
-              image={Nft2}
-              price='0.91 ETH'
-            />
-            <HistoryItem
-              name='Swipe Circles'
-              author='By Peter Will'
-              date='1m ago'
-              image={Nft4}
-              price='0.91 ETH'
-            />
-            <HistoryItem
-              name='Mesh Gradients '
-              author='By Will Smith'
-              date='2m ago'
-              image={Nft3}
-              price='0.91 ETH'
-            />
-            <HistoryItem
-              name='3D Cubes Art'
-              author='By Manny Gates'
-              date='3m ago'
-              image={Nft6}
-              price='0.91 ETH'
-            />
-          </Card>
-        </Flex>
-      </Grid>
-      {/* Delete Product */}
-    </Box>
-  );
+    const merchantSave = async () => {
+        setIsLoading(true)
+        try {
+            const {data} = await axios.post(user_register, formValues, config);
+            if (data?.error?.code) {
+                setIsLoading(false)
+                toastMessage(data?.error?.code)
+            }
+            else {
+                setIsLoading(false)
+                toast.success('Merchant saved successfully')
+                onClose();
+                resetValue()
+            }
+        } catch (err) {
+            setIsLoading(false)
+            console.log(err)
+            consoleClear()
+        }
+    }
+
+    const resetValue = () => {
+        setFormValues({
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            password: ''
+        });
+    }
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormValues({...formValues, [name]: value});
+
+        // Simple validation example
+        const errors = {};
+        if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
+            errors.phone = "The phone number must start with +998 and contain 13 characters";
+        } else if (name === "password" && value.length < 3) errors.password = "Password must be at least 3 characters long.";
+        else if (value.trim() === '') errors[name] = `${name} is required`;
+        setFormErrors({...formErrors, ...errors});
+    };
+
+    const handleSave = async () => {
+        const errors = {};
+        Object.keys(formValues).forEach(key => {
+            if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
+                errors.phone = "The phone number must start with +998 and contain 13 characters";
+            } else if (key === "password" && formValues[key].length < 3) errors.password = "Password must be at least 3 characters long.";
+            else if (formValues[key].trim() === '') errors[key] = `${key} is required`;
+        });
+
+        if (Object.keys(errors).length === 0) await merchantSave()
+        else setFormErrors(errors);
+    };
+
+    return (
+        <Box pt={{base: "180px", md: "80px", xl: "80px"}}>
+            {/* Main Fields */}
+            <Grid
+                // mb='20px'
+                gridTemplateColumns={{xl: "repeat(3, 1fr)", "2xl": "1fr 0.46fr"}}
+                gap={{base: "20px", xl: "20px"}}
+                display={{base: "block", xl: "grid"}}>
+                <Flex
+                    flexDirection='column'
+                    gridArea={{xl: "1 / 1 / 2 / 4", "2xl": "1 / 1 / 2 / 2"}}>
+                    <Card px='0px'>
+                        <TableTopCreators
+                            onOpen={onOpen}
+                            tableData={tableDataTopCreators}
+                            columnsData={tableColumnsTopCreators}
+                        />
+                    </Card>
+                </Flex>
+            </Grid>
+
+            <Modal
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+                isOpen={isOpen}
+                onClose={() => {
+                    onClose()
+                    resetValue()
+                }}
+            >
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader>Create merchant</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody pb={6}>
+                        <FormControl isInvalid={!!formErrors.firstName}>
+                            <FormLabel>First name</FormLabel>
+                            <Input
+                                name="firstName"
+                                ref={initialRef}
+                                placeholder="Enter the firstname"
+                                value={formValues.firstName}
+                                onChange={handleChange}
+                                color={inputTextColor}
+                            />
+                            {formErrors.firstName && <Text color="red.500" fontSize="sm">{formErrors.firstName}</Text>}
+                        </FormControl>
+                        <FormControl mt={4} isInvalid={!!formErrors.lastName}>
+                            <FormLabel>Last name</FormLabel>
+                            <Input
+                                name="lastName"
+                                placeholder="Enter the lastname"
+                                value={formValues.lastName}
+                                onChange={handleChange}
+                                color={inputTextColor}
+                            />
+                            {formErrors.lastName && <Text color="red.500" fontSize="sm">{formErrors.lastName}</Text>}
+                        </FormControl>
+                        <FormControl mt={4} isInvalid={!!formErrors.phone}>
+                            <FormLabel>Phone number</FormLabel>
+                            <Input
+                                name="phone"
+                                placeholder="Enter the phone number"
+                                value={formValues.phone}
+                                onChange={handleChange}
+                                color={inputTextColor}
+                            />
+                            {formErrors.phone && <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
+                        </FormControl>
+                        <FormControl mt={4} isInvalid={!!formErrors.email}>
+                            <FormLabel>Email</FormLabel>
+                            <Input
+                                name="email"
+                                placeholder="Enter the email"
+                                value={formValues.email}
+                                onChange={handleChange}
+                                color={inputTextColor}
+                            />
+                            {formErrors.email && <Text color="red.500" fontSize="sm">{formErrors.email}</Text>}
+                        </FormControl>
+                        <FormControl mt={4} isInvalid={!!formErrors.password}>
+                            <FormLabel>Password</FormLabel>
+                            <Input
+                                name="password"
+                                placeholder="Enter the password"
+                                value={formValues.password}
+                                onChange={handleChange}
+                                color={inputTextColor}
+                            />
+                            {formErrors.password && <Text color="red.500" fontSize="sm">{formErrors.password}</Text>}
+                        </FormControl>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button onClick={() => {
+                            onClose()
+                            resetValue()
+                        }}>Cancel</Button>
+                        <Button colorScheme="blue" ms={3} onClick={handleSave} disabled={isLoading}>
+                            {isLoading ? 'Loading...' : 'Save'}
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </Box>
+    );
 }

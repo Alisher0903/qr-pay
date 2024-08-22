@@ -27,7 +27,7 @@ import * as React from 'react';
 const columnHelper = createColumnHelper();
 
 export default function TopCreatorTable(props) {
-  const { tableData } = props;
+  const { tableData, onOpen } = props;
   const [sorting, setSorting] = React.useState([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
@@ -126,9 +126,9 @@ export default function TopCreatorTable(props) {
         boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
       >
         <Text color={textColor} fontSize="xl" fontWeight="600">
-          Top Creators
+          Merchants of list
         </Text>
-        <Button variant="action">See all</Button>
+        <Button variant="action" onClick={onOpen}>Create merchant</Button>
       </Flex>
       <Box>
         <Table variant="simple" color="gray.500" mt="12px">
