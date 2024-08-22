@@ -17,7 +17,7 @@ async function globalCrudFunction({ method, url, data, setData, setLoading }) {
         toastMessage(data.error.code)
     } else {
         setLoading(false)
-        setData(response.data.data);
+        setData(response);
     }
   } catch (error) {
         setLoading(false)

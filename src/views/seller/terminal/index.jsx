@@ -1,11 +1,13 @@
 import {
   Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton
 } from "@chakra-ui/react";
+import { terminal_get } from "contexts/api";
 import { terminal_update } from "contexts/api";
 import { terminal_create } from "contexts/api";
 import globalCrudFunction from "contexts/logic-function/globalFunktion";
 import { TerminalStory } from "contexts/state-management/terminal/terminalStory";
-import React, { useState } from "react";
+import { setConfig } from "contexts/token";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
@@ -23,7 +25,10 @@ export default function SellerTerminal() {
   const textColor = useColorModeValue('white', 'white');
   const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
 
-  
+  useEffect(() => {
+    setConfig()
+    globalCrudFunction({ method: 'get', url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData });
+  }, [])
 
   // State to manage form values and validation
   const [formValues, setFormValues] = useState({
@@ -63,6 +68,8 @@ export default function SellerTerminal() {
     });
   };
 
+  console.log(terminalData);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -124,11 +131,12 @@ export default function SellerTerminal() {
                 onOpen() 
               }}>Create terminal
             </Button>}
-          thead={['Name', 'Inn', 'Account', 'Filial code', "Update", "Active"]}
+          thead={['Name', 'Inn', 'Account','Phone', 'Filial code', "Update", "Active"]}
         >
           <Tr>
             <Td>John Doe</Td>
             <Td>Approved</Td>
+            <Td>2024-08-21</Td>
             <Td>2024-08-21</Td>
             <Td>2024-08-21</Td>
             <Td>

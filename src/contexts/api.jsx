@@ -6,5 +6,6 @@ export const user_login = `${base_url}api/user/login`;
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;
+export const terminal_get = `${base_url}terminal/list`;
 export const terminal_update = `${base_url}terminal/update/`; // id kirib keladi
 export const terminal_isActive = `${base_url}terminal/deactive/`; // id kirib keladi
