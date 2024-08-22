@@ -1,34 +1,46 @@
-// Chakra imports
-import { 
-  Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, 
-  Progress,
-  Switch
+import {
+  Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton
 } from "@chakra-ui/react";
+import { terminal_update } from "contexts/api";
+import { terminal_create } from "contexts/api";
+import globalCrudFunction from "contexts/logic-function/globalFunktion";
+import { TerminalStory } from "contexts/state-management/terminal/terminalStory";
 import React, { useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
 export default function SellerTerminal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { setTerminalData, terminalData, isEdit, setIsEdit } = TerminalStory();
+  const [createLoading, setCreateLoading] = useState();
+  const [showPassword, setShowPassword] = useState(false);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
   // Setting input text color based on color mode
   const inputTextColor = useColorModeValue('gray.800', 'white');
+  const bgColor = useColorModeValue('#422AFB', '#7551FF');
+  const textColor = useColorModeValue('white', 'white');
+  const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
+
 
   // State to manage form values and validation
   const [formValues, setFormValues] = useState({
     name: '',
     account: '',
     filialCode: '',
-    inn: ''
+    inn: '',
+    password: '',
+    phone: ''
   });
 
   const [formErrors, setFormErrors] = useState({
     name: '',
     account: '',
     filialCode: '',
-    inn: ''
+    inn: '',
+    password: '',
+    phone: ''
   });
 
   const resetValue = () => {
@@ -37,34 +49,52 @@ export default function SellerTerminal() {
       account: '',
       filialCode: '',
       inn: '',
+      password: '',
+      phone: ''
     });
-  }
+    setFormErrors({
+      name: '',
+      account: '',
+      filialCode: '',
+      inn: '',
+      password: '',
+      phone: ''
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
 
     // Simple validation example
-    if (value.trim() === '') {
-      setFormErrors({ ...formErrors, [name]: `${name} is required` });
-    } else {
-      setFormErrors({ ...formErrors, [name]: '' });
+    const errors = {};
+    if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
+      errors.phone = "Phone number must be exactly 13 characters long and only contain numbers or +.";
+    } else if (name === "password" && value.length < 3) {
+      errors.password = "Password must be at least 3 characters long.";
+    } else if (value.trim() === '') {
+      errors[name] = `${name} is required`;
     }
+    setFormErrors({ ...formErrors, ...errors });
   };
 
   const handleSave = () => {
-    // You can add more validation logic here
     const errors = {};
     Object.keys(formValues).forEach(key => {
-      if (formValues[key].trim() === '') {
+      if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
+        errors.phone = "Phone number must be exactly 13 characters long and only contain numbers or +.";
+      } else if (key === "password" && formValues[key].length < 3) {
+        errors.password = "Password must be at least 3 characters long.";
+      } else if (formValues[key].trim() === '') {
         errors[key] = `${key} is required`;
       }
     });
 
     if (Object.keys(errors).length === 0) {
       console.log("Form Submitted", formValues);
+      globalCrudFunction({ method: `${isEdit ? "put" : "post"}`, url: `${isEdit ? `${terminal_update}1` : terminal_create}`, data: formValues, setLoading: setCreateLoading });
       onClose();
-      resetValue()
+      resetValue();
     } else {
       setFormErrors(errors);
     }
@@ -77,9 +107,22 @@ export default function SellerTerminal() {
         columns={{ sm: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        <ComplexTable 
-          name="Table" 
-          buttonChild={<Button onClick={onOpen}>Create terminal</Button>} 
+        <ComplexTable
+          name="Table"
+          buttonChild={
+            <Button
+              bg={bgColor}
+              color={textColor}
+              _hover={{ bg: hoverBgColor }}
+              _active={{
+                bg: hoverBgColor,
+                transform: "scale(0.98)",
+              }}
+              onClick={ () => {
+                setIsEdit(false)
+                onOpen() 
+              }}>Create terminal
+            </Button>}
           thead={['Name', 'Inn', 'Account', 'Filial code', "Update", "Active"]}
         >
           <Tr>
@@ -89,14 +132,17 @@ export default function SellerTerminal() {
             <Td>2024-08-21</Td>
             <Td>
               <Box ms={3}>
-                <button onClick={onOpen}>
+                <button onClick={() => {
+                  setIsEdit(true)
+                  onOpen() 
+                }}>
                   <FaEdit size={23} />
                 </button>
               </Box>
             </Td>
             <Td>
               <Box>
-              <Switch colorScheme='teal' size='lg' />
+                <Switch colorScheme='teal' size='lg' />
               </Box>
             </Td>
           </Tr>
@@ -107,8 +153,8 @@ export default function SellerTerminal() {
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={() => {
-          onClose()
-          resetValue()
+          onClose();
+          resetValue();
         }}
       >
         <ModalOverlay />
@@ -161,6 +207,40 @@ export default function SellerTerminal() {
               />
               {formErrors.inn && <Text color="red.500" fontSize="sm">{formErrors.inn}</Text>}
             </FormControl>
+            <FormControl mt={4} isInvalid={!!formErrors.phone}>
+              <FormLabel>Phone number</FormLabel>
+              <Input
+                name="phone"
+                placeholder="Enter the terminal phone number"
+                value={formValues.phone}
+                onChange={handleChange}
+                color={inputTextColor}
+              />
+              {formErrors.phone && <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!formErrors.password}>
+              <FormLabel>Password</FormLabel>
+              <InputGroup>
+                <Input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter the terminal password"
+                  value={formValues.password}
+                  onChange={handleChange}
+                  color={inputTextColor}
+                />
+                <InputRightElement>
+                  <IconButton
+                    icon={showPassword ? <FaEyeSlash /> : <FaEye />}
+                    onClick={() => setShowPassword(!showPassword)}
+                    variant="ghost"
+                    size="sm"
+                    aria-label="Toggle Password Visibility"
+                  />
+                </InputRightElement>
+              </InputGroup>
+              {formErrors.password && <Text color="red.500" fontSize="sm">{formErrors.password}</Text>}
+            </FormControl>
           </ModalBody>
 
           <ModalFooter>
@@ -168,8 +248,8 @@ export default function SellerTerminal() {
               Save
             </Button>
             <Button onClick={() => {
-              onClose()
-              resetValue()
+              onClose();
+              resetValue();
             }}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
