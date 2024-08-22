@@ -59,16 +59,19 @@ function SignIn() {
     useEffect(() => {
         if (roles === 'ROLE_SUPER_ADMIN') {
             toast.success('You have successfully logged in')
-            setAuth(defVal)
             navigate('/admin/dashboard')
+            sessionStorage.setItem('pathname', 'Dashboard')
+            setAuth(defVal)
         } else if (roles === 'ROLE_SELLER') {
             toast.success('You have successfully logged in')
-            setAuth(defVal)
             navigate('/seller/main')
+            sessionStorage.setItem('pathname', 'Dashboard')
+            setAuth(defVal)
         } else if (roles === 'ROLE_TERMINAL') {
             toast.success('You have successfully logged in')
-            setAuth(defVal)
             navigate('/terminal/default')
+            sessionStorage.setItem('pathname', 'Terminal dashboard')
+            setAuth(defVal)
         }
     }, [roles]);
 

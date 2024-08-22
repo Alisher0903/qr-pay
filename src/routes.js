@@ -60,28 +60,28 @@ const routes = [
     },
     //  Seller panel route
     {
-        name: 'Seller-dashboard',
+        name: 'Dashboard',
         layout: '/seller',
         path: '/main',
         icon: <Icon as={MdHome} width="20px" height="20px" color="inherit"/>,
         component: <SellerDashboard/>,
     },
     {
-        name: 'Seller-terminal',
+        name: 'Terminal',
         layout: '/seller',
         path: '/sellerterminal',
         icon: <Icon as={TbCashRegister} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
     },
     {
-        name: 'Seller-orders',
+        name: 'Orders',
         layout: '/seller',
         path: '/order',
         icon: <Icon as={IoQrCode} width="20px" height="20px" color="inherit"/>,
         component: <SellerOrder/>,
     },
     {
-        name: 'Seller-refund',
+        name: 'Refund',
         layout: '/seller',
         path: '/refund',
         icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,

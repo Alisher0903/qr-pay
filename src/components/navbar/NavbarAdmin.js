@@ -9,6 +9,7 @@ export default function AdminNavbar(props) {
     const {secondary, message, brandText} = props;
     const {pathname} = useLocation()
     const [scrolled, setScrolled] = useState(false);
+    const pathName = sessionStorage.getItem('pathname')
 
     useEffect(() => {
         window.addEventListener('scroll', changeNavbar);
@@ -91,7 +92,7 @@ export default function AdminNavbar(props) {
 
                         <BreadcrumbItem color={secondaryText} fontSize='md' fontWeight={`400`}>
                             <BreadcrumbLink href='#' color={secondaryText}>
-                                {brandText}
+                                {pathName}
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
