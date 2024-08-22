@@ -116,7 +116,7 @@ export default function SellerTerminal() {
         spacing={{ base: "20px", xl: "20px" }}
       >
         <ComplexTable
-          name="Table"
+          name="Terminal"
           buttonChild={
             <Button
               bg={bgColor}
@@ -133,17 +133,20 @@ export default function SellerTerminal() {
             </Button>}
           thead={['Name', 'Inn', 'Account','Phone', 'Filial code', "Update", "Active"]}
         >
+          {
+            terminalData.length > 0 && terminalData.map((item, i) =>
           <Tr>
-            <Td>John Doe</Td>
-            <Td>Approved</Td>
-            <Td>2024-08-21</Td>
-            <Td>2024-08-21</Td>
-            <Td>2024-08-21</Td>
+            <Td>{item.name}</Td>
+            <Td>{item.inn}</Td>
+            <Td>{item.account}</Td>
+            <Td>{item.phone}</Td>
+            <Td>{item.filialCode}</Td>
             <Td>
               <Box ms={3}>
                 <button onClick={() => {
+                  setFormValues(item)
                   setIsEdit(true)
-                  onOpen() 
+                  onOpen()
                 }}>
                   <FaEdit size={23} />
                 </button>
@@ -151,10 +154,12 @@ export default function SellerTerminal() {
             </Td>
             <Td>
               <Box>
-                <Switch colorScheme='teal' size='lg' />
+                <Switch isChecked={item.active} colorScheme='teal' size='lg' />
               </Box>
             </Td>
           </Tr>
+            ) 
+          }
         </ComplexTable>
       </SimpleGrid>
       <Modal
