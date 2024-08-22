@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -28,13 +28,17 @@ import toast from "react-hot-toast";
 import {sliceNumber} from "../../../contexts/allRequest";
 import axios from "axios";
 import {user_login} from "../../../contexts/api";
+import {consoleClear, toastMessage} from "../../../contexts/toast-message";
+import {useNavigate} from "react-router-dom";
 
 const defVal = {phone: '', password: ''}
 
 function SignIn() {
-    // Chakra color mode
+    const navigate = useNavigate()
     const [auth, setAuth] = useState({phone: '', password: ''});
+    const [roles, setRoles] = useState('');
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false);
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const brandStars = useColorModeValue("brand.500", "brand.400");
@@ -52,17 +56,45 @@ function SignIn() {
     //   { bg: "whiteAlpha.200" }
     // );
 
+    useEffect(() => {
+        if (roles === 'ROLE_SUPER_ADMIN') {
+            toast.success('You have successfully logged in')
+            setAuth(defVal)
+            navigate('/admin/dashboard')
+        } else if (roles === 'ROLE_SELLER') {
+            toast.success('You have successfully logged in')
+            setAuth(defVal)
+            navigate('/seller/main')
+        } else if (roles === 'ROLE_TERMINAL') {
+            toast.success('You have successfully logged in')
+            setAuth(defVal)
+            navigate('/terminal/default')
+        }
+    }, [roles]);
+
     const authLogin = async () => {
+        setLoading(true)
         try {
-            const res = await axios.post(user_login, {
+            const {data} = await axios.post(user_login, {
                 phone: `+${auth.phone}`,
                 password: auth.password
             })
-            console.log(res.data.error.code)
-            if (res.data) console.log('ishladi')
-            else console.log('ishlamadi')
+            if (data?.error?.code) {
+                setLoading(false)
+                toastMessage(data.error.code)
+            }
+            else {
+                setLoading(false)
+                const expiryTime = new Date().getTime() + 12 * 60 * 60 * 1000;
+                localStorage.setItem('tokenExpiry', expiryTime.toString());
+                localStorage.setItem("token", data.data.token)
+                localStorage.setItem("ROLE", data.data.role)
+                setRoles(data.data.role)
+            }
         } catch (err) {
+            setLoading(false)
             console.error(err);
+            consoleClear()
         }
     }
 

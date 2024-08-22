@@ -17,7 +17,7 @@ export default function Dashboard(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/seller/full-screen-maps';
+    return window.location.pathname !== '/terminal/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Dashboard';
@@ -90,7 +90,7 @@ export default function Dashboard(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/seller') {
+      if (route.layout === '/terminal') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -133,7 +133,7 @@ export default function Dashboard(props) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={'Seller dashboard'}
+                  logoText={'Terminal dashboard'}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
@@ -155,7 +155,7 @@ export default function Dashboard(props) {
                   {getRoutes(routes)}
                   <Route
                     path="/"
-                    element={<Navigate to="/seller/dashboard" replace />}
+                    element={<Navigate to="/terminal/dashboard" replace />}
                   />
                 </Routes>
               </Box>

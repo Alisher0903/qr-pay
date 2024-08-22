@@ -3,6 +3,7 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import AuthLayout from './layouts/auth';
 import AdminLayout from './layouts/admin';
 import ClientLayout from './layouts/seller';
+import TerminalLayout from './layouts/terminal';
 import {ChakraProvider} from '@chakra-ui/react';
 import initialTheme from './theme/theme';
 import {useState} from 'react';
@@ -20,6 +21,10 @@ export default function Main() {
                 <Route
                     path="seller/*"
                     element={<ClientLayout theme={currentTheme} setTheme={setCurrentTheme}/>}
+                />
+                <Route
+                    path="terminal/*"
+                    element={<TerminalLayout theme={currentTheme} setTheme={setCurrentTheme}/>}
                 />
                 <Route path="*" element={<Navigate to="/auth/sign-in" replace/>}/>
             </Routes>
