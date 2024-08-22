@@ -32,7 +32,7 @@ const routes = [
     {
         name: 'Merchant',
         layout: '/admin',
-        path: '/partners',
+        path: '/partner',
         icon: (
             <Icon
                 as={MdOutlineShoppingCart}
@@ -42,7 +42,30 @@ const routes = [
             />
         ),
         component: <Partner/>,
-        // secondary: true,
+        secondary: true,
+        subMenu: [
+            {
+                name: 'Payment',
+                layout: '/admin',
+                icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
+                path: '/payments',
+                component: <Payment/>,
+            },
+            {
+                name: 'Terminal',
+                layout: '/admin',
+                path: '/terminal_lists',
+                icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+                component: <TerminalAdmin/>,
+            },
+            {
+                name: 'Static QR',
+                layout: '/admin',
+                path: '/static-qr',
+                icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+                component: <TerminalAdmin/>,
+            },
+        ]
     },
     {
         name: 'Payment',
