@@ -1,5 +1,7 @@
 export const base_url = "http://134.122.77.107:8090/";
 
+export const getMeUrl = `${base_url}api/user/me`;
+
 // USER CONTROLLER
 export const user_register = `${base_url}api/user/register`;
 export const user_login = `${base_url}api/user/login`;
