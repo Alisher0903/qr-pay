@@ -33,27 +33,7 @@ export function SidebarLinks(props) {
     // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
     const createLinks = (routes) => {
         return routes.map((route, index) => {
-            if (route.category) {
-                return (
-                    <>
-                        <Text
-                            fontSize={"md"}
-                            color={activeColor}
-                            fontWeight='bold'
-                            mx='auto'
-                            ps={{
-                                sm: "10px",
-                                xl: "16px",
-                            }}
-                            pt='18px'
-                            pb='12px'
-                            key={index}>
-                            {route.name}
-                        </Text>
-                        {createLinks(route.items)}
-                    </>
-                );
-            } else if (sideBarLinks(route)) {
+            if (sideBarLinks(route)) {
                 return (
                     <NavLink key={index} to={route.layout + route.path} onClick={() => {
                         sessionStorage.setItem('pathname', route.name)
