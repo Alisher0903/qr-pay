@@ -56,7 +56,7 @@ export function SidebarLinks(props) {
             } else if (sideBarLinks(route)) {
                 return (
                     <NavLink key={index} to={route.layout + route.path} onClick={() => {
-
+                        sessionStorage.setItem('pathname', route.name)
                     }}>
                         {route.icon ? (
                             <Box>
