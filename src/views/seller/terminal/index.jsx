@@ -2,9 +2,12 @@ import {
   Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton
 } from "@chakra-ui/react";
 import { terminal_get } from "contexts/api";
+import { terminal_isActive } from "contexts/api";
 import { terminal_update } from "contexts/api";
 import { terminal_create } from "contexts/api";
-import globalCrudFunction from "contexts/logic-function/globalFunktion";
+import { globalPostFunction } from "contexts/logic-function/globalFunktion";
+import { globalPutFunction } from "contexts/logic-function/globalFunktion";
+import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { TerminalStory } from "contexts/state-management/terminal/terminalStory";
 import { setConfig } from "contexts/token";
 import React, { useEffect, useState } from "react";
@@ -27,33 +30,37 @@ export default function SellerTerminal() {
 
   useEffect(() => {
     setConfig()
-    globalCrudFunction({ method: 'get', url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData });
+    getFunction()
   }, [])
+
+  const getFunction = () => {
+    globalGetFunction({ url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData });
+  }
 
   // State to manage form values and validation
   const [formValues, setFormValues] = useState({
-    name: '',
-    account: '',
-    filialCode: '',
-    inn: '',
-    password: '',
-    phone: ''
+    name: "",
+    account: "",
+    filial_code: "",
+    inn: "",
+    password: "",
+    phone: ""
   });
 
   const [formErrors, setFormErrors] = useState({
-    name: '',
-    account: '',
-    filialCode: '',
-    inn: '',
-    password: '',
-    phone: ''
+    name: "",
+    account: "",
+    filial_code: "",
+    inn: "",
+    password: "",
+    phone: ""
   });
 
   const resetValue = () => {
     setFormValues({
       name: '',
       account: '',
-      filialCode: '',
+      filial_code: '',
       inn: '',
       password: '',
       phone: ''
@@ -61,7 +68,7 @@ export default function SellerTerminal() {
     setFormErrors({
       name: '',
       account: '',
-      filialCode: '',
+      filial_code: '',
       inn: '',
       password: '',
       phone: ''
@@ -69,7 +76,7 @@ export default function SellerTerminal() {
   };
 
   console.log(terminalData);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -100,7 +107,7 @@ export default function SellerTerminal() {
 
     if (Object.keys(errors).length === 0) {
       console.log("Form Submitted", formValues);
-      globalCrudFunction({ method: `${isEdit ? "put" : "post"}`, url: `${isEdit ? `${terminal_update}1` : terminal_create}`, data: formValues, setLoading: setCreateLoading });
+      isEdit ? globalPutFunction({url: `${terminal_update}1`, putData: formValues, setLoading: setCreateLoading, getFunction: getFunction }) : globalPostFunction({url: `${terminal_create}`, postData: formValues, setLoading: setCreateLoading, getFunction: getFunction  })
       onClose();
       resetValue();
     } else {
@@ -126,39 +133,58 @@ export default function SellerTerminal() {
                 bg: hoverBgColor,
                 transform: "scale(0.98)",
               }}
-              onClick={ () => {
+              onClick={() => {
                 setIsEdit(false)
-                onOpen() 
-              }}>Create terminal
-            </Button>}
-          thead={['Name', 'Inn', 'Account','Phone', 'Filial code', "Update", "Active"]}
+                onOpen()
+              }}>Create terminal</Button>}
+          thead={['Name', 'Inn', 'Account', 'Phone', 'Filial code', "Update", "Active"]}
         >
           {
-            terminalData.length > 0 && terminalData.map((item, i) =>
-          <Tr>
-            <Td>{item.name}</Td>
-            <Td>{item.inn}</Td>
-            <Td>{item.account}</Td>
-            <Td>{item.phone}</Td>
-            <Td>{item.filialCode}</Td>
-            <Td>
-              <Box ms={3}>
-                <button onClick={() => {
-                  setFormValues(item)
-                  setIsEdit(true)
-                  onOpen()
-                }}>
-                  <FaEdit size={23} />
-                </button>
-              </Box>
-            </Td>
-            <Td>
-              <Box>
-                <Switch isChecked={item.active} colorScheme='teal' size='lg' />
-              </Box>
-            </Td>
-          </Tr>
-            ) 
+            terminalData.length > 0 ? terminalData.map((item, i) =>
+              <Tr>
+                <Td>{item.name}</Td>
+                <Td>{item.inn}</Td>
+                <Td>{item.account}</Td>
+                <Td>{item.phone}</Td>
+                <Td>{item.filial_code}</Td>
+                <Td>
+                  <Box ms={3}>
+                    <button onClick={() => {
+                      setFormValues({
+                        name: item.name,
+                        account: item.account,
+                        filial_code: item.filial_code,
+                        inn: item.inn,
+                        password: '',
+                        phone: item.phone
+                      })
+                      setIsEdit(true)
+                      onOpen()
+                    }}>
+                      <FaEdit size={23} />
+                    </button>
+                  </Box>
+                </Td>
+                <Td>
+                  <Box onClick={() => {
+                    globalPostFunction({url: `${terminal_isActive}${item.id}`, data: {}, setLoading: setCreateLoading, getFunction: getFunction})
+                    console.log("switch");
+                  }}>
+                    
+                    <Switch disabled={item.status !== 0} isChecked={item.status === 0} colorScheme='teal' size='lg' />
+                  </Box>
+                </Td>
+              </Tr>
+            ) :
+              <Tr>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+                <Td>Terminal not found</Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
           }
         </ComplexTable>
       </SimpleGrid>
@@ -199,16 +225,16 @@ export default function SellerTerminal() {
               />
               {formErrors.account && <Text color="red.500" fontSize="sm">{formErrors.account}</Text>}
             </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.filialCode}>
+            <FormControl mt={4} isInvalid={!!formErrors.filial_code}>
               <FormLabel>Filial Code</FormLabel>
               <Input
-                name="filialCode"
+                name="filial_code"
                 placeholder="Enter the terminal filial code"
-                value={formValues.filialCode}
+                value={formValues.filial_code}
                 onChange={handleChange}
                 color={inputTextColor}
               />
-              {formErrors.filialCode && <Text color="red.500" fontSize="sm">{formErrors.filialCode}</Text>}
+              {formErrors.filial_code && <Text color="red.500" fontSize="sm">{formErrors.filial_code}</Text>}
             </FormControl>
             <FormControl mt={4} isInvalid={!!formErrors.inn}>
               <FormLabel>Inn</FormLabel>
