@@ -80,6 +80,13 @@ export default function Partner() {
             email: '',
             password: ''
         });
+        setFormErrors({
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            password: ''
+        });
     }
 
     const handleChange = (e) => {
