@@ -166,11 +166,11 @@ export default function SellerTerminal() {
                   </Box>
                 </Td>
                 <Td>
-                  <Box onClick={() => {
+                  <Box disabled={item.status !== 0} onClick={() => {
                     globalPostFunction({url: `${terminal_isActive}${item.id}`, data: {}, setLoading: setCreateLoading, getFunction: getFunction})
                     console.log("switch");
                   }}>
-                    
+
                     <Switch disabled={item.status !== 0} isChecked={item.status === 0} colorScheme='teal' size='lg' />
                   </Box>
                 </Td>
