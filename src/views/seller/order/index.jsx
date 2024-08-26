@@ -1,5 +1,8 @@
 import {
-  Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton
+  Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton,
+  Grid,
+  Flex,
+  GridItem
 } from "@chakra-ui/react";
 import { seller_order_get } from "contexts/api";
 import { admin_notification_count } from "contexts/api";
@@ -11,6 +14,7 @@ import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 import { PaymentStore } from "contexts/state-management/payment/paymentStore";
 import { setConfig } from "contexts/token";
+import QRCode, { QRCodeSVG } from "qrcode.react";
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaEye } from "react-icons/fa";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
@@ -18,8 +22,10 @@ import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 export default function SellerOrder() {
   const { setPaymentData, paymentData } = PaymentStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {setCountData, countData, loading, setLoading} = NotificationStore()
-  const [createLoading, setCreateLoading] = useState();
+  const { setCountData, setLoading } = NotificationStore()
+  const [detailData, setDetailData] = useState({})
+  const [createLoading, setCreateLoading] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
@@ -37,7 +43,7 @@ export default function SellerOrder() {
 
   const getFunction = () => {
     globalGetFunction({ url: `${seller_order_get}`, setLoading: setCreateLoading, setData: setPaymentData });
-    globalGetFunction({url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData, setLoading: setLoading})
+    globalGetFunction({ url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData, setLoading: setLoading })
   }
 
   // State to manage form values and validation
@@ -90,6 +96,8 @@ export default function SellerOrder() {
     }
   };
 
+  console.log(detailData);
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -109,28 +117,22 @@ export default function SellerOrder() {
                 transform: "scale(0.98)",
               }}
               onClick={() => {
+                setIsCreate(true)
                 onOpen()
               }}>Create order</Button>}
-          thead={['External id', 'Purpose Code', 'Amount', 'Terminal Id', 'Redirect Url', "Action", "Active"]}
+          thead={['Partner', 'Purpose Code', 'Date', "Action", "Active"]}
         >
           {
             paymentData.object ? paymentData.object.map((item, i) =>
-              <Tr>
-                <Td>{item.ext_id}</Td>
-                <Td>{item.purposeCode}</Td>
-                <Td>{item.chequeAmount}</Td>
-                <Td>{item.terminalId}</Td>
-                <Td>{item.redirectUrl}</Td>
+              <Tr key={i}>
+                <Td>{item.partner ? item.partner : "no data"}</Td>
+                <Td>{item.purpose ? `${item.purpose.slice(0, 25)}...` : "no data"}</Td>
+                <Td>{item.updated_at ? item.updated_at.slice(0, 10) : "no date"}</Td>
                 <Td>
                   <Box ms={3}>
                     <button onClick={() => {
-                      setFormValues({
-                        extId: +item.extId,
-                        purposeCode: item.purposeCode,
-                        amount: +item.amount,
-                        terminalId: +item.terminalId,
-                        redirectUrl: item.redirectUrl
-                      })
+                      setIsCreate(false)
+                      setDetailData(item)
                       onOpen()
                     }}>
                       <FaEye size={23} />
@@ -159,6 +161,7 @@ export default function SellerOrder() {
         </ComplexTable>
       </SimpleGrid>
       <Modal
+        size={isCreate ? "lg" : "3xl"}
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -169,78 +172,133 @@ export default function SellerOrder() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>{isCreate ? "Create your account" : ""}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl isInvalid={!!formErrors.extId}>
-              <FormLabel>External id</FormLabel>
-              <Input
-              type="number"
-                name="extId"
-                ref={initialRef}
-                placeholder="Enter the external id"
-                value={formValues.extId}
-                onChange={handleChange}
-                color={inputTextColor}
-              />
-              {formErrors.extId && <Text color="red.500" fontSize="sm">{formErrors.extId}</Text>}
-            </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.amount}>
-              <FormLabel>Amount</FormLabel>
-              <Input
-              type="number"
-                name="amount"
-                placeholder="Enter the amount"
-                value={formValues.amount}
-                onChange={handleChange}
-                color={inputTextColor}
-              />
-              {formErrors.amount && <Text color="red.500" fontSize="sm">{formErrors.amount}</Text>}
-            </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.purposeCode}>
-              <FormLabel>Purpose Code</FormLabel>
-              <Input
-                name="purposeCode"
-                placeholder="Enter the filial code"
-                value={formValues.purposeCode}
-                onChange={handleChange}
-                color={inputTextColor}
-              />
-              {formErrors.purposeCode && <Text color="red.500" fontSize="sm">{formErrors.purposeCode}</Text>}
-            </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.terminalId}>
-              <FormLabel>Terminal Id</FormLabel>
-              <Input
-              type="number"
-                name="terminalId"
-                placeholder="Enter the terminalId"
-                value={formValues.terminalId}
-                onChange={handleChange}
-                color={inputTextColor}
-              />
-              {formErrors.terminalId && <Text color="red.500" fontSize="sm">{formErrors.terminalId}</Text>}
-            </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.redirectUrl}>
-              <FormLabel>Redirect Url</FormLabel>
-              <Input
-                name="redirectUrl"
-                placeholder="Enter the redirectUrl"
-                value={formValues.redirectUrl}
-                onChange={handleChange}
-                color={inputTextColor}
-              />
-              {formErrors.redirectUrl && <Text color="red.500" fontSize="sm">{formErrors.redirectUrl}</Text>}
-            </FormControl>
+            {
+              isCreate ?
+                <>
+                  <FormControl isInvalid={!!formErrors.extId}>
+                    <FormLabel>External id</FormLabel>
+                    <Input
+                      type="number"
+                      name="extId"
+                      ref={initialRef}
+                      placeholder="Enter the external id"
+                      value={formValues.extId}
+                      onChange={handleChange}
+                      color={inputTextColor}
+                    />
+                    {formErrors.extId && <Text color="red.500" fontSize="sm">{formErrors.extId}</Text>}
+                  </FormControl>
+                  <FormControl mt={4} isInvalid={!!formErrors.amount}>
+                    <FormLabel>Amount</FormLabel>
+                    <Input
+                      type="number"
+                      name="amount"
+                      placeholder="Enter the amount"
+                      value={formValues.amount}
+                      onChange={handleChange}
+                      color={inputTextColor}
+                    />
+                    {formErrors.amount && <Text color="red.500" fontSize="sm">{formErrors.amount}</Text>}
+                  </FormControl>
+                  <FormControl mt={4} isInvalid={!!formErrors.purposeCode}>
+                    <FormLabel>Purpose Code</FormLabel>
+                    <Input
+                      name="purposeCode"
+                      placeholder="Enter the filial code"
+                      value={formValues.purposeCode}
+                      onChange={handleChange}
+                      color={inputTextColor}
+                    />
+                    {formErrors.purposeCode && <Text color="red.500" fontSize="sm">{formErrors.purposeCode}</Text>}
+                  </FormControl>
+                  <FormControl mt={4} isInvalid={!!formErrors.terminalId}>
+                    <FormLabel>Terminal Id</FormLabel>
+                    <Input
+                      type="number"
+                      name="terminalId"
+                      placeholder="Enter the terminalId"
+                      value={formValues.terminalId}
+                      onChange={handleChange}
+                      color={inputTextColor}
+                    />
+                    {formErrors.terminalId && <Text color="red.500" fontSize="sm">{formErrors.terminalId}</Text>}
+                  </FormControl>
+                  <FormControl mt={4} isInvalid={!!formErrors.redirectUrl}>
+                    <FormLabel>Redirect Url</FormLabel>
+                    <Input
+                      name="redirectUrl"
+                      placeholder="Enter the redirectUrl"
+                      value={formValues.redirectUrl}
+                      onChange={handleChange}
+                      color={inputTextColor}
+                    />
+                    {formErrors.redirectUrl && <Text color="red.500" fontSize="sm">{formErrors.redirectUrl}</Text>}
+                  </FormControl>
+                </>
+                :
+                <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Ext id: </Text>
+                    <Text fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Cheque amount:</Text>
+                    <Text fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Partner: </Text>
+                    <Text fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Local QR id:</Text>
+                    <Text fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "no data"}</Text>
+                  </Flex>
+                  <GridItem colSpan={2} display={"flex"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Purpose: </Text>
+                    <Text width={"70%"} fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "no data"}</Text>
+                  </GridItem>
+                  <GridItem colSpan={2} display={"flex"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>QR id:</Text>
+                    <Text width={'70%'} fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "no data"}</Text>
+                  </GridItem>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>QR amount:</Text>
+                    <Text fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Rate:</Text>
+                    <Text fontSize={"17px"}>{detailData.rate || detailData.rate === 0 ? detailData.rate : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Status:</Text>
+                    <Text fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "no data"}</Text>
+                  </Flex>
+                  <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                    <Text fontSize={"17px"} fontWeight={"700"}>Date:</Text>
+                    <Text fontSize={"17px"}>{detailData.updated_at || detailData.updated_at === 0 ? detailData.updated_at : "no data"}</Text>
+                  </Flex>
+                  <GridItem colSpan={2} display={"flex" } justifyContent={"center"}>
+                    <QRCodeSVG value={detailData.url ? detailData.url : "https://qr.nspk.ru/"} renderAs="canvas" />
+                  </GridItem>
+                </Grid>
+            }
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSave}>
-              Save
-            </Button>
             <Button onClick={() => {
               onClose();
               resetValue();
             }}>Cancel</Button>
+            {
+              isCreate &&
+              <Button colorScheme="blue" mr={3} onClick={handleSave}>
+                Save
+              </Button>
+
+            }
           </ModalFooter>
         </ModalContent>
       </Modal>

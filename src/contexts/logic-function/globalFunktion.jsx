@@ -60,9 +60,6 @@ export async function globalPostFunction({ url, postData, setLoading, getFunctio
     }
 }
 
-
-
-
 export async function globalPutFunction({ url, putData, setLoading, getFunction }) {
     try {
         setLoading(true)
