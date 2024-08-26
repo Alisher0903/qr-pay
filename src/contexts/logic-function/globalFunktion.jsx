@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {consoleClear, toastMessage} from 'contexts/toast-message';
-import {config} from 'contexts/token';
-import {getMeUrl} from "../api";
+import { consoleClear, toastMessage } from 'contexts/toast-message';
+import { config } from 'contexts/token';
+import { getMeUrl } from "../api";
 import toast from 'react-hot-toast';
 
-export const userGetMe = async ({setData, token}) => {
+export const userGetMe = async ({ setData, token }) => {
     try {
-        const {data} = await axios.get(getMeUrl, token ? {
+        const { data } = await axios.get(getMeUrl, token ? {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -21,28 +21,30 @@ export const userGetMe = async ({setData, token}) => {
     }
 }
 
-export async function globalGetFunction({ url, setData, setLoading}) {
+export async function globalGetFunction({ url, setData, setLoading }) {
     try {
         setLoading(true)
-        const {data} = await axios.get(url, config)
+        const { data } = await axios.get(url, config)
         if (data?.error?.code) {
             setLoading(false)
-            toastMessage(data.error.code)
+            // toastMessage(data.error.code)
+            setData([]);
         } else {
             setLoading(false)
             setData(data.data);
         }
     } catch (error) {
+        setData([]);
         setLoading(false)
         console.error('Error during get operation:', error);
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     }
 }
 
-export async function globalPostFunction({ url, postData, setLoading, getFunction}) {
+export async function globalPostFunction({ url, postData, setLoading, getFunction }) {
     try {
         setLoading(true)
-        const {data} = await axios.post(url, postData, config)
+        const { data } = await axios.post(url, postData, config)
         if (data?.error?.code) {
             setLoading(false)
             toastMessage(data.error.code)
@@ -61,10 +63,10 @@ export async function globalPostFunction({ url, postData, setLoading, getFunctio
 
 
 
-export async function globalPutFunction({ url, putData, setLoading, getFunction}) {
+export async function globalPutFunction({ url, putData, setLoading, getFunction }) {
     try {
         setLoading(true)
-        const {data} = await axios.put(url, putData, config)
+        const { data } = await axios.put(url, putData, config)
         if (data?.error?.code) {
             setLoading(false)
             toastMessage(data.error.code)

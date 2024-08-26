@@ -19,6 +19,7 @@ import {RiRefund2Line} from 'react-icons/ri';
 import SellerTerminal from 'views/seller/terminal';
 import SellerOrder from 'views/seller/order';
 import SellerRefund from 'views/seller/refund';
+import Notification from 'views/notification/notification';
 
 const routes = [
     //  Admin panel route
@@ -68,6 +69,13 @@ const routes = [
         ]
     },
     {
+        name: '',
+        layout: '/admin',
+        path: '/notification',
+        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        component: <Notification/>,
+    },
+    {
         name: 'Payment',
         layout: '/admin',
         icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
@@ -110,6 +118,13 @@ const routes = [
         icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
         component: <SellerRefund/>,
     },
+    {
+        name: '',
+        layout: '/seller',
+        path: '/notification',
+        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        component: <Notification/>,
+    },
     //  Terminal panel route
     {
         name: 'Terminal dashboard',
@@ -117,6 +132,13 @@ const routes = [
         path: '/default',
         icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
         component: <SellerRefund/>,
+    },
+    {
+        name: '',
+        layout: '/terminal',
+        path: '/notification',
+        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        component: <Notification/>,
     },
     {
         name: 'Sign In',

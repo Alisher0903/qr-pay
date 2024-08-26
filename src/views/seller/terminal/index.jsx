@@ -41,7 +41,7 @@ export default function SellerTerminal() {
   const [formValues, setFormValues] = useState({
     name: "",
     account: "",
-    filial_code: "",
+    filialCode: "",
     inn: "",
     password: "",
     phone: ""
@@ -50,7 +50,7 @@ export default function SellerTerminal() {
   const [formErrors, setFormErrors] = useState({
     name: "",
     account: "",
-    filial_code: "",
+    filialCode: "",
     inn: "",
     password: "",
     phone: ""
@@ -60,7 +60,7 @@ export default function SellerTerminal() {
     setFormValues({
       name: '',
       account: '',
-      filial_code: '',
+      filialCode: '',
       inn: '',
       password: '',
       phone: ''
@@ -68,14 +68,13 @@ export default function SellerTerminal() {
     setFormErrors({
       name: '',
       account: '',
-      filial_code: '',
+      filialCode: '',
       inn: '',
       password: '',
       phone: ''
     });
   };
 
-  console.log(terminalData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -106,7 +105,6 @@ export default function SellerTerminal() {
     });
 
     if (Object.keys(errors).length === 0) {
-      console.log("Form Submitted", formValues);
       isEdit ? globalPutFunction({url: `${terminal_update}1`, putData: formValues, setLoading: setCreateLoading, getFunction: getFunction }) : globalPostFunction({url: `${terminal_create}`, postData: formValues, setLoading: setCreateLoading, getFunction: getFunction  })
       onClose();
       resetValue();
@@ -145,7 +143,7 @@ export default function SellerTerminal() {
                 <Td>{item.name}</Td>
                 <Td>{item.inn}</Td>
                 <Td>{item.account}</Td>
-                <Td>{item.phone}</Td>
+                <Td>{item.phones}</Td>
                 <Td>{item.filial_code}</Td>
                 <Td>
                   <Box ms={3}>
@@ -153,10 +151,10 @@ export default function SellerTerminal() {
                       setFormValues({
                         name: item.name,
                         account: item.account,
-                        filial_code: item.filial_code,
+                        filialCode: item.filial_code,
                         inn: item.inn,
                         password: '',
-                        phone: item.phone
+                        phone: item.phones
                       })
                       setIsEdit(true)
                       onOpen()
@@ -168,9 +166,7 @@ export default function SellerTerminal() {
                 <Td>
                   <Box disabled={item.status !== 0} onClick={() => {
                     globalPostFunction({url: `${terminal_isActive}${item.id}`, data: {}, setLoading: setCreateLoading, getFunction: getFunction})
-                    console.log("switch");
                   }}>
-
                     <Switch disabled={item.status !== 0} isChecked={item.status === 0} colorScheme='teal' size='lg' />
                   </Box>
                 </Td>
@@ -225,16 +221,16 @@ export default function SellerTerminal() {
               />
               {formErrors.account && <Text color="red.500" fontSize="sm">{formErrors.account}</Text>}
             </FormControl>
-            <FormControl mt={4} isInvalid={!!formErrors.filial_code}>
+            <FormControl mt={4} isInvalid={!!formErrors.filialCode}>
               <FormLabel>Filial Code</FormLabel>
               <Input
-                name="filial_code"
+                name="filialCode"
                 placeholder="Enter the terminal filial code"
-                value={formValues.filial_code}
+                value={formValues.filialCode}
                 onChange={handleChange}
                 color={inputTextColor}
               />
-              {formErrors.filial_code && <Text color="red.500" fontSize="sm">{formErrors.filial_code}</Text>}
+              {formErrors.filialCode && <Text color="red.500" fontSize="sm">{formErrors.filialCode}</Text>}
             </FormControl>
             <FormControl mt={4} isInvalid={!!formErrors.inn}>
               <FormLabel>Inn</FormLabel>

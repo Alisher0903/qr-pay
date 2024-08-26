@@ -13,8 +13,7 @@ import {
 } from '@chakra-ui/react';
 import * as React from 'react';
 // Custom components
-import Card from 'components/card/Card';
-import Menu from 'components/menu/MainMenu';
+import Card from 'components/card/Card';    
 
 
 export default function ComplexTable({thead, children, name, buttonChild }) {

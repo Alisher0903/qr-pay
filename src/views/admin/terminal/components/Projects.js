@@ -1,59 +1,220 @@
 // Chakra imports
-import { Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 // Assets
-import Project1 from "assets/img/profile/Project1.png";
-import Project2 from "assets/img/profile/Project2.png";
-import Project3 from "assets/img/profile/Project3.png";
+import Project1 from "assets/img/profile/notification.png";
 // Custom components
 import Card from "components/card/Card.js";
-import React from "react";
+import { seller_notification } from "contexts/api";
+import { admin_notification } from "contexts/api";
+import { terminal_notification_count } from "contexts/api";
+import { admin_notification_count } from "contexts/api";
+import { isRead_notification } from "contexts/api";
+import { delete_notification } from "contexts/api";
+import { seller_notification_count } from "contexts/api";
+import { terminal_notification } from "contexts/api";
+import { globalPostFunction } from "contexts/logic-function/globalFunktion";
+import { globalGetFunction } from "contexts/logic-function/globalFunktion";
+import { NotificationStore } from "contexts/state-management/notification/notificationStore";
+import React, { useEffect, useState } from "react";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { MdDeleteSweep } from "react-icons/md";
 import Project from "views/admin/terminal/components/Project";
 
-export default function Projects(props) {
-  // Chakra Color Mode
+export default function Projects() {
+  const {
+    setNotificationData,
+    notificationData,
+    loading,
+    setLoading,
+    setCountData,
+  } = NotificationStore();
+
+  const [selectedIds, setSelectedIds] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
+  const navbarIcon = useColorModeValue("#1B255A", "white");
+  const role = localStorage.getItem("ROLE");
+  const bg = useColorModeValue("white", "navy.700");
+
+  useEffect(() => {
+    getFunction();
+  }, []);
+
+  const getFunction = () => {
+    globalGetFunction({
+      url:
+        role === "ROLE_TERMINAL"
+          ? terminal_notification
+          : role === "ROLE_SELLER"
+          ? seller_notification
+          : role === "ROLE_SUPER_ADMIN"
+          ? admin_notification
+          : "",
+      setData: setNotificationData,
+      setLoading: setLoading,
+    });
+    globalGetFunction({
+      url:
+        role === "ROLE_TERMINAL"
+          ? terminal_notification_count
+          : role === "ROLE_SELLER"
+          ? seller_notification_count
+          : role === "ROLE_SUPER_ADMIN"
+          ? admin_notification_count
+          : "",
+      setData: setCountData,
+      setLoading: setLoading,
+    });
+  };
+
+  const handleSelectAllIds = () => {
+    if (notificationData.object) {
+      const ids = notificationData.object.map((item) => item.id);
+      setSelectedIds(ids);
+    }
+  };
+
   const cardShadow = useColorModeValue(
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+
   return (
-    <Card mb={{ base: "0px", "2xl": "20px" }}>
-      <Text
-        color={textColorPrimary}
-        fontWeight='bold'
-        fontSize='2xl'
-        mt='10px'
-        mb='4px'>
-        All projects
-      </Text>
-      <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
-        Here you can find more details about your projects. Keep you user
-        engaged by providing meaningful information.
-      </Text>
-      <Project
-        boxShadow={cardShadow}
-        mb='20px'
-        image={Project1}
-        ranking='1'
-        link='#'
-        title='Technology behind the Blockchain'
-      />
-      <Project
-        boxShadow={cardShadow}
-        mb='20px'
-        image={Project2}
-        ranking='2'
-        link='#'
-        title='Greatest way to a good Economy'
-      />
-      <Project
-        boxShadow={cardShadow}
-        image={Project3}
-        ranking='3'
-        link='#'
-        title='Most essential tips for Burnout'
-      />
-    </Card>
+    <>
+      <Card mb={{ base: "0px", "2xl": "20px" }}>
+        <Flex
+          w={{ sm: "100%", md: "auto" }}
+          mb={"10px"}
+          alignItems="center"
+          flexDirection="row"
+          justifyContent={"space-between"}
+        >
+          <Text
+            color={textColorPrimary}
+            fontWeight="bold"
+            fontSize="2xl"
+            mt="10px"
+            mb="4px"
+          >
+            All notifications
+          </Text>
+          <Flex
+            w={{ sm: "100%", md: "auto" }}
+            alignItems="center"
+            flexDirection="row"
+          >
+            <Button
+              variant="no-hover"
+              bg="transparent"
+              onClick={async () => {
+                await handleSelectAllIds();
+                await globalPostFunction({
+                  url: isRead_notification,
+                  postData:
+                    selectedIds.length > 0 ? { ids: selectedIds } : { ids: [] },
+                  setLoading: setLoading,
+                  getFunction: getFunction,
+                });
+              }}
+            >
+              <IoCheckmarkDoneSharp color={navbarIcon} size={23} />
+            </Button>
+            <Button
+              onClick={() => {
+                onOpen();
+                handleSelectAllIds();
+              }}
+              variant="no-hover"
+              bg="transparent"
+            >
+              <MdDeleteSweep color={navbarIcon} size={23} />
+            </Button>
+          </Flex>
+        </Flex>
+        {Array.isArray(notificationData.object) &&
+        notificationData.object.length > 0 ? (
+          notificationData.object.map((item) => (
+            <Project
+              key={item.id} // item.id ni key sifatida ishlating
+              boxShadow={cardShadow}
+              mb="20px"
+              item={item}
+              image={Project1}
+              getFunction={getFunction}
+            />
+          ))
+        ) : (
+          <Card bg={bg} p="14px">
+            <Flex width={"100%"} justifyContent={"center"}>
+              <Text
+                color={textColorPrimary}
+                fontWeight="500"
+                fontSize="md"
+                mb="4px"
+              >
+                Order not found
+              </Text>
+            </Flex>
+          </Card>
+        )}
+      </Card>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>nhj g</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="red" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                globalPostFunction({
+                  url: delete_notification,
+                  postData:
+                    selectedIds.length > 0 ? { ids: selectedIds } : { ids: [] },
+                  setLoading: setLoading,
+                  getFunction: () => {
+                    globalGetFunction({
+                    url:
+                      role === "ROLE_TERMINAL"
+                        ? terminal_notification
+                        : role === "ROLE_SELLER"
+                        ? seller_notification
+                        : role === "ROLE_SUPER_ADMIN"
+                        ? admin_notification
+                        : "",
+                    setData: setNotificationData,
+                    setLoading: setLoading,
+                  })
+                  onClose()
+                }
+                });
+              }}
+            >
+              Secondary Action
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
