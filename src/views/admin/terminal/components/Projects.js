@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Pagination } from "antd";
 // Assets
 import Project1 from "assets/img/profile/notification.png";
 // Custom components
@@ -40,6 +41,12 @@ export default function Projects() {
     loading,
     setLoading,
     setCountData,
+    setPage,
+    setSize,
+    totalPage,
+    size,
+    page,
+    setTotalPages
   } = NotificationStore();
 
   const [selectedIds, setSelectedIds] = useState([]);
@@ -55,6 +62,22 @@ export default function Projects() {
     getFunction();
   }, []);
 
+  useEffect(() => {
+    globalGetFunction({
+      url:
+        role === "ROLE_TERMINAL"
+          ? terminal_notification
+          : role === "ROLE_SELLER"
+          ? seller_notification
+          : role === "ROLE_SUPER_ADMIN"
+          ? admin_notification
+          : "",
+      setData: setNotificationData,
+      setLoading: setLoading,
+      setTotalElements: setTotalPages, page: page, size: size 
+    });
+  }, [page, size])
+
   const getFunction = () => {
     globalGetFunction({
       url:
@@ -67,6 +90,7 @@ export default function Projects() {
           : "",
       setData: setNotificationData,
       setLoading: setLoading,
+      setTotalElements: setTotalPages
     });
     globalGetFunction({
       url:
@@ -82,12 +106,44 @@ export default function Projects() {
     });
   };
 
+  const handleSelectIsReadIds = () => {
+    if (notificationData.object) {
+      // isRead false bo'lgan elementlarning id larini olish
+      const ids = notificationData.object
+        .filter((item) => !item.isRead) // isRead false bo'lganlarni filtrlash
+        .map((item) => item.id); // ularning id larini olish
+      
+      setSelectedIds(ids); // id larni setSelectedIds ga saqlash
+      console.log(ids);
+    }
+  };
+
   const handleSelectAllIds = () => {
     if (notificationData.object) {
       const ids = notificationData.object.map((item) => item.id);
       setSelectedIds(ids);
+      console.log(ids);
+      
     }
   };
+
+  const itemRender = (_, type, originalElement) => {
+    if (type === 'page') {
+      return (
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
+
+  const onChange = (page, size) => {
+    setPage(page - 1);
+    setSize(size);
+  };
+
 
   const cardShadow = useColorModeValue(
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
@@ -122,7 +178,7 @@ export default function Projects() {
               variant="no-hover"
               bg="transparent"
               onClick={async () => {
-                await handleSelectAllIds();
+                await handleSelectIsReadIds();
                 await globalPostFunction({
                   url: isRead_notification,
                   postData:
@@ -167,11 +223,24 @@ export default function Projects() {
                 fontSize="md"
                 mb="4px"
               >
-                Order not found
+                Notification not found
               </Text>
             </Flex>
           </Card>
         )}
+        {
+          Array.isArray(notificationData.object) &&
+          notificationData.object.length > 0 ?
+          <Pagination
+           // showSizeChanger={false}
+           responsive={true}
+           defaultCurrent={1}
+           total={totalPage}
+           onChange={onChange}
+           rootClassName={`mt-10 mb-5 ms-5`}
+           itemRender={itemRender}
+         /> : ""
+        }
       </Card>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

@@ -6,5 +6,11 @@ export const NotificationStore = create((set) => ({
     countData: [],
     setCountData: (data) => set({countData: data}),
     loading: false,
-    setLoading: (data) => set({loading: data})
+    setLoading: (data) => set({loading: data}),
+    totalPage: 0,
+    setTotalPages: (val) => set({ totalPage: val }),
+    page: 0,
+    setPage: (val) => set({ page: val }),
+    size: 10,
+    setSize: (val) => set({ size: val }),
 }))

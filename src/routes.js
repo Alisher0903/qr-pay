@@ -20,6 +20,7 @@ import SellerTerminal from 'views/seller/terminal';
 import SellerOrder from 'views/seller/order';
 import SellerRefund from 'views/seller/refund';
 import Notification from 'views/notification/notification';
+import TerminalOrder from 'views/terminal/order';
 
 const routes = [
     //  Admin panel route
@@ -80,7 +81,7 @@ const routes = [
         layout: '/admin',
         icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
         path: '/payments',
-        component: <Payment/>,
+        component: <SellerOrder/>,
     },
     {
         name: 'Terminal',
@@ -105,9 +106,9 @@ const routes = [
         component: <SellerTerminal/>,
     },
     {
-        name: 'Orders',
+        name: 'Payment',
         layout: '/seller',
-        path: '/order',
+        path: '/payment',
         icon: <Icon as={IoQrCode} width="20px" height="20px" color="inherit"/>,
         component: <SellerOrder/>,
     },
@@ -127,11 +128,11 @@ const routes = [
     },
     //  Terminal panel route
     {
-        name: 'Terminal dashboard',
+        name: 'Payment',
         layout: '/terminal',
-        path: '/default',
+        path: '/payment',
         icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
-        component: <SellerRefund/>,
+        component: <SellerOrder/>,
     },
     {
         name: '',

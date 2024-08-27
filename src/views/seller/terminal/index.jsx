@@ -1,6 +1,7 @@
 import {
   Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Td, Tr, useDisclosure, useColorModeValue, Text, Switch, InputGroup, InputRightElement, IconButton
 } from "@chakra-ui/react";
+import { Pagination } from "antd";
 import { terminal_get } from "contexts/api";
 import { terminal_isActive } from "contexts/api";
 import { terminal_update } from "contexts/api";
@@ -16,7 +17,12 @@ import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
 export default function SellerTerminal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setTerminalData, terminalData, isEdit, setIsEdit } = TerminalStory();
+  const { setTerminalData, terminalData, isEdit, setIsEdit, setPage,
+    setSize,
+    totalPage,
+    size,
+    page,
+    setTotalPages, } = TerminalStory();
   const [createLoading, setCreateLoading] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const initialRef = React.useRef(null);
@@ -33,8 +39,12 @@ export default function SellerTerminal() {
     getFunction()
   }, [])
 
+  useEffect(() => {
+    globalGetFunction({ url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData, setTotalElements: setTotalPages, page: page, size: size });
+  }, [page, size])
+
   const getFunction = () => {
-    globalGetFunction({ url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData });
+    globalGetFunction({ url: `${terminal_get}`, setLoading: setCreateLoading, setData: setTerminalData, setTotalElements: setTotalPages });
   }
 
   // State to manage form values and validation
@@ -92,6 +102,24 @@ export default function SellerTerminal() {
     setFormErrors({ ...formErrors, ...errors });
   };
 
+  const itemRender = (_, type, originalElement) => {
+    if (type === 'page') {
+      return (
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
+
+  const onChange = (page, size) => {
+    setPage(page - 1);
+    setSize(size);
+  };
+
+
   const handleSave = () => {
     const errors = {};
     Object.keys(formValues).forEach(key => {
@@ -138,7 +166,7 @@ export default function SellerTerminal() {
           thead={['Name', 'Inn', 'Account', 'Phone', 'Filial code', "Update", "Active"]}
         >
           {
-            terminalData.length > 0 ? terminalData.map((item, i) =>
+             Array.isArray(terminalData.object) && terminalData.object.length > 0 ? terminalData.object.map((item, i) =>
               <Tr>
                 <Td>{item.name}</Td>
                 <Td>{item.inn}</Td>
@@ -173,16 +201,22 @@ export default function SellerTerminal() {
               </Tr>
             ) :
               <Tr>
-                <Td></Td>
-                <Td></Td>
-                <Td></Td>
-                <Td>Terminal not found</Td>
-                <Td></Td>
-                <Td></Td>
-                <Td></Td>
+                <Td textAlign={"center"} colSpan={7}>Terminal not found</Td>
               </Tr>
           }
         </ComplexTable>
+        {
+        Array.isArray(terminalData.object) && terminalData.object.length > 0 &&
+        <Pagination
+          // showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5 ms-5`}
+          itemRender={itemRender}
+        />
+      }
       </SimpleGrid>
       <Modal
         initialFocusRef={initialRef}

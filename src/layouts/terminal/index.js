@@ -155,7 +155,7 @@ export default function Dashboard(props) {
                   {getRoutes(routes)}
                   <Route
                     path="/"
-                    element={<Navigate to="/terminal/dashboard" replace />}
+                    element={<Navigate to="/terminal/payment" replace />}
                   />
                 </Routes>
               </Box>

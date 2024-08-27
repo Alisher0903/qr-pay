@@ -4,8 +4,12 @@ import {
   Flex,
   GridItem
 } from "@chakra-ui/react";
+import { Pagination } from "antd";
 import { seller_order_get } from "contexts/api";
 import { admin_notification_count } from "contexts/api";
+import { order_cancel } from "contexts/api";
+import { terminal_order_get } from "contexts/api";
+import { admin_order_get } from "contexts/api";
 import { seller_notification_count } from "contexts/api";
 import { terminal_notification_count } from "contexts/api";
 import { order_create } from "contexts/api";
@@ -14,14 +18,21 @@ import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 import { PaymentStore } from "contexts/state-management/payment/paymentStore";
 import { setConfig } from "contexts/token";
-import QRCode, { QRCodeSVG } from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaEye } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+import { RiRefund2Line } from "react-icons/ri";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
 export default function SellerOrder() {
-  const { setPaymentData, paymentData } = PaymentStore();
+  const { setPaymentData, paymentData, setPage,
+    setSize,
+    totalPage,
+    size,
+    page,
+    setTotalPages, } = PaymentStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isCancelModal, onOpen: openCancelModal, onClose: closeCancelModal } = useDisclosure();
   const { setCountData, setLoading } = NotificationStore()
   const [detailData, setDetailData] = useState({})
   const [createLoading, setCreateLoading] = useState(false);
@@ -41,9 +52,13 @@ export default function SellerOrder() {
     getFunction()
   }, [])
 
+  useEffect(() => {
+    globalGetFunction({ url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "", setLoading: setCreateLoading, setData: setPaymentData, setTotalElements: setTotalPages, page: page, size: size });
+  }, [page, size])
+
   const getFunction = () => {
-    globalGetFunction({ url: `${seller_order_get}`, setLoading: setCreateLoading, setData: setPaymentData });
-    globalGetFunction({ url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData, setLoading: setLoading })
+    globalGetFunction({ url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "", setLoading: setCreateLoading, setData: setPaymentData, setTotalElements: setTotalPages });
+    globalGetFunction({ url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData })
   }
 
   // State to manage form values and validation
@@ -79,6 +94,24 @@ export default function SellerOrder() {
       redirectUrl: ""
     });
   };
+
+  const itemRender = (_, type, originalElement) => {
+    if (type === 'page') {
+      return (
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
+
+  const onChange = (page, size) => {
+    setPage(page - 1);
+    setSize(size);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -96,8 +129,6 @@ export default function SellerOrder() {
     }
   };
 
-  console.log(detailData);
-
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -106,7 +137,7 @@ export default function SellerOrder() {
         spacing={{ base: "20px", xl: "20px" }}
       >
         <ComplexTable
-          name="Order"
+          name="Payment"
           buttonChild={
             <Button
               bg={bgColor}
@@ -119,11 +150,11 @@ export default function SellerOrder() {
               onClick={() => {
                 setIsCreate(true)
                 onOpen()
-              }}>Create order</Button>}
-          thead={['Partner', 'Purpose Code', 'Date', "Action", "Active"]}
+              }}>Create payment</Button>}
+          thead={['Partner', 'Purpose', 'Date', "Action", "Cancel payment"]}
         >
           {
-            paymentData.object ? paymentData.object.map((item, i) =>
+            Array.isArray(paymentData.object) && paymentData.object.length > 0 ? paymentData.object.map((item, i) =>
               <Tr key={i}>
                 <Td>{item.partner ? item.partner : "no data"}</Td>
                 <Td>{item.purpose ? `${item.purpose.slice(0, 25)}...` : "no data"}</Td>
@@ -140,26 +171,35 @@ export default function SellerOrder() {
                   </Box>
                 </Td>
                 <Td>
-                  <Box disabled={item.status !== 0} onClick={() => {
-                    // globalPostFunction({ url: `${terminal_isActive}${item.id}`, data: {}, setLoading: setCreateLoading, getFunction: getFunction })
-                  }}>
-                    <Switch disabled={item.status !== 0} isChecked={item.status === 0} colorScheme='teal' size='lg' />
+                <Box ms={15}>
+                    <button onClick={() => {
+                      setDetailData(item)
+                      openCancelModal()
+                    }}>
+                      <RiRefund2Line size={23} />
+                    </button>
                   </Box>
                 </Td>
               </Tr>
             ) :
-              <Tr>
-                <Td></Td>
-                <Td></Td>
-                <Td></Td>
-                <Td>Order not found</Td>
-                <Td></Td>
-                <Td></Td>
-                <Td></Td>
-              </Tr>
+            <Tr>
+            <Td textAlign={"center"} colSpan={5}>Payment not found</Td>
+          </Tr>
           }
         </ComplexTable>
       </SimpleGrid>
+      {
+        Array.isArray(paymentData.object) && paymentData.object.length > 0 &&
+        <Pagination
+          // showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5 ms-5`}
+          itemRender={itemRender}
+        />
+      }
       <Modal
         size={isCreate ? "lg" : "3xl"}
         initialFocusRef={initialRef}
@@ -280,7 +320,7 @@ export default function SellerOrder() {
                     <Text fontSize={"17px"} fontWeight={"700"}>Date:</Text>
                     <Text fontSize={"17px"}>{detailData.updated_at || detailData.updated_at === 0 ? detailData.updated_at : "no data"}</Text>
                   </Flex>
-                  <GridItem colSpan={2} display={"flex" } justifyContent={"center"}>
+                  <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
                     <QRCodeSVG value={detailData.url ? detailData.url : "https://qr.nspk.ru/"} renderAs="canvas" />
                   </GridItem>
                 </Grid>
@@ -299,6 +339,30 @@ export default function SellerOrder() {
               </Button>
 
             }
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isCancelModal} onClose={closeCancelModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Cancel payment</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+           Do you really want to cancel the payment?
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={closeCancelModal}>
+              Close
+            </Button>
+            <Button
+            onClick={() => {
+              globalPostFunction({ url: `${order_cancel}?ext_id=${detailData && detailData.ext_id ? detailData.ext_id : 0}`, postData: {}, getFunction: () => {
+                getFunction() 
+                closeCancelModal()
+              }})
+            }} 
+             variant='ghost'>Next</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
