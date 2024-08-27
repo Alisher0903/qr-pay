@@ -18,14 +18,7 @@ import { Pagination } from "antd";
 import Project1 from "assets/img/profile/notification.png";
 // Custom components
 import Card from "components/card/Card.js";
-import { seller_notification } from "contexts/api";
-import { admin_notification } from "contexts/api";
-import { terminal_notification_count } from "contexts/api";
-import { admin_notification_count } from "contexts/api";
-import { isRead_notification } from "contexts/api";
-import { delete_notification } from "contexts/api";
-import { seller_notification_count } from "contexts/api";
-import { terminal_notification } from "contexts/api";
+import { seller_notification_count, terminal_notification, delete_notification, isRead_notification, admin_notification_count, terminal_notification_count, admin_notification, seller_notification } from "contexts/api";
 import { globalPostFunction } from "contexts/logic-function/globalFunktion";
 import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";

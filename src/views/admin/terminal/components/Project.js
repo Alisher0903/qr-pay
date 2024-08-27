@@ -27,10 +27,10 @@ export default function Project(props) {
   const textColorSecondary = "gray.400";
   const navbarIcon = useColorModeValue("#1B255A", "white");
   const brandColor = useColorModeValue("brand.500", "white");
-  const bg = useColorModeValue("white", "navy.700");
+  const bg = useColorModeValue("#e4e5f1", "navy.700");
 
   return (
-    <Card bg={bg} {...rest} p="14px">
+    <Card bg={bg} {...rest} p="14px" >
       <Flex
         align="center"
         justifyContent={"space-between"}
@@ -38,7 +38,7 @@ export default function Project(props) {
         direction={{ base: "column", md: "row" }}
       >
         <Flex>
-          <Image h="80px" w="80px" src={image} borderRadius="8px" me="20px" />
+          <Image h="60px" w="60px" src={image} borderRadius="8px" me="20px" />
           <Box mt={{ base: "10px", md: "0" }}>
             <Text
               color={textColorPrimary}
