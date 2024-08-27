@@ -191,6 +191,7 @@ export default function SellerOrder() {
       {
         Array.isArray(paymentData.object) && paymentData.object.length > 0 &&
         <Pagination
+
           // showSizeChanger={false}
           responsive={true}
           defaultCurrent={1}
@@ -212,7 +213,7 @@ export default function SellerOrder() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{isCreate ? "Create your account" : ""}</ModalHeader>
+          <ModalHeader>{isCreate ? "Create payment" : ""}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             {
@@ -318,7 +319,7 @@ export default function SellerOrder() {
                   </Flex>
                   <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
                     <Text fontSize={"17px"} fontWeight={"700"}>Date:</Text>
-                    <Text fontSize={"17px"}>{detailData.updated_at || detailData.updated_at === 0 ? detailData.updated_at : "no data"}</Text>
+                    <Text fontSize={"17px"}>{detailData.updated_at || detailData.updated_at === 0 ? detailData.updated_at.slice(0, 10) : "no data"}</Text>
                   </Flex>
                   <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
                     <QRCodeSVG value={detailData.url ? detailData.url : "https://qr.nspk.ru/"} renderAs="canvas" />

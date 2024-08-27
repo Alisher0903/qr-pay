@@ -16,7 +16,6 @@ export const userGetMe = async ({ setData, token }) => {
         else setData(data.data)
     } catch (err) {
         setData(null)
-        console.log(err)
         consoleClear()
     }
 }

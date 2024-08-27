@@ -114,7 +114,6 @@ export default function Projects() {
         .map((item) => item.id); // ularning id larini olish
       
       setSelectedIds(ids); // id larni setSelectedIds ga saqlash
-      console.log(ids);
     }
   };
 
@@ -122,7 +121,6 @@ export default function Projects() {
     if (notificationData.object) {
       const ids = notificationData.object.map((item) => item.id);
       setSelectedIds(ids);
-      console.log(ids);
       
     }
   };
