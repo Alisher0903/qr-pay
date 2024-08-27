@@ -45,6 +45,7 @@ export default function SellerOrder() {
   const inputTextColor = useColorModeValue('gray.800', 'white');
   const bgColor = useColorModeValue('#422AFB', '#7551FF');
   const textColor = useColorModeValue('white', 'white');
+  const navbarIcon = useColorModeValue("#1B255A", "white");
   const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
 
   useEffect(() => {
@@ -166,7 +167,7 @@ export default function SellerOrder() {
                       setDetailData(item)
                       onOpen()
                     }}>
-                      <FaEye size={23} />
+                      <FaEye color={navbarIcon} size={23} />
                     </button>
                   </Box>
                 </Td>
@@ -176,7 +177,7 @@ export default function SellerOrder() {
                       setDetailData(item)
                       openCancelModal()
                     }}>
-                      <RiRefund2Line size={23} />
+                      <RiRefund2Line color={navbarIcon} size={23} />
                     </button>
                   </Box>
                 </Td>

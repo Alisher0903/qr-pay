@@ -28,6 +28,7 @@ export default function SellerTerminal() {
 
   // Setting input text color based on color mode
   const inputTextColor = useColorModeValue('gray.800', 'white');
+  const navbarIcon = useColorModeValue("#1B255A", "white");
   const bgColor = useColorModeValue('#422AFB', '#7551FF');
   const textColor = useColorModeValue('white', 'white');
   const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
@@ -245,7 +246,7 @@ export default function SellerTerminal() {
                       setIsEdit(true)
                       onOpen()
                     }}>
-                      <FaEdit size={23} />
+                      <FaEdit color={navbarIcon} size={23} />
                     </button>
                   </Box>
                 </Td>
