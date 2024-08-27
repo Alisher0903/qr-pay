@@ -56,9 +56,9 @@ const routes = [
             {
                 name: 'Terminal',
                 layout: '/admin',
-                path: '/terminal_lists',
+                path: '/terminal',
                 icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
-                component: <TerminalAdmin/>,
+                component: <SellerTerminal/>,
             },
             {
                 name: 'Static QR',
@@ -86,9 +86,9 @@ const routes = [
     {
         name: 'Terminal',
         layout: '/admin',
-        path: '/terminal_lists',
+        path: '/terminal',
         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
-        component: <TerminalAdmin/>,
+        component: <SellerTerminal/>,
     },
     //  Seller panel route
     {
@@ -101,7 +101,7 @@ const routes = [
     {
         name: 'Terminal',
         layout: '/seller',
-        path: '/sellerterminal',
+        path: '/terminal',
         icon: <Icon as={TbCashRegister} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
     },
