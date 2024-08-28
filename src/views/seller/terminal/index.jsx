@@ -6,7 +6,7 @@ import {
 import { Pagination } from "antd";
 import { terminal_create, terminal_update, terminal_isActive, terminal_get } from "contexts/api";
 import { globalPostFunction, globalPutFunction, globalGetFunction } from "contexts/logic-function/globalFunktion";
-import { TerminalStory } from "contexts/state-management/terminal/terminalStory";
+import { TerminalStore } from "contexts/state-management/terminal/terminalStory";
 import { setConfig } from "contexts/token";
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaEye, FaEyeSlash, FaMinus, FaPlus } from "react-icons/fa";
@@ -19,7 +19,7 @@ export default function SellerTerminal() {
     totalPage,
     size,
     page,
-    setTotalPages, } = TerminalStory();
+    setTotalPages, } = TerminalStore();
   const [createLoading, setCreateLoading] = useState(false);
   const [detailData, setdetailData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -342,7 +342,7 @@ export default function SellerTerminal() {
               {
                 isEdit ?
                   <FormControl mt={4} isInvalid={formErrors.phones && formErrors.phones.length > 0}>
-                    <Flex justifyContent={"space-between"} alignItems={"center"}> 
+                    <Flex justifyContent={"space-between"} alignItems={"center"}>
                       <FormLabel>Phone Numbers</FormLabel>
                       {formValues.phones.length < 5 && (
                         <Button mt={2} onClick={handleAddPhone} p={0} mb={4} bg={"transparent"}>
@@ -414,14 +414,15 @@ export default function SellerTerminal() {
               }
             </Grid>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSave}>
+          <ModalFooter display={"flex"} gap={"10px"}>
+            <Button
+              colorScheme="red" onClick={() => {
+                onClose();
+                resetValue();
+              }}>Cancel</Button>
+            <Button colorScheme="blue" onClick={handleSave}>
               Save
             </Button>
-            <Button onClick={() => {
-              onClose();
-              resetValue();
-            }}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

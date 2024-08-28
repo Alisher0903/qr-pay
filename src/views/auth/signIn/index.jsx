@@ -27,14 +27,20 @@ import {RiEyeCloseLine} from "react-icons/ri";
 import toast from "react-hot-toast";
 import {sliceNumber} from "../../../contexts/allRequest";
 import axios from "axios";
-import {user_login} from "../../../contexts/api";
+import {admin_notification_count, seller_notification_count, terminal_notification_count, user_login} from "../../../contexts/api";
 import {consoleClear, toastMessage} from "../../../contexts/toast-message";
 import {useNavigate} from "react-router-dom";
+import { userGetMe } from "contexts/logic-function/globalFunktion";
+import { AppStore } from "contexts/state-management";
+import { globalGetFunction } from "contexts/logic-function/globalFunktion";
+import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 
 const defVal = {phone: '', password: ''}
 
 function SignIn() {
     const navigate = useNavigate()
+  const {setCountData } = NotificationStore()
+  const { setGetMeeData } = AppStore()
     const [auth, setAuth] = useState({phone: '', password: ''});
     const [roles, setRoles] = useState('');
     const [show, setShow] = useState(false);
@@ -62,17 +68,17 @@ function SignIn() {
             navigate('/admin/dashboard')
             sessionStorage.setItem('pathname', 'Dashboard')
             setAuth(defVal)
-        } else if (roles === 'ROLE_SELLER') {
+    } else if (roles === 'ROLE_SELLER') {
             toast.success('You have successfully logged in')
             navigate('/seller/main')
             sessionStorage.setItem('pathname', 'Dashboard')
             setAuth(defVal)
-        } else if (roles === 'ROLE_TERMINAL') {
+    } else if (roles === 'ROLE_TERMINAL') {
             toast.success('You have successfully logged in')
             navigate('/terminal/default')
             sessionStorage.setItem('pathname', 'Terminal dashboard')
             setAuth(defVal)
-        }
+    }
     }, [roles]);
 
     const authLogin = async () => {
@@ -92,6 +98,9 @@ function SignIn() {
                 localStorage.setItem("token", data.data.token)
                 localStorage.setItem("ROLE", data.data.role)
                 setRoles(data.data.role)
+                userGetMe({ setData: setGetMeeData, token: data.data.token});
+                globalGetFunction({url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData, token: data.data.token})
+
             }
         } catch (err) {
             setLoading(false)

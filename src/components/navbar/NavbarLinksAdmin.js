@@ -19,17 +19,18 @@ import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
 import routes from "routes";
 import { Link, useNavigate } from "react-router-dom";
-import { globalGetFunction, userGetMe } from "../../contexts/logic-function/globalFunktion";
+import { globalGetFunction } from "../../contexts/logic-function/globalFunktion";
 import { terminal_notification_count } from "contexts/api";
 import { seller_notification_count } from "contexts/api";
 import { admin_notification_count } from "contexts/api";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";
+import { AppStore } from "contexts/state-management";
 
 export default function HeaderLinks(props) {
   const {setCountData, countData, loading, setLoading} = NotificationStore()
+  const { getMeeData } = AppStore()
   const { secondary } = props;
   const navigate = useNavigate();
-  const [userMe, setUserMe] = useState(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const navbarIcon = useColorModeValue("gray.400", "white");
   let menuBg = useColorModeValue("white", "navy.800");
@@ -40,13 +41,9 @@ export default function HeaderLinks(props) {
     "14px 17px 40px 4px rgba(112, 144, 176, 0.06)"
   );
 
-  const role = localStorage.getItem("ROLE");
-
-  useEffect(() => {
-    userGetMe({ setData: setUserMe });
-    globalGetFunction({url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "", setData: setCountData, setLoading: setLoading})
-  }, []);
-
+    const role = localStorage.getItem("ROLE");
+   
+    
   const routePush = (id) => document.getElementById(id).click()
 
   return (
@@ -298,7 +295,7 @@ export default function HeaderLinks(props) {
             <Avatar
               _hover={{ cursor: "pointer" }}
               color="white"
-              // name={`${userMe ? userMe.firstName + ' ' + userMe.lastName : ''}`}
+              // name={`${getMeeData ? getMeeData.firstName + ' ' + getMeeData.lastName : ''}`}
               bg="#11047A"
               size="sm"
               w="40px"
@@ -326,7 +323,7 @@ export default function HeaderLinks(props) {
                 color={textColor}
               >
                 👋&nbsp; Hey,{" "}
-                {userMe ? userMe.firstName + " " + userMe.lastName : ""}
+                {getMeeData ? getMeeData.firstName + " " + getMeeData.lastName : ""}
               </Text>
             </Flex>
             {/*<Flex w="100%" mb="0px">*/}
@@ -338,10 +335,64 @@ export default function HeaderLinks(props) {
             {/*        fontWeight="700"*/}
             {/*        color={textColor}*/}
             {/*    >*/}
-            {/*        {userMe ? userMe.email : ''}*/}
+            {/*        {getMeeData ? getMeeData.email : ''}*/}
             {/*    </Text>*/}
             {/*</Flex>*/}
             <Flex flexDirection="column" p="10px">
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
+              <MenuItem
+                bg={menuBg}
+                // _hover={{bg: 'none'}}
+                _focus={{ bg: "none" }}
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Profile Settings</Text>
+              </MenuItem>
               <MenuItem
                 bg={menuBg}
                 // _hover={{bg: 'none'}}

@@ -6,7 +6,7 @@ import ClientLayout from './layouts/seller';
 import TerminalLayout from './layouts/terminal';
 import {ChakraProvider} from '@chakra-ui/react';
 import initialTheme from './theme/theme';
-import {useState} from 'react';
+import { useState} from 'react';
 
 export default function Main() {
     const [currentTheme, setCurrentTheme] = useState(initialTheme);

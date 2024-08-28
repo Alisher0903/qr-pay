@@ -208,12 +208,12 @@ export default function Partner() {
                         </FormControl>
                     </ModalBody>
 
-                    <ModalFooter>
-                        <Button onClick={() => {
+                    <ModalFooter display={"flex"} gap={"10px"}>
+                        <Button colorScheme="red" onClick={() => {
                             onClose()
                             resetValue()
                         }}>Cancel</Button>
-                        <Button colorScheme="blue" ms={3} onClick={handleSave} disabled={isLoading}>
+                        <Button colorScheme="blue" onClick={handleSave} disabled={isLoading}>
                             {isLoading ? 'Loading...' : 'Save'}
                         </Button>
                     </ModalFooter>

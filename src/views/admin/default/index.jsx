@@ -14,7 +14,7 @@ import {
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdAddTask,
   MdAttachMoney,
@@ -39,6 +39,7 @@ export default function Dashboard() {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid

@@ -1,6 +1,6 @@
 import create from "zustand";
 
-export const TerminalStory = create((set) => ({
+export const TerminalStore = create((set) => ({
     terminalData: [],
     setTerminalData: (data) => set({terminalData: data}),
     isEdit: false,

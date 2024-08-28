@@ -74,7 +74,7 @@ export default function Terminal() {
           posts='17'
           followers='9.7k'
           following='274'
-        />
+        />  
         <General
           gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
           minH='365px'

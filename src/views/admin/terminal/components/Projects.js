@@ -236,12 +236,12 @@ export default function Projects() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Delete notifications</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>nhj g</ModalBody>
+          <ModalBody>Are you sure delete all notifications?</ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+          <ModalFooter display={"flex"} gap={"10px"}>
+            <Button colorScheme="red" onClick={onClose}>
               Close
             </Button>
             <Button
@@ -270,7 +270,7 @@ export default function Projects() {
                 });
               }}
             >
-              Secondary Action
+              Next
             </Button>
           </ModalFooter>
         </ModalContent>

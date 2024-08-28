@@ -329,17 +329,16 @@ export default function SellerOrder() {
             }
           </ModalBody>
 
-          <ModalFooter>
-            <Button onClick={() => {
+          <ModalFooter display={"flex"} gap={"10px"}>
+            <Button  colorScheme="red" onClick={() => {
               onClose();
               resetValue();
             }}>Cancel</Button>
             {
               isCreate &&
-              <Button colorScheme="blue" mr={3} onClick={handleSave}>
+              <Button colorScheme="blue" onClick={handleSave}>
                 Save
               </Button>
-
             }
           </ModalFooter>
         </ModalContent>
@@ -353,18 +352,18 @@ export default function SellerOrder() {
            Do you really want to cancel the payment?
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={closeCancelModal}>
+          <ModalFooter display={"flex"} gap={"10px"}>
+            <Button colorScheme="red" mr={3} onClick={closeCancelModal}>
               Close
             </Button>
             <Button
+            colorScheme="blue"
             onClick={() => {
               globalPostFunction({ url: `${order_cancel}?ext_id=${detailData && detailData.ext_id ? detailData.ext_id : 0}`, postData: {}, getFunction: () => {
                 getFunction() 
                 closeCancelModal()
               }})
-            }} 
-             variant='ghost'>Next</Button>
+            }}>Next</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

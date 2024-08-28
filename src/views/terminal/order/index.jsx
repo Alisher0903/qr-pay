@@ -281,17 +281,17 @@ import { terminal_order_get } from "contexts/api";
               }
             </ModalBody>
   
-            <ModalFooter>
-              <Button onClick={() => {
+            <ModalFooter display={"flex"} gap={"10px"}>
+              <Button
+               colorScheme="red" onClick={() => {
                 onClose();
                 resetValue();
               }}>Cancel</Button>
               {
                 isCreate &&
-                <Button colorScheme="blue" mr={3} onClick={handleSave}>
+                <Button colorScheme="blue" onClick={handleSave}>
                   Save
                 </Button>
-  
               }
             </ModalFooter>
           </ModalContent>

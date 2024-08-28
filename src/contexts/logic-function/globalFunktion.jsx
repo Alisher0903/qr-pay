@@ -11,17 +11,22 @@ export const userGetMe = async ({ setData, token }) => {
                 Authorization: `Bearer ${token}`,
             }
         } : config)
-
-        if (data?.error?.code) setData(null)
-        else setData(data.data)
+        if (data?.error?.code) {
+            setData(null)
+        }
+        else {
+            setData(data.data)
+        }
     } catch (err) {
         setData(null)
+    } finally {
         consoleClear()
     }
 }
 
-export async function globalGetFunction({ url, setData, setLoading, setTotalElements, page, size }) {
+export async function globalGetFunction({ url, setData, setLoading, setTotalElements, page, size, token }) {
     let getUrl = url; // Boshlang'ich URL
+    if (setLoading) setLoading(true); // Agar setLoading funksiyasi mavjud bo'lsa, uni chaqiramiz
     try {
         const params = [];
 
@@ -32,49 +37,53 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
         if (params.length > 0) {
             getUrl = `${url}?${params.join("&")}`;
         }
-        
-        if (setLoading) setLoading(true); // Agar setLoading funksiyasi mavjud bo'lsa, uni chaqiramiz
 
-        const { data } = await axios.get(getUrl, config);
+
+        const { data } = await axios.get(getUrl, token ? {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        } : config);
 
         if (data?.error?.code) {
-            if (setLoading) setLoading(false);
             // toastMessage(data.error.code)
             setData([]);
+            consoleClear()
         } else {
-            if (setLoading) setLoading(false);
             setData(data.data);
 
             if (setTotalElements && data.data.totalElements !== undefined) {
                 setTotalElements(data.data.totalElements); // Agar setTotalElements va totalElements mavjud bo'lsa, qiymatini saqlaymiz
             }
+            consoleClear()
         }
     } catch (error) {
         setData([]);
-        if (setLoading) setLoading(false);
-        console.error('Error during get operation:', error);
+        consoleClear()
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
+    } finally {
+        if (setLoading) setLoading(false);
+        consoleClear()
     }
 }
 
 
 export async function globalPostFunction({ url, postData, setLoading, getFunction }) {
-
+    if (setLoading) setLoading(true);
     try {
-        if (setLoading) setLoading(true);
         const { data } = await axios.post(url, postData, config)
         if (data?.error?.code) {
-            if (setLoading) setLoading(false);
             toastMessage(data.error.code)
         } else {
-            if (setLoading) setLoading(false);
             toast.success("Task completed successfully")
             getFunction()
         }
     } catch (error) {
-        if (setLoading) setLoading(false);
         toast.error('Error during create operation:');
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
+    } finally {
+        if (setLoading) setLoading(false);
+        consoleClear()
     }
 }
 
@@ -83,16 +92,16 @@ export async function globalPutFunction({ url, putData, setLoading, getFunction 
         if (setLoading) setLoading(true);
         const { data } = await axios.put(url, putData, config)
         if (data?.error?.code) {
-            if (setLoading) setLoading(false);
             toastMessage(data.error.code)
         } else {
-            if (setLoading) setLoading(false);
             toast.success("Task completed successfully")
             getFunction()
         }
     } catch (error) {
-        if (setLoading) setLoading(false);
         toast.error('Error during update operation:');
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
+    } finally {
+        if (setLoading) setLoading(false);
+        consoleClear()
     }
 }

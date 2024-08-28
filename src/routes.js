@@ -70,13 +70,6 @@ const routes = [
         ]
     },
     {
-        name: '',
-        layout: '/admin',
-        path: '/notification',
-        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
-        component: <Notification/>,
-    },
-    {
         name: 'Payment',
         layout: '/admin',
         icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
@@ -89,6 +82,13 @@ const routes = [
         path: '/terminal',
         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
+    },
+    {
+        name: '',
+        layout: '/admin',
+        path: '/notification',
+        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        component: <Notification/>,
     },
     //  Seller panel route
     {
