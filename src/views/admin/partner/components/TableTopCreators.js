@@ -128,7 +128,7 @@ export default function TopCreatorTable(props) {
         <Text color={textColor} fontSize="xl" fontWeight="600">
           Merchants of list
         </Text>
-        <Button variant="action" onClick={onOpen}>Create merchant</Button>
+        {/* <Button variant="action" onClick={onOpen}>Create merchant</Button> */}
       </Flex>
       <Box>
         <Table variant="simple" color="gray.500" mt="12px">

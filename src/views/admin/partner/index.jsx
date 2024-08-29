@@ -31,89 +31,89 @@ import {consoleClear, toastMessage} from "../../../contexts/toast-message";
 import toast from "react-hot-toast";
 
 export default function Partner() {
-    const inputTextColor = useColorModeValue('gray.800', 'white');
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const initialRef = useRef(null);
-    const finalRef = useRef(null);
-    const [formValues, setFormValues] = useState({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        password: ''
-    });
-    const [formErrors, setFormErrors] = useState({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        password: ''
-    });
-    const [isLoading, setIsLoading] = useState(false)
+    // const inputTextColor = useColorModeValue('gray.800', 'white');
+    // const {isOpen, onOpen, onClose} = useDisclosure();
+    // const initialRef = useRef(null);
+    // const finalRef = useRef(null);
+    // const [formValues, setFormValues] = useState({
+    //     firstName: '',
+    //     lastName: '',
+    //     phone: '',
+    //     email: '',
+    //     password: ''
+    // });
+    // const [formErrors, setFormErrors] = useState({
+    //     firstName: '',
+    //     lastName: '',
+    //     phone: '',
+    //     email: '',
+    //     password: ''
+    // });
+    // const [isLoading, setIsLoading] = useState(false)
 
-    const merchantSave = async () => {
-        setIsLoading(true)
-        try {
-            const {data} = await axios.post(user_register, formValues, config);
-            if (data?.error?.code) {
-                setIsLoading(false)
-                toastMessage(data?.error?.code)
-            }
-            else {
-                setIsLoading(false)
-                toast.success('Merchant saved successfully')
-                onClose();
-                resetValue()
-            }
-        } catch (err) {
-            setIsLoading(false)
-            console.log(err)
-            consoleClear()
-        }
-    }
+    // const merchantSave = async () => {
+    //     setIsLoading(true)
+    //     try {
+    //         const {data} = await axios.post(user_register, formValues, config);
+    //         if (data?.error?.code) {
+    //             setIsLoading(false)
+    //             toastMessage(data?.error?.code)
+    //         }
+    //         else {
+    //             setIsLoading(false)
+    //             toast.success('Merchant saved successfully')
+    //             onClose();
+    //             resetValue()
+    //         }
+    //     } catch (err) {
+    //         setIsLoading(false)
+    //         console.log(err)
+    //         consoleClear()
+    //     }
+    // }
 
-    const resetValue = () => {
-        setFormValues({
-            firstName: '',
-            lastName: '',
-            phone: '',
-            email: '',
-            password: ''
-        });
-        setFormErrors({
-            firstName: '',
-            lastName: '',
-            phone: '',
-            email: '',
-            password: ''
-        });
-    }
+    // const resetValue = () => {
+    //     setFormValues({
+    //         firstName: '',
+    //         lastName: '',
+    //         phone: '',
+    //         email: '',
+    //         password: ''
+    //     });
+    //     setFormErrors({
+    //         firstName: '',
+    //         lastName: '',
+    //         phone: '',
+    //         email: '',
+    //         password: ''
+    //     });
+    // }
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormValues({...formValues, [name]: value});
+    // const handleChange = (e) => {
+    //     const {name, value} = e.target;
+    //     setFormValues({...formValues, [name]: value});
 
-        // Simple validation example
-        const errors = {};
-        if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
-            errors.phone = "The phone number must start with +998 and contain 13 characters";
-        } else if (name === "password" && value.length < 3) errors.password = "Password must be at least 3 characters long.";
-        else if (value.trim() === '') errors[name] = `${name} is required`;
-        setFormErrors({...formErrors, ...errors});
-    };
+    //     // Simple validation example
+    //     const errors = {};
+    //     if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
+    //         errors.phone = "The phone number must start with +998 and contain 13 characters";
+    //     } else if (name === "password" && value.length < 3) errors.password = "Password must be at least 3 characters long.";
+    //     else if (value.trim() === '') errors[name] = `${name} is required`;
+    //     setFormErrors({...formErrors, ...errors});
+    // };
 
-    const handleSave = async () => {
-        const errors = {};
-        Object.keys(formValues).forEach(key => {
-            if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
-                errors.phone = "The phone number must start with +998 and contain 13 characters";
-            } else if (key === "password" && formValues[key].length < 3) errors.password = "Password must be at least 3 characters long.";
-            else if (formValues[key].trim() === '') errors[key] = `${key} is required`;
-        });
+    // const handleSave = async () => {
+    //     const errors = {};
+    //     Object.keys(formValues).forEach(key => {
+    //         if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
+    //             errors.phone = "The phone number must start with +998 and contain 13 characters";
+    //         } else if (key === "password" && formValues[key].length < 3) errors.password = "Password must be at least 3 characters long.";
+    //         else if (formValues[key].trim() === '') errors[key] = `${key} is required`;
+    //     });
 
-        if (Object.keys(errors).length === 0) await merchantSave()
-        else setFormErrors(errors);
-    };
+    //     if (Object.keys(errors).length === 0) await merchantSave()
+    //     else setFormErrors(errors);
+    // };
 
     return (
         <Box pt={{base: "180px", md: "80px", xl: "80px"}}>
@@ -128,7 +128,6 @@ export default function Partner() {
                     gridArea={{xl: "1 / 1 / 2 / 4", "2xl": "1 / 1 / 2 / 2"}}>
                     <Card px='0px'>
                         <TableTopCreators
-                            onOpen={onOpen}
                             tableData={tableDataTopCreators}
                             columnsData={tableColumnsTopCreators}
                         />
@@ -136,7 +135,7 @@ export default function Partner() {
                 </Flex>
             </Grid>
 
-            <Modal
+                {/* <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
                 isOpen={isOpen}
@@ -218,7 +217,7 @@ export default function Partner() {
                         </Button>
                     </ModalFooter>
                 </ModalContent>
-            </Modal>
+            </Modal> */}
         </Box>
     );
 }
