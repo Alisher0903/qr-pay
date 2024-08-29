@@ -20,14 +20,13 @@ export const userGetMe = async ({setData, token}) => {
     }
 }
 
-export async function globalGetFunction({url, setData, setLoading, setTotalElements, page, size, token}) {
+export async function globalGetFunction({url, setData, setLoading, setTotalElements, page, token}) {
     let getUrl = url; // Boshlang'ich URL
     if (setLoading) setLoading(true); // Agar setLoading funksiyasi mavjud bo'lsa, uni chaqiramiz
     try {
         const params = [];
 
-        if (page) params.push(`page=${page}`);
-        if (size) params.push(`size=${size}`);
+        if (page) params.push(`page=${page}&size=10`);
 
         // Agar params mavjud bo'lsa, URLga qo'shamiz
         if (params.length > 0) {

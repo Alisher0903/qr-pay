@@ -49,9 +49,7 @@ import moment from "moment";
 export default function SellerOrder() {
     const {
         setPaymentData, paymentData, setPage,
-        setSize,
         totalPage,
-        size,
         page,
         setTotalPages,
     } = PaymentStore();
@@ -84,9 +82,8 @@ export default function SellerOrder() {
             setData: setPaymentData,
             setTotalElements: setTotalPages,
             page: page,
-            size: size
         });
-    }, [page, size])
+    }, [page])
 
     const getFunction = () => {
         globalGetFunction({
@@ -131,10 +128,7 @@ export default function SellerOrder() {
         return originalElement;
     };
 
-    const onChange = (page, size) => {
-        setPage(page - 1);
-        setSize(size);
-    };
+    const onChange = (page) => setPage(page - 1)
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -229,8 +223,7 @@ export default function SellerOrder() {
             </SimpleGrid>
             {Array.isArray(paymentData.object) && paymentData.object.length > 0 &&
                 <Pagination
-
-                    // showSizeChanger={false}
+                    showSizeChanger={false}
                     responsive={true}
                     defaultCurrent={1}
                     total={totalPage}

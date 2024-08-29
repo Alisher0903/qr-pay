@@ -11,8 +11,8 @@ import {TbCashRegister} from "react-icons/tb";
 import AdminDashboard from 'views/admin/default';
 import SellerDashboard from 'views/seller/default';
 import Partner from 'views/admin/partner';
-import TerminalAdmin from 'views/admin/terminal';
-import Payment from 'views/admin/dataTables';
+// import TerminalAdmin from 'views/admin/terminal';
+// import Payment from 'views/admin/dataTables';
 import SignInCentered from 'views/auth/signIn';
 import {IoQrCode} from 'react-icons/io5';
 import {RiRefund2Line} from 'react-icons/ri';
@@ -20,6 +20,7 @@ import SellerTerminal from 'views/seller/terminal';
 import SellerOrder from 'views/seller/order';
 import SellerRefund from 'views/seller/refund';
 import Notification from 'views/notification/notification';
+import Request from "./views/admin/request";
 
 const routes = [
     //  Admin panel route
@@ -44,29 +45,29 @@ const routes = [
         ),
         component: <Partner/>,
         secondary: true,
-        subMenu: [
-            {
-                name: 'Payment',
-                layout: '/admin',
-                icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
-                path: '/payments',
-                component: <Payment/>,
-            },
-            {
-                name: 'Terminal',
-                layout: '/admin',
-                path: '/terminal',
-                icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
-                component: <SellerTerminal/>,
-            },
-            {
-                name: 'Static QR',
-                layout: '/admin',
-                path: '/static-qr',
-                icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
-                component: <TerminalAdmin/>,
-            },
-        ]
+        // subMenu: [
+        //     {
+        //         name: 'Payment',
+        //         layout: '/admin',
+        //         icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
+        //         path: '/payments',
+        //         component: <Payment/>,
+        //     },
+        //     {
+        //         name: 'Terminal',
+        //         layout: '/admin',
+        //         path: '/terminal',
+        //         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+        //         component: <SellerTerminal/>,
+        //     },
+        //     {
+        //         name: 'Static QR',
+        //         layout: '/admin',
+        //         path: '/static-qr',
+        //         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+        //         component: <TerminalAdmin/>,
+        //     },
+        // ]
     },
     {
         name: 'Payment',
@@ -81,6 +82,13 @@ const routes = [
         path: '/terminal',
         icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
+    },
+    {
+        name: 'Request',
+        layout: '/admin',
+        path: '/request',
+        icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+        component: <Request/>,
     },
     {
         name: '',

@@ -31,4 +31,7 @@ export const admin_notification_count = `${base_url}notification/count/for-admin
 export const seller_notification_count = `${base_url}notification/count/for-seller`
 export const terminal_notification_count = `${base_url}notification/count/for-terminal`
 
-
+// REQUEST CONTROLLER
+export const requestSave = `${base_url}request/save`
+export const requestUpdateStatus = `${base_url}request/change-status`
+export const requestGetAdmin = `${base_url}request`

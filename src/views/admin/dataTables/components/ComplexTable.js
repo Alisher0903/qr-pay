@@ -39,7 +39,7 @@ export default function ComplexTable({thead, children, name, buttonChild }) {
         {buttonChild}
       </Flex>
       <Box>
-        <Table variant="simple" color="gray.500" mb="24px" mt="12px">
+        <Table variant="simple" color="gray.500" mt="12px">
           <Thead>
             <Tr>
               {thead.length > 0 && thead.map((header, index) => (
