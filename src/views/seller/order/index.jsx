@@ -64,35 +64,19 @@ export default function SellerOrder() {
 
   // State to manage form values and validation
   const [formValues, setFormValues] = useState({
-    extId: 0,
-    amount: 0,
-    purposeCode: "",
-    terminalId: 0,
-    redirectUrl: ""
+    amount: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    extId: "",
-    amount: "",
-    purposeCode: "",
-    terminalId: "",
-    redirectUrl: ""
+    amount: ""  ,
   });
 
   const resetValue = () => {
     setFormValues({
-      extId: 0,
-      amount: 0,
-      purposeCode: "",
-      terminalId: 0,
-      redirectUrl: ""
+      amount: "",
     });
     setFormErrors({
-      extId: "",
       amount: "",
-      purposeCode: "",
-      terminalId: "",
-      redirectUrl: ""
     });
   };
 
@@ -122,7 +106,9 @@ export default function SellerOrder() {
   const handleSave = () => {
     const errors = {};
     if (Object.keys(errors).length === 0) {
-      globalPostFunction({ url: `${order_create}`, postData: formValues, setLoading: setCreateLoading, getFunction: getFunction })
+      globalPostFunction({ url: `${order_create}`, postData: {
+        amount: +formValues.amount
+      }, setLoading: setCreateLoading, getFunction: getFunction })
       onClose();
       resetValue();
     } else {
@@ -140,7 +126,7 @@ export default function SellerOrder() {
         <ComplexTable
           name="Payment"
           buttonChild={
-            <Button
+            role !== "ROLE_SUPER_ADMIN" && <Button
               bg={bgColor}
               color={textColor}
               _hover={{ bg: hoverBgColor }}
@@ -220,8 +206,8 @@ export default function SellerOrder() {
             {
               isCreate ?
                 <>
-                  <FormControl isInvalid={!!formErrors.extId}>
-                    <FormLabel>External id</FormLabel>
+                  {/* <FormControl isInvalid={!!formErrors.extId}> */}
+                    {/* <FormLabel>External id</FormLabel>
                     <Input
                       type="number"
                       name="extId"
@@ -232,7 +218,7 @@ export default function SellerOrder() {
                       color={inputTextColor}
                     />
                     {formErrors.extId && <Text color="red.500" fontSize="sm">{formErrors.extId}</Text>}
-                  </FormControl>
+                  </FormControl> */}
                   <FormControl mt={4} isInvalid={!!formErrors.amount}>
                     <FormLabel>Amount</FormLabel>
                     <Input
@@ -245,7 +231,7 @@ export default function SellerOrder() {
                     />
                     {formErrors.amount && <Text color="red.500" fontSize="sm">{formErrors.amount}</Text>}
                   </FormControl>
-                  <FormControl mt={4} isInvalid={!!formErrors.purposeCode}>
+                  {/* <FormControl mt={4} isInvalid={!!formErrors.purposeCode}>
                     <FormLabel>Purpose Code</FormLabel>
                     <Input
                       name="purposeCode"
@@ -255,8 +241,8 @@ export default function SellerOrder() {
                       color={inputTextColor}
                     />
                     {formErrors.purposeCode && <Text color="red.500" fontSize="sm">{formErrors.purposeCode}</Text>}
-                  </FormControl>
-                  <FormControl mt={4} isInvalid={!!formErrors.terminalId}>
+                  </FormControl> */}
+                  {/* <FormControl mt={4} isInvalid={!!formErrors.terminalId}>
                     <FormLabel>Terminal Id</FormLabel>
                     <Input
                       type="number"
@@ -267,8 +253,8 @@ export default function SellerOrder() {
                       color={inputTextColor}
                     />
                     {formErrors.terminalId && <Text color="red.500" fontSize="sm">{formErrors.terminalId}</Text>}
-                  </FormControl>
-                  <FormControl mt={4} isInvalid={!!formErrors.redirectUrl}>
+                  </FormControl> */}
+                  {/* <FormControl mt={4} isInvalid={!!formErrors.redirectUrl}>
                     <FormLabel>Redirect Url</FormLabel>
                     <Input
                       name="redirectUrl"
@@ -278,7 +264,7 @@ export default function SellerOrder() {
                       color={inputTextColor}
                     />
                     {formErrors.redirectUrl && <Text color="red.500" fontSize="sm">{formErrors.redirectUrl}</Text>}
-                  </FormControl>
+                  </FormControl> */}
                 </>
                 :
                 <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
