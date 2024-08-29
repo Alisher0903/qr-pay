@@ -5,6 +5,7 @@ export const getMeUrl = `${base_url}api/user/me`;
 // USER CONTROLLER
 export const user_register = `${base_url}api/user/register`;
 export const user_login = `${base_url}api/user/login`;
+export const user_edit = `${base_url}api/user/update`;
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;

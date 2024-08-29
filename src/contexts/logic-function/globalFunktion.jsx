@@ -20,7 +20,7 @@ export const userGetMe = async ({ setData, token }) => {
     } catch (err) {
         setData(null)
     } finally {
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -38,7 +38,6 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
             getUrl = `${url}?${params.join("&")}`;
         }
 
-
         const { data } = await axios.get(getUrl, token ? {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -46,16 +45,13 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
         } : config);
 
         if (data?.error?.code) {
-            // toastMessage(data.error.code)
             setData([]);
-            consoleClear()
         } else {
             setData(data.data);
 
             if (setTotalElements && data.data.totalElements !== undefined) {
                 setTotalElements(data.data.totalElements); // Agar setTotalElements va totalElements mavjud bo'lsa, qiymatini saqlaymiz
             }
-            consoleClear()
         }
     } catch (error) {
         setData([]);
@@ -63,7 +59,7 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -83,7 +79,7 @@ export async function globalPostFunction({ url, postData, setLoading, getFunctio
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -102,6 +98,6 @@ export async function globalPutFunction({ url, putData, setLoading, getFunction 
         // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }
