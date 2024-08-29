@@ -82,8 +82,8 @@ export async function globalPutFunction({url, putData, setLoading, getFunction, 
         if (data?.error?.code) toastMessage(data.error.code)
         else {
             if (setResponse) setResponse(data.data)
+            if (getFunction) getFunction()
             toast.success("Task completed successfully")
-            getFunction()
         }
     } catch (error) {
         // toast.error('Error during update operation:');

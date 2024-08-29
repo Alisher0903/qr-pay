@@ -94,6 +94,7 @@ export default function HeaderLinks(props) {
             url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
             setData: setCountData
         })
+        userGetMe({setData: setGetMeeData})
     }, [])
 
     useEffect(() => {
@@ -103,6 +104,7 @@ export default function HeaderLinks(props) {
             localStorage.setItem('token', response)
             setResponse('')
             onClose()
+            userGetMe({setData: setGetMeeData})
         }
     }, [response])
 
@@ -176,7 +178,6 @@ export default function HeaderLinks(props) {
                     password: formValues.password ? formValues.password : null
                 },
                 setLoading: setEditLoading,
-                getFunction: userGetMe({setData: setGetMeeData}),
                 setResponse
             })
             resetValue();
