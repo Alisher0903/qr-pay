@@ -93,7 +93,7 @@ const routes = [
     {
         name: 'Dashboard',
         layout: '/seller',
-        path: '/main',
+        path: '/dashboard',
         icon: <Icon as={MdHome} width="20px" height="20px" color="inherit"/>,
         component: <SellerDashboard/>,
     },
