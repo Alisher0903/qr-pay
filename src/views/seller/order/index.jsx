@@ -173,12 +173,13 @@ export default function SellerOrder() {
                                 setIsCreate(true)
                                 onOpen()
                             }}>Create payment</Button>}
-                    thead={['Partner', 'Purpose', 'Date', "Action", "Cancel payment"]}
+                    thead={['T/r', 'Partner', 'Purpose', 'Date', "Action", "Cancel payment"]}
                 >
                     {
                         Array.isArray(paymentData.object) && paymentData.object.length > 0 ? paymentData.object.map((item, i) =>
                                 <Tr key={i}>
-                                    <Td>{item.partner ? item.partner : ""}</Td>
+                <Td>{(page * 10) + i + 1}</Td>
+                <Td>{item.partner ? item.partner : ""}</Td>
                                     <Td>{item.purpose ? item.purpose.length > 25 ? <>
                                         <Popover
                                             title={item.purpose}
