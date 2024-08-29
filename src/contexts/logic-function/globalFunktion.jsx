@@ -1,30 +1,26 @@
 import axios from 'axios';
-import { consoleClear, toastMessage } from 'contexts/toast-message';
-import { config } from 'contexts/token';
-import { getMeUrl } from "../api";
+import {consoleClear, toastMessage} from 'contexts/toast-message';
+import {config} from 'contexts/token';
+import {getMeUrl} from "../api";
 import toast from 'react-hot-toast';
 
-export const userGetMe = async ({ setData, token }) => {
+export const userGetMe = async ({setData, token}) => {
     try {
-        const { data } = await axios.get(getMeUrl, token ? {
+        const {data} = await axios.get(getMeUrl, token ? {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         } : config)
-        if (data?.error?.code) {
-            setData(null)
-        }
-        else {
-            setData(data.data)
-        }
+        if (data?.error?.code) setData(null)
+        else setData(data.data)
     } catch (err) {
         setData(null)
     } finally {
-        // consoleClear()
+        consoleClear()
     }
 }
 
-export async function globalGetFunction({ url, setData, setLoading, setTotalElements, page, size, token }) {
+export async function globalGetFunction({url, setData, setLoading, setTotalElements, page, size, token}) {
     let getUrl = url; // Boshlang'ich URL
     if (setLoading) setLoading(true); // Agar setLoading funksiyasi mavjud bo'lsa, uni chaqiramiz
     try {
@@ -38,15 +34,14 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
             getUrl = `${url}?${params.join("&")}`;
         }
 
-        const { data } = await axios.get(getUrl, token ? {
+        const {data} = await axios.get(getUrl, token ? {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         } : config);
 
-        if (data?.error?.code) {
-            setData([]);
-        } else {
+        if (data?.error?.code) setData([]);
+        else {
             setData(data.data);
 
             if (setTotalElements && data.data.totalElements !== undefined) {
@@ -56,7 +51,6 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
     } catch (error) {
         setData([]);
         consoleClear()
-        // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     } finally {
         if (setLoading) setLoading(false);
         // consoleClear()
@@ -64,38 +58,35 @@ export async function globalGetFunction({ url, setData, setLoading, setTotalElem
 }
 
 
-export async function globalPostFunction({ url, postData, setLoading, getFunction }) {
+export async function globalPostFunction({url, postData, setLoading, getFunction}) {
     if (setLoading) setLoading(true);
     try {
-        const { data } = await axios.post(url, postData, config)
-        if (data?.error?.code) {
-            toastMessage(data.error.code)
-        } else {
+        const {data} = await axios.post(url, postData, config)
+        if (data?.error?.code) toastMessage(data.error.code)
+        else {
             toast.success("Task completed successfully")
             getFunction()
         }
     } catch (error) {
         toast.error('Error during create operation:');
-        // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
     } finally {
         if (setLoading) setLoading(false);
         // consoleClear()
     }
 }
 
-export async function globalPutFunction({ url, putData, setLoading, getFunction }) {
+export async function globalPutFunction({url, putData, setLoading, getFunction, setResponse}) {
     try {
         if (setLoading) setLoading(true);
-        const { data } = await axios.put(url, putData, config)
-        if (data?.error?.code) {
-            toastMessage(data.error.code)
-        } else {
+        const {data} = await axios.put(url, putData, config)
+        if (data?.error?.code) toastMessage(data.error.code)
+        else {
+            if (setResponse) setResponse(data.data)
             toast.success("Task completed successfully")
             getFunction()
         }
     } catch (error) {
-        toast.error('Error during update operation:');
-        // Qo'shimcha xato bilan shug'ullanish mexanizmlari bu yerda amalga oshirilishi mumkin.
+        // toast.error('Error during update operation:');
     } finally {
         if (setLoading) setLoading(false);
         // consoleClear()

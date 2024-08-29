@@ -20,7 +20,6 @@ import SellerTerminal from 'views/seller/terminal';
 import SellerOrder from 'views/seller/order';
 import SellerRefund from 'views/seller/refund';
 import Notification from 'views/notification/notification';
-import TerminalOrder from 'views/terminal/order';
 
 const routes = [
     //  Admin panel route

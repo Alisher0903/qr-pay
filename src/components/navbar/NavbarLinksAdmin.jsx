@@ -79,7 +79,8 @@ export default function HeaderLinks(props) {
     // State to manage form values and validation
     const [showPassword, setShowPassword] = useState(false);
     const [formValues, setFormValues] = useState(initialValue);
-    const [editDolading, setEditLoading] = useState(false);
+    const [editLoading, setEditLoading] = useState(false);
+    const [response, setResponse] = useState('');
 
     const [formErrors, setFormErrors] = useState(initialValue);
 
@@ -94,6 +95,16 @@ export default function HeaderLinks(props) {
             setData: setCountData
         })
     }, [])
+
+    useEffect(() => {
+        if (response) {
+            const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000
+            localStorage.setItem('tokenExpiry', expiryTime.toString())
+            localStorage.setItem('token', response)
+            setResponse('')
+            onClose()
+        }
+    }, [response])
 
     const routePush = (id) => document.getElementById(id).click();
 
@@ -151,9 +162,11 @@ export default function HeaderLinks(props) {
                 }
             }
         });
+
         if (Object.keys(errors).length === 0) {
             globalPutFunction({
-                url: `${user_edit}`, putData: {
+                url: `${user_edit}`,
+                putData: {
                     firstName: formValues.firstName,
                     lastName: formValues.lastName,
                     email: formValues.email,
@@ -161,15 +174,14 @@ export default function HeaderLinks(props) {
                     filial_code: formValues.filial_code ? formValues.filial_code : null,
                     inn: formValues.inn ? formValues.inn : null,
                     password: formValues.password ? formValues.password : null
-                }, setLoading: setEditLoading, getFunction: userGetMe({setData: setGetMeeData})
+                },
+                setLoading: setEditLoading,
+                getFunction: userGetMe({setData: setGetMeeData}),
+                setResponse
             })
-            onClose();
             resetValue();
-        } else {
-            setFormErrors(errors);
-        }
+        } else setFormErrors(errors);
     }
-
 
     return (
         <>
@@ -212,7 +224,7 @@ export default function HeaderLinks(props) {
                         }}
                     >
                         <div
-                            hidden={countData === 0}
+                            hidden={+countData === 0}
                             style={{
                                 backgroundColor: "red",
                                 position: "absolute",
@@ -229,7 +241,7 @@ export default function HeaderLinks(props) {
                             }}
                         >
                             {" "}
-                            <span>{countData > 9 ? "9+" : countData}</span>{" "}
+                            <span>{+countData > 9 ? "9+" : countData}</span>{" "}
                         </div>
                         <Icon me="15px" h="22px" w="22px" color={navbarIcon} as={FaBell}/>
                     </Button>
