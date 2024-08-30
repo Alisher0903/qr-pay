@@ -9,14 +9,38 @@ import initialTheme from './theme/theme';
 import {useEffect, useState} from 'react';
 import {consoleClear} from "./contexts/toast-message";
 import {setConfig} from "./contexts/token";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { TranslateUz } from 'variables/locales/translateUz';
+import { TranslateRu } from 'variables/locales/translateRu';
+import { LanguageStore } from 'contexts/state-management/language/languageStore';
+
+i18n.use(initReactI18next).init({
+    resources: {
+        uz: { translation: TranslateUz },
+        ru: { translation: TranslateRu },
+    },
+    lng: "uz",
+    fallbackLng: "uz",
+});
+
 
 export default function Main() {
+    const { setLanguageData ,languageData } = LanguageStore()
     const [currentTheme, setCurrentTheme] = useState(initialTheme);
     const {pathname} = useLocation();
     const navigate = useNavigate();
     const tokens = localStorage.getItem('token');
     const role = localStorage.getItem('ROLE');
     const tokenExpiry = localStorage.getItem('tokenExpiry');
+
+    useEffect(() => {
+        setLanguageData(localStorage.getItem("selectedLang"))
+    }, []);
+
+    useEffect(() => {
+        i18n.changeLanguage(languageData);
+    }, [languageData]);
 
     useEffect(() => {
         setConfig();
