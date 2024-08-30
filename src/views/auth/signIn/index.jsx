@@ -103,8 +103,8 @@ function SignIn() {
                 localStorage.setItem("token", data.data.token)
                 localStorage.setItem("ROLE", data.data.role)
                 setRoles(data.data.role)
-                userGetMe({setData: setGetMeeData, token: data.data.token});
-                globalGetFunction({
+                await userGetMe({setData: setGetMeeData, token: data.data.token});
+                await globalGetFunction({
                     url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
                     setData: setCountData, token: data.data.token
                 })
@@ -122,6 +122,13 @@ function SignIn() {
         setAuth({
             ...auth, [name]: val
         })
+    }
+
+    function checkKeyPress(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.querySelector('button[type="submit"]').click();
+        }
     }
 
     return (
@@ -206,6 +213,7 @@ function SignIn() {
                             fontWeight='500'
                             size='lg'
                             value={auth.phone}
+                            onKeyDown={checkKeyPress}
                             onChange={e => handleAuth('phone', e.target.value)}
                         />
                         <FormLabel
@@ -225,6 +233,7 @@ function SignIn() {
                                 size='lg'
                                 type={show ? "text" : "password"}
                                 variant='auth'
+                                onKeyDown={checkKeyPress}
                                 value={auth.password}
                                 onChange={e => handleAuth('password', e.target.value)}
                             />
@@ -270,6 +279,7 @@ function SignIn() {
                             w='100%'
                             h='50'
                             mb='24px'
+                            type='submit'
                             onClick={async () => {
                                 if (sliceNumber(auth.phone) && auth.password) await authLogin()
                                 else toast.error('Check the data integrity');

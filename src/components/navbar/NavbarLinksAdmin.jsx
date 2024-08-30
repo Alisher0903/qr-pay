@@ -336,7 +336,7 @@ export default function HeaderLinks(props) {
                                     <Text fontSize="sm">
                                         {getMeeData && getMeeData.firstName
                                             ? getMeeData.firstName
-                                            : "no data"}
+                                            : "-"}
                                     </Text>
                                 </MenuItem>
                                 <MenuItem
@@ -355,7 +355,7 @@ export default function HeaderLinks(props) {
                                     <Text fontSize="sm">
                                         {getMeeData && getMeeData.lastName
                                             ? getMeeData.lastName
-                                            : "no data"}
+                                            : "-"}
                                     </Text>
                                 </MenuItem>
                                 <MenuItem
@@ -374,7 +374,7 @@ export default function HeaderLinks(props) {
                                     <Text fontSize="sm">
                                         {getMeeData && getMeeData.phone
                                             ? getMeeData.phone
-                                            : "no data"}
+                                            : "-"}
                                     </Text>
                                 </MenuItem>
                                 <MenuItem
@@ -393,7 +393,7 @@ export default function HeaderLinks(props) {
                                     <Text fontSize="sm">
                                         {getMeeData && getMeeData.email
                                             ? getMeeData.email
-                                            : "no data"}
+                                            : "-"}
                                     </Text>
                                 </MenuItem>
                                 <MenuItem
@@ -410,7 +410,7 @@ export default function HeaderLinks(props) {
                                         Inn:{" "}
                                     </Text>
                                     <Text fontSize="sm">
-                                        {getMeeData && getMeeData.inn ? getMeeData.inn : "no data"}
+                                        {getMeeData && getMeeData.inn ? getMeeData.inn : "-"}
                                     </Text>
                                 </MenuItem>
                                 <MenuItem
@@ -429,7 +429,7 @@ export default function HeaderLinks(props) {
                                     <Text fontSize="sm">
                                         {getMeeData && getMeeData.filial_code
                                             ? getMeeData.filial_code
-                                            : "no data"}
+                                            : "-"}
                                     </Text>
                                 </MenuItem>
 
