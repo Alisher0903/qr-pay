@@ -45,6 +45,7 @@ import {FaEye} from "react-icons/fa";
 import {RiRefund2Line} from "react-icons/ri";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 import moment from "moment";
+import { column } from "stylis";
 
 export default function SellerOrder() {
     const {
@@ -313,59 +314,59 @@ export default function SellerOrder() {
                   </FormControl> */}
                                 </>
                                 :
-                                <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                <Grid overflow={"hidden"} templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={6} px={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Ext id: </Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Cheque amount:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Partner: </Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Local QR id:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "-"}</Text>
                                     </Flex>
-                                    <GridItem colSpan={2} display={"flex"} justifyContent={"space-between"} pe={5}>
+                                    <GridItem colSpan={{base: 1, md: 2}} display={"flex"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Purpose: </Text>
                                         <Text width={"70%"}
                                               fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "-"}</Text>
                                     </GridItem>
-                                    <GridItem colSpan={2} display={"flex"} justifyContent={"space-between"} pe={5}>
+                                    <GridItem colSpan={{base: 1, md: 2}} flexDirection={{base: "column", md: "row"}} display={"flex"} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>QR id:</Text>
                                         <Text width={'70%'}
                                               fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "-"}</Text>
                                     </GridItem>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>QR amount:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Rate:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.rate || detailData.rate === 0 ? detailData.rate : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Status:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "-"}</Text>
                                     </Flex>
-                                    <Flex width={"100%"} justifyContent={"space-between"} pe={5}>
+                                    <Flex width={"100%"} flexDirection={{base: "column", md: "row"}} justifyContent={"space-between"} pe={5}>
                                         <Text fontSize={"17px"} fontWeight={"700"}>Date:</Text>
                                         <Text fontSize={"17px"}>
                                             {detailData.updated_at || detailData.updated_at === 0 ? `${detailData.updated_at.slice(0, 10)} ${detailData.updated_at.slice(11, 16)}` : "-"}
                                         </Text>
                                     </Flex>
-                                    <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
+                                    <GridItem width={"100%"} colSpan={{base: 1, md: 2}} display={"flex"} justifyContent={"center"}>
                                         <QRCodeSVG
                                             value={detailData.url ? detailData.url : "https://qr.nspk.ru/"}
                                             renderAs="canvas"
@@ -376,15 +377,17 @@ export default function SellerOrder() {
                     </ModalBody>
 
                     <ModalFooter display={"flex"} gap={"10px"}>
-                        <Button colorScheme="red" onClick={() => {
-                            onClose();
-                            resetValue();
-                        }}>Cancel</Button>
                         {
-                            isCreate &&
-                            <Button colorScheme="blue" onClick={handleSave}>
-                                Save
-                            </Button>
+                          isCreate &&
+                          <>
+                            <Button colorScheme="red" onClick={() => {
+                                onClose();
+                                resetValue();
+                            }}>Cancel</Button>
+                              <Button colorScheme="blue" onClick={handleSave}>
+                                  Save
+                              </Button>
+                          </>
                         }
                     </ModalFooter>
                 </ModalContent>

@@ -251,7 +251,6 @@ export default function SellerTerminal() {
         >
           {Array.isArray(terminalData.object) && terminalData.object.length > 0 ? terminalData.object.map((item, i) =>
             <Tr key={i}>
-              {console.log(item)}
               <Td>{(page * 10) + i + 1}</Td>
               <Td>{item?.name}</Td>
               <Td>{item?.inn}</Td>
