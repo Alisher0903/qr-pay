@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-// import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -54,8 +54,8 @@ function SignIn() {
     const textColorSecondary = "gray.400";
     const brandStars = useColorModeValue("brand.500", "brand.400");
 
-    // const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-    // const textColorBrand = useColorModeValue("brand.500", "white");
+    const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
+    const textColorBrand = useColorModeValue("brand.500", "white");
     // const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
     // const googleText = useColorModeValue("navy.700", "white");
     // const googleHover = useColorModeValue(
@@ -286,25 +286,25 @@ function SignIn() {
                             }}
                         >{loading ? 'Loading...' : 'Sign In'}</Button>
                     </FormControl>
-                    {/*<Flex*/}
-                    {/*  flexDirection='column'*/}
-                    {/*  justifyContent='center'*/}
-                    {/*  alignItems='start'*/}
-                    {/*  maxW='100%'*/}
-                    {/*  mt='0px'>*/}
-                    {/*  <Text color={textColorDetails} fontWeight='400' fontSize='14px'>*/}
-                    {/*    Not registered yet?*/}
-                    {/*    <NavLink to='/auth/sign-up'>*/}
-                    {/*      <Text*/}
-                    {/*        color={textColorBrand}*/}
-                    {/*        as='span'*/}
-                    {/*        ms='5px'*/}
-                    {/*        fontWeight='500'>*/}
-                    {/*        Create an Account*/}
-                    {/*      </Text>*/}
-                    {/*    </NavLink>*/}
-                    {/*  </Text>*/}
-                    {/*</Flex>*/}
+                    <Flex
+                     flexDirection='column'
+                     justifyContent='center'
+                     alignItems='start'
+                     maxW='100%'
+                     mt='0px'>
+                     <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
+                       Not registered yet?
+                       <NavLink to='/auth/sign-up'>
+                         <Text
+                           color={textColorBrand}
+                           as='span'
+                           ms='5px'
+                           fontWeight='500'>
+                           Leave a request for registration.
+                         </Text>
+                       </NavLink>
+                     </Text>
+                    </Flex>
                 </Flex>
             </Flex>
         </DefaultAuth>

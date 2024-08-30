@@ -21,6 +21,7 @@ import SellerOrder from 'views/seller/order';
 import SellerRefund from 'views/seller/refund';
 import Notification from 'views/notification/notification';
 import Request from "./views/admin/request";
+import SignUp from 'views/auth/signUp';
 
 const routes = [
     //  Admin panel route
@@ -154,6 +155,13 @@ const routes = [
         path: '/sign-in',
         icon: <Icon as={MdLock} width="20px" height="20px" color="inherit"/>,
         component: <SignInCentered/>,
+    },
+    {
+        name: 'Sign Up',
+        layout: '/auth',
+        path: '/sign-up',
+        icon: <Icon as={MdLock} width="20px" height="20px" color="inherit"/>,
+        component: <SignUp/>,
     },
 ];
 
