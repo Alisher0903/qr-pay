@@ -34,9 +34,7 @@ export async function globalGetFunction({url, setData, setLoading, setTotalEleme
         }
 
         const {data} = await axios.get(getUrl, token ? {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+            headers: {Authorization: `Bearer ${token}`,}
         } : config);
 
         if (data?.error?.code) setData([]);
@@ -48,11 +46,11 @@ export async function globalGetFunction({url, setData, setLoading, setTotalEleme
             }
         }
     } catch (error) {
-        setData([]);
+        setData(null);
         consoleClear()
     } finally {
         if (setLoading) setLoading(false);
-        // consoleClear()
+        consoleClear()
     }
 }
 
