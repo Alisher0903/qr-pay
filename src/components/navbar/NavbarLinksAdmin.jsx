@@ -282,11 +282,11 @@ export default function HeaderLinks(props) {
               </Flex>
             </MenuButton>
             <MenuList>
-              <MenuItem minH='30px' 
-              onClick={() => {
-                setLanguageData('uz')
-                localStorage.setItem("selectedLang", 'uz')
-              }}>
+              <MenuItem minH='30px'
+                onClick={() => {
+                  setLanguageData('uz')
+                  localStorage.setItem("selectedLang", 'uz')
+                }}>
                 <Image
                   boxSize='2rem'
                   borderRadius='full'
@@ -296,11 +296,11 @@ export default function HeaderLinks(props) {
                 />
                 <Text fontWeight={"700"}>UZ</Text>
               </MenuItem>
-              <MenuItem minH='30px' 
-              onClick={() => {
-                setLanguageData('ru')
-                localStorage.setItem("selectedLang", 'ru')
-              }}>
+              <MenuItem minH='30px'
+                onClick={() => {
+                  setLanguageData('ru')
+                  localStorage.setItem("selectedLang", 'ru')
+                }}>
                 <Image
                   boxSize='2rem'
                   borderRadius='full'
@@ -444,42 +444,46 @@ export default function HeaderLinks(props) {
                       : "-"}
                   </Text>
                 </MenuItem>
-                <MenuItem
-                  bg={menuBg}
-                  // _hover={{bg: 'none'}}
-                  _focus={{ bg: "none" }}
-                  borderRadius="8px"
-                  px="14px"
-                  display={"flex"}
-                  gap={"20px"}
-                  justifyContent={"space-between"}
-                >
-                  <Text fontSize="sm" fontWeight={"800"}>
-                    Inn:{" "}
-                  </Text>
-                  <Text fontSize="sm">
-                    {getMeeData && getMeeData.inn ? getMeeData.inn : "-"}
-                  </Text>
-                </MenuItem>
-                <MenuItem
-                  bg={menuBg}
-                  // _hover={{bg: 'none'}}
-                  _focus={{ bg: "none" }}
-                  borderRadius="8px"
-                  px="14px"
-                  display={"flex"}
-                  gap={"20px"}
-                  justifyContent={"space-between"}
-                >
-                  <Text fontSize="sm" fontWeight={"800"}>
-                    Filial:{" "}
-                  </Text>
-                  <Text fontSize="sm">
-                    {getMeeData && getMeeData.filial_code
-                      ? getMeeData.filial_code
-                      : "-"}
-                  </Text>
-                </MenuItem>
+                {role !== "ROLE_SUPER_ADMIN" &&
+                  <>
+                    <MenuItem
+                      bg={menuBg}
+                      // _hover={{bg: 'none'}}
+                      _focus={{ bg: "none" }}
+                      borderRadius="8px"
+                      px="14px"
+                      display={"flex"}
+                      gap={"20px"}
+                      justifyContent={"space-between"}
+                    >
+                      <Text fontSize="sm" fontWeight={"800"}>
+                        Inn:{" "}
+                      </Text>
+                      <Text fontSize="sm">
+                        {getMeeData && getMeeData.inn ? getMeeData.inn : "-"}
+                      </Text>
+                    </MenuItem>
+                    <MenuItem
+                      bg={menuBg}
+                      // _hover={{bg: 'none'}}
+                      _focus={{ bg: "none" }}
+                      borderRadius="8px"
+                      px="14px"
+                      display={"flex"}
+                      gap={"20px"}
+                      justifyContent={"space-between"}
+                    >
+                      <Text fontSize="sm" fontWeight={"800"}>
+                        Filial:{" "}
+                      </Text>
+                      <Text fontSize="sm">
+                        {getMeeData && getMeeData.filial_code
+                          ? getMeeData.filial_code
+                          : "-"}
+                      </Text>
+                    </MenuItem>
+                  </>
+                }
 
                 <MenuItem
                   // _hover={{bg: 'none'}}

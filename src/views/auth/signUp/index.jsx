@@ -128,7 +128,7 @@ function SignUp() {
                 >
 
                     <FormControl>
-                        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: "repeat(2, 1fr)" }} gap={6}>
+                        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: "repeat(2, 1fr)" }} gap={{base: 0, md: 6}}>
                             <GridItem>
                                 <FormLabel
                                     ms='4px'
@@ -240,7 +240,7 @@ function SignUp() {
                                 </NavLink>
                             </Text>
                         </Flex>
-                        <Flex width={"100%"} justifyContent={"end"}>
+                        <Flex width={"100%"} mt={3} justifyContent={{base: "start", md: "end"}}>
                             <Button
                                 fontSize='sm'
                                 variant='brand'
