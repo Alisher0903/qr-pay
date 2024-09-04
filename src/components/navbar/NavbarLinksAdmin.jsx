@@ -521,11 +521,10 @@ export default function HeaderLinks(props) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create terminal</ModalHeader>
+          <ModalHeader>Update profile</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
-
+            <Grid templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={{base: 0, md: 6}} px={5}>
               <FormControl mt={4} isInvalid={!!formErrors.firstName}>
                 <FormLabel>First name</FormLabel>
                 <Input
