@@ -126,19 +126,21 @@ export default function HeaderLinks(props) {
       errors.phone = "Phone number must be exactly 13 characters long and only contain numbers.";
     } else if (name === "firstName") {
       if (value.trim() === '') {
-        errors[name] = `${name} is required`;
+        errors[name] = `${t(name)}${t("error")}`;
       }
     } else if (name === "lastName") {
       if (value.trim() === '') {
-        errors[name] = `${name} is required`;
+        errors[name] = `${t(name)}${t("error")}`;
       }
     } else if (name === "email") {
       if (value.trim() === '') {
-        errors[name] = `${name} is required`;
+        errors[name] = `${t(name)}${t("error")}`;
       }
+    } else if (name === "password") {
+        errors[name] = "";
     } else if (role !== "SUPER_ADMIN" || role === "SELLER" || role === "TERMINAL") {
       if (value.trim() === '' && name !== "email") {
-        errors[name] = `${name} is required`;
+        errors[name] = `${t(name)}${t("error")}`;
       }
     }
     setFormErrors({ ...formErrors, ...errors });
@@ -150,22 +152,24 @@ export default function HeaderLinks(props) {
     Object.keys(formValues).filter((item) => item !== "phones"
     ).forEach(key => {
       if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
-        errors.phone = "Phone number must be exactly 13 characters long and only contain numbers.";
+        errors.phone = t("phoneError");
       } else if (key === "firstName") {
         if (formValues[key].trim() === '') {
-          errors[key] = `${key} is required`;
+          errors[key] = `${t(key)}${t("error")}`;
         }
       } else if (key === "lastName") {
         if (formValues[key].trim() === '') {
-          errors[key] = `${key} is required`;
+          errors[key] = `${t(key)}${t("error")}`;
         }
       } else if (key === "email") {
         if (formValues[key].trim() === '') {
-          errors[key] = `${key} is required`;
-        }
-      } else if (role !== "ROLE_SUPER_ADMIN" || role === "ROLE_SELLER" || role === "ROLE_TERMINAL") {
+          errors[key] = `${t(key)}${t("error")}`;
+        } 
+      } else if (key === "password") {
+        errors[key] = "";
+    } else if (role !== "ROLE_SUPER_ADMIN" || role === "ROLE_SELLER" || role === "ROLE_TERMINAL") {
         if (formValues[key].trim() === '' && key !== "email") {
-          errors[key] = `${key} is required`;
+          errors[key] = `${t(key)}${t("error")}`;
         }
       }
     });
@@ -347,7 +351,7 @@ export default function HeaderLinks(props) {
                   fontWeight="700"
                   color={textColor}
                 >
-                  👋&nbsp; Hey,{" "}
+                  👋&nbsp; {t("hey")},{" "}
                   {getMeeData
                     ? getMeeData.firstName + " " + getMeeData.lastName
                     : "User"}
@@ -379,7 +383,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                    First name:{" "}
+                  {t("firstName")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.firstName
@@ -398,7 +402,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                    Last name:{" "}
+                  {t("lastname")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.lastName
@@ -417,7 +421,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                    Phone:{" "}
+                  {t("phone")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.phone
@@ -436,7 +440,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                    Email:{" "}
+                  {t("email")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.email
@@ -457,7 +461,7 @@ export default function HeaderLinks(props) {
                       justifyContent={"space-between"}
                     >
                       <Text fontSize="sm" fontWeight={"800"}>
-                        Inn:{" "}
+                      {t("inn")}:{" "}
                       </Text>
                       <Text fontSize="sm">
                         {getMeeData && getMeeData.inn ? getMeeData.inn : "-"}
@@ -474,7 +478,7 @@ export default function HeaderLinks(props) {
                       justifyContent={"space-between"}
                     >
                       <Text fontSize="sm" fontWeight={"800"}>
-                        Filial:{" "}
+                      {t("filial_code")}:{" "}
                       </Text>
                       <Text fontSize="sm">
                         {getMeeData && getMeeData.filial_code
@@ -501,7 +505,7 @@ export default function HeaderLinks(props) {
                   }}
                 >
                   <Text fontSize="md" fontWeight={"800"}>
-                    Log out
+                  {t("logOut")}
                   </Text>
                 </MenuItem>
               </Flex>
@@ -521,16 +525,16 @@ export default function HeaderLinks(props) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update profile</ModalHeader>
+          <ModalHeader>{t("updateProfile")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Grid templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={{base: 0, md: 6}} px={5}>
               <FormControl mt={4} isInvalid={!!formErrors.firstName}>
-                <FormLabel>First name</FormLabel>
+                <FormLabel>{t("firstName")}</FormLabel>
                 <Input
                   name="firstName"
                   ref={initialRef}
-                  placeholder="Enter the terminal name"
+                  placeholder={t("enterYourFirstName")}
                   value={formValues.firstName}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -539,10 +543,10 @@ export default function HeaderLinks(props) {
                   <Text color="red.500" fontSize="sm">{formErrors.firstName}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.lastName}>
-                <FormLabel>Last name</FormLabel>
+                <FormLabel>{t("lastName")}</FormLabel>
                 <Input
                   name="lastName"
-                  placeholder="Enter the terminal lastName"
+                  placeholder={t("enterYourLastName")}
                   value={formValues.lastName}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -551,10 +555,10 @@ export default function HeaderLinks(props) {
                   <Text color="red.500" fontSize="sm">{formErrors.lastName}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.email}>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("email")}</FormLabel>
                 <Input
                   name="email"
-                  placeholder="Enter the terminal filial code"
+                  placeholder={t("enterYourEmail")}
                   value={formValues.email}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -562,10 +566,10 @@ export default function HeaderLinks(props) {
                 {formErrors.email && <Text color="red.500" fontSize="sm">{formErrors.email}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.phone}>
-                <FormLabel>Phone number</FormLabel>
+                <FormLabel>{t("phone")}</FormLabel>
                 <Input
                   name="phone"
-                  placeholder="Enter the terminal phone number"
+                  placeholder={t("enterYourPhoneNumber")}
                   value={formValues.phone}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -575,10 +579,10 @@ export default function HeaderLinks(props) {
               {role !== "ROLE_SUPER_ADMIN" &&
                 <>
                   <FormControl mt={4} isInvalid={!!formErrors.inn}>
-                    <FormLabel>Inn</FormLabel>
+                    <FormLabel>{t("inn")}</FormLabel>
                     <Input
                       name="inn"
-                      placeholder="Enter the terminal inn"
+                      placeholder={t("enterYourInn")}
                       value={formValues.inn}
                       onChange={handleChange}
                       color={inputTextColor}
@@ -586,10 +590,10 @@ export default function HeaderLinks(props) {
                     {formErrors.inn && <Text color="red.500" fontSize="sm">{formErrors.inn}</Text>}
                   </FormControl>
                   <FormControl mt={4} isInvalid={!!formErrors.filial_code}>
-                    <FormLabel>Filial code</FormLabel>
+                    <FormLabel>{t("filial_code")}</FormLabel>
                     <Input
                       name="filial_code"
-                      placeholder="Enter the terminal filial_code"
+                      placeholder={t("enterYourFilialCode")}
                       value={formValues.filial_code}
                       onChange={handleChange}
                       color={inputTextColor}
@@ -600,12 +604,12 @@ export default function HeaderLinks(props) {
                 </>
               }
               <FormControl mt={4} isInvalid={!!formErrors.password}>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t("password")}</FormLabel>
                 <InputGroup>
                   <Input
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter the terminal password"
+                    placeholder={t("enterYourPassword")}
                     value={formValues.password}
                     onChange={handleChange}
                     color={inputTextColor}
@@ -620,8 +624,9 @@ export default function HeaderLinks(props) {
                     />
                   </InputRightElement>
                 </InputGroup>
-                {formErrors.password &&
-                  <Text color="red.500" fontSize="sm">{formErrors.password}</Text>}
+                {/* {formErrors.password && */}
+                  <Text color="blue.500" fontSize="sm">{t("passwordWarn")}</Text>
+                  {/* } */}
               </FormControl>
             </Grid>
           </ModalBody>
@@ -630,9 +635,9 @@ export default function HeaderLinks(props) {
               colorScheme="red" onClick={() => {
                 onClose();
                 resetValue();
-              }}>Cancel</Button>
+              }}>{t("cancel")}</Button>
             <Button colorScheme="blue" onClick={handleSave}>
-              Save
+            {t("save")}
             </Button>
           </ModalFooter>
         </ModalContent>

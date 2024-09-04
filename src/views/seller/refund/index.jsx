@@ -32,8 +32,10 @@ export default function SellerRefund() {
           columnsData={columnsDataColumns}
           tableData={tableDataColumns}
         /> */}
-        <ComplexTable name="Refund" thead={['Name', 'Status', 'Date', 'Progress']}>
+        <ComplexTable name="Refund" thead={['T/r', 'Name', 'Status', 'Date', 'Progress']}>
           <Tr>
+          <Td>1</Td>
+          {/* <Td>{(page * 10) + i + 1}</Td> */}
             <Td>John Doe</Td>
             <Td>Approved</Td>
             <Td>2024-08-21</Td>
