@@ -33,6 +33,7 @@ export const TranslateUz = {
     extId: "Ext id",
     filial_code: "Filial kodi",
     firstName: "Ism",
+    fullName: "Ism familiya",
     img: 'https://cdn-icons-png.flaticon.com/512/6211/6211657.png',
     inn: "Inn raqami",
     lang: "UZ",
@@ -56,7 +57,7 @@ export const TranslateUz = {
     QRId: "QR id",
     rate: "Daraja",
     refund: "To'lovni bekor qilish",
-    reuest: "So'rovlar",
+    request: "So'rovlar",
     save: "Saqlash",
     signIn: "Tizimga kirish",
     signUp: "RO'yhatdan o'tish",
@@ -66,4 +67,8 @@ export const TranslateUz = {
     updateProfile: "Hisobni yangilash",
     viewMore: "Koʻproq koʻrish",
     hey: "Salom",
+    wait: "Kutilayotgan",
+    canceled: "Bekor qilingan",
+    confirmed: "Tasdiqlangan",
+    table: "jadvali"
 };

@@ -173,7 +173,7 @@ export default function SellerOrder() {
                 spacing={{ base: "20px", xl: "20px" }}
             >
                 <ComplexTable
-                    name={t("payment")}
+                    name={`${t("payment")} ${t("table")}`}
                     buttonChild={
                         role !== "ROLE_SUPER_ADMIN" && <Button
                             bg={bgColor}

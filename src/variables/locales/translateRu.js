@@ -33,6 +33,7 @@ export const TranslateRu = {
     extId: "Ext id",
     filial_code: "Филиальный код",
     firstName: "Имя",
+    fullName: "Имя фамилия",
     img: 'https://cdn-icons-png.flaticon.com/512/6211/6211549.png',
     inn: "ИНН",
     lang: "RU",
@@ -56,7 +57,7 @@ export const TranslateRu = {
     QRId: "QR id",
     rate: "Оценка",
     refund: "Отмена платежа",
-    reuest: "Запросы",
+    request: "Запросы",
     save: "Сохранить",
     signIn: "Вход в систему",
     signUp: "Регистрация",
@@ -66,4 +67,8 @@ export const TranslateRu = {
     updateProfile: "Обновить аккаунт",
     viewMore: "Посмотреть больше",
     hey: "Привет",
+    wait: "Ожидал",
+    canceled: "Отменено",
+    confirmed: "Подтвержденный",
+    table: "расписание"
 };

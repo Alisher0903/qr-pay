@@ -5,15 +5,17 @@ import {globalGetFunction} from "../../../contexts/logic-function/globalFunktion
 import {requestGetAdmin} from "../../../contexts/api";
 import {Pagination} from "antd";
 import {updateRequestStatus} from "../../../contexts/logic-function";
+import { useTranslation } from 'react-i18next';
 
-const thead = ['T/r', 'Full name', 'Phone number', 'Filial code', 'Inn', 'Status', 'Action',]
 
 const Request = () => {
+    const { t } = useTranslation()
     const [requestList, setRequestList] = useState(null)
     const [loading, setLoading] = useState(false)
     const [totalElement, setTotalElements] = useState(0)
     const [page, setPage] = useState(0)
-
+    
+    const thead = ['T/r', t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status"), t("action"),]
     const getFunctionRequest = async () => {
         await globalGetFunction({
             url: requestGetAdmin,
@@ -29,9 +31,9 @@ const Request = () => {
     }, []);
 
     const bgGenerator = (status) => {
-        if (status === 'WAIT') return ['yellow', 'Waiting']
-        else if (status === 'CONFIRMED') return ['green', 'Confirmed']
-        else if (status === 'CANCEL') return ['red', 'Canceled']
+        if (status === 'WAIT') return ['yellow', t("wait")]
+        else if (status === 'CONFIRMED') return ['green', t("confirmed")]
+        else if (status === 'CANCEL') return ['red', t("canceled")]
     }
 
     return (
@@ -42,7 +44,7 @@ const Request = () => {
                 spacing={{base: "20px", xl: "20px"}}
             >
                 <ComplexTable
-                    name="Request table"
+                    name={`${t("request")} ${t("table")}`}
                     thead={thead}
                 >
                     {loading ? <Tr>
@@ -62,7 +64,7 @@ const Request = () => {
                                     fontWeight="700"
                                     borderRadius="10px"
                                     textAlign={'center'}
-                                    width={'120px'}
+                                    width={'130px'}
                                 >{bgGenerator(item.status)[1]}</Text>
                             </Td>
                             <Td>
@@ -83,7 +85,7 @@ const Request = () => {
                                 </Select>
                             </Td>
                         </Tr>
-                    ) : <Tr><Td textAlign="center" colSpan={thead.length}>Request not found</Td></Tr>}
+                    ) : <Tr><Td textAlign="center" colSpan={thead.length}>{t("request")} {t("notFound")}</Td></Tr>}
                 </ComplexTable>
                 <Pagination
                     showSizeChanger={false}

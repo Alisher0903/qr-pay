@@ -239,7 +239,7 @@ export default function SellerTerminal() {
         spacing={{ base: "20px", xl: "20px" }}
       >
         <ComplexTable
-          name={t("terminal")}
+          name={`${t("terminal")} ${t("table")}`}
           buttonChild={
             <Button
               bg={bgColor}
@@ -255,7 +255,7 @@ export default function SellerTerminal() {
               }}>{t("createTerminal")}</Button>}
           thead={['T/r', t("name"), t("inn"), t("account"), t("phone"), t("filial_code"), t("update"), t("active")]}
         >
-          {Array.isArray(terminalData.object) && terminalData.object.length > 0 ? terminalData.object.map((item, i) =>
+          {terminalData ? terminalData?.object.map((item, i) =>
             <Tr key={i}>
               <Td>{(page * 10) + i + 1}</Td>
               <Td>{item?.name}</Td>
