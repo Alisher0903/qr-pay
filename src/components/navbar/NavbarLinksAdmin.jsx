@@ -32,7 +32,6 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { FaBell, FaEye, FaEyeSlash, FaUserEdit } from "react-icons/fa";
-import routes from "routes";
 import { Link, useNavigate } from "react-router-dom";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 import { AppStore } from "contexts/state-management";
@@ -45,6 +44,7 @@ import { globalPutFunction } from "contexts/logic-function/globalFunktion";
 import { userGetMe } from "contexts/logic-function/globalFunktion";
 import { LanguageStore } from "contexts/state-management/language/languageStore";
 import { useTranslation } from "react-i18next";
+import { generateRoutes } from "routes";
 
 export default function HeaderLinks(props) {
   const { countData, setCountData } = NotificationStore();
@@ -52,6 +52,7 @@ export default function HeaderLinks(props) {
   const { secondary } = props;
   const { setLanguageData } = LanguageStore()
   const { t } = useTranslation()
+  const routes = generateRoutes(t);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -402,7 +403,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                  {t("lastname")}:{" "}
+                  {t("lastName")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.lastName

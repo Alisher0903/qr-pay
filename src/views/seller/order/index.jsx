@@ -45,7 +45,7 @@ import { FaEye } from "react-icons/fa";
 import { RiRefund2Line } from "react-icons/ri";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 import moment from "moment";
-import { column } from "stylis";
+import { useTranslation } from "react-i18next";
 
 export default function SellerOrder() {
     const {
@@ -54,6 +54,7 @@ export default function SellerOrder() {
         page,
         setTotalPages,
     } = PaymentStore();
+    const { t } = useTranslation()
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { isOpen: isCancelModal, onOpen: openCancelModal, onClose: closeCancelModal } = useDisclosure();
     const { setCountData, setLoading } = NotificationStore()
@@ -134,11 +135,23 @@ export default function SellerOrder() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
+        const errors = {};
+        if (value.trim() === '') {
+            errors[name] = `${t(name)}${t("error")}`;
+        } else {
+            errors[name] = ""
+        }
+          setFormErrors({ ...formErrors, ...errors });
         // Simple validation example
     };
 
     const handleSave = () => {
         const errors = {};
+        Object.keys(formValues).forEach(key => {
+         if (formValues[key].trim() === '') {
+          errors[key] = `${t(key)}${t("error")}`;
+        }
+      });
         if (Object.keys(errors).length === 0) {
             globalPostFunction({
                 url: `${order_create}`, postData: {
@@ -160,7 +173,7 @@ export default function SellerOrder() {
                 spacing={{ base: "20px", xl: "20px" }}
             >
                 <ComplexTable
-                    name="Payment"
+                    name={t("payment")}
                     buttonChild={
                         role !== "ROLE_SUPER_ADMIN" && <Button
                             bg={bgColor}
@@ -173,8 +186,8 @@ export default function SellerOrder() {
                             onClick={() => {
                                 setIsCreate(true)
                                 onOpen()
-                            }}>Create payment</Button>}
-                    thead={['T/r', 'Partner', 'Purpose', 'Date', "Action", "Cancel payment"]}
+                            }}>{t("createPayment")}</Button>}
+                    thead={['T/r', t("partner"), t("purpose"), t("date"), t("action"), t("refund")]}
                 >
                     {
                         Array.isArray(paymentData.object) && paymentData.object.length > 0 ? paymentData.object.map((item, i) =>
@@ -197,7 +210,7 @@ export default function SellerOrder() {
                                             setDetailData(item)
                                             onOpen()
                                         }}>
-                                            <Popover title={`View more`} overlayStyle={{ textAlign: 'center' }}>
+                                            <Popover title={t("viewMore")} overlayStyle={{ textAlign: 'center' }}>
                                                 <FaEye color={navbarIcon} size={23} />
                                             </Popover>
                                         </button>
@@ -209,7 +222,7 @@ export default function SellerOrder() {
                                             setDetailData(item)
                                             openCancelModal()
                                         }}>
-                                            <Popover title={`Payment canceled`} overlayStyle={{ textAlign: 'center' }}>
+                                            <Popover title={t("refund")} overlayStyle={{ textAlign: 'center' }}>
                                                 <RiRefund2Line color={navbarIcon} size={23} />
                                             </Popover>
                                         </button>
@@ -218,7 +231,7 @@ export default function SellerOrder() {
                             </Tr>
                         ) :
                             <Tr>
-                                <Td textAlign={"center"} colSpan={5}>Payment not found</Td>
+                                <Td textAlign={"center"} colSpan={5}>{t("payment")}{t("notFound")}</Td>
                             </Tr>
                     }
                 </ComplexTable>
@@ -246,18 +259,18 @@ export default function SellerOrder() {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{isCreate ? "Create payment" : ""}</ModalHeader>
+                    <ModalHeader>{isCreate ? t("createPayment") : ""}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         {
                             isCreate ?
                                 <>
                                     <FormControl mt={4} isInvalid={!!formErrors.amount}>
-                                        <FormLabel>Amount</FormLabel>
+                                        <FormLabel>{t("amount")}</FormLabel>
                                         <Input
                                             type="number"
                                             name="amount"
-                                            placeholder="Enter the amount"
+                                            placeholder={t("enterTheAmount")}
                                             value={formValues.amount}
                                             onChange={handleChange}
                                             color={inputTextColor}
@@ -270,52 +283,52 @@ export default function SellerOrder() {
                                 :
                                 <Grid overflow={"hidden"} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={6} px={5}>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Ext id: </Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("extId")}: </Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Cheque amount:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Partner: </Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("partner")}: </Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Local QR id:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("localQRId")}:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "-"}</Text>
                                     </Flex>
                                     <GridItem colSpan={{ base: 1, md: 2 }} display={"flex"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Purpose: </Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("purpose")}: </Text>
                                         <Text width={"70%"}
                                             fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "-"}</Text>
                                     </GridItem>
                                     <GridItem colSpan={{ base: 1, md: 2 }} flexDirection={{ base: "column", md: "row" }} display={"flex"} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>QR id:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("QRId")}:</Text>
                                         <Text width={'70%'}
                                             fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "-"}</Text>
                                     </GridItem>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>QR amount:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("QRAmount")}:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Rate:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("rate")}:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.rate || detailData.rate === 0 ? detailData.rate : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Status:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("status")}:</Text>
                                         <Text
                                             fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "-"}</Text>
                                     </Flex>
                                     <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>Date:</Text>
+                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("date")}:</Text>
                                         <Text fontSize={"17px"}>
                                             {detailData.updated_at || detailData.updated_at === 0 ? `${detailData.updated_at.slice(0, 10)} ${detailData.updated_at.slice(11, 16)}` : "-"}
                                         </Text>
@@ -337,9 +350,9 @@ export default function SellerOrder() {
                                 <Button colorScheme="red" onClick={() => {
                                     onClose();
                                     resetValue();
-                                }}>Cancel</Button>
+                                }}>{t("cancel")}</Button>
                                 <Button colorScheme="blue" onClick={handleSave}>
-                                    Save
+                                {t("save")}
                                 </Button>
                             </>
                         }
@@ -349,15 +362,15 @@ export default function SellerOrder() {
             <Modal isOpen={isCancelModal} onClose={closeCancelModal}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Cancel payment</ModalHeader>
+                    <ModalHeader>{t("cancel")} {t("payment")}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        Do you really want to cancel the payment?
+                    {t("cancelModal")}
                     </ModalBody>
 
                     <ModalFooter display={"flex"} gap={"10px"}>
                         <Button colorScheme="red" mr={3} onClick={closeCancelModal}>
-                            Close
+                        {t("close")}
                         </Button>
                         <Button
                             colorScheme="blue"
@@ -370,7 +383,7 @@ export default function SellerOrder() {
                                         closeCancelModal()
                                     }
                                 })
-                            }}>Next</Button>
+                            }}>{t("continue")}</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

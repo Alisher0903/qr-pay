@@ -30,11 +30,13 @@ import { globalPostFunction, globalPutFunction, globalGetFunction } from "contex
 import { TerminalStore } from "contexts/state-management/terminal/terminalStory";
 import { setConfig } from "contexts/token";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaEdit, FaEye, FaEyeSlash, FaMinus, FaPlus } from "react-icons/fa";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
 export default function SellerTerminal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { t } = useTranslation()
   const {
     setTerminalData, terminalData, isEdit, setIsEdit, setPage,
     totalPage,
@@ -109,7 +111,9 @@ export default function SellerTerminal() {
       const errors = {};
       updatedPhones.forEach((phone) => {
         if (!/^\+?\d*$/.test(phone) || phone.length !== 13) {
-          errors.phones = [...(errors.phones || []), "Phone number must be exactly 13 characters long and only contain numbers."];
+          errors.phones = [...(errors.phones || []), t("phoneError")];
+        } else {
+          errors.phones = [""]
         }
       });
       setFormErrors({ ...formErrors, ...errors });
@@ -120,11 +124,13 @@ export default function SellerTerminal() {
       // Simple validation example
       const errors = {};
       if (!isEdit && name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
-        errors.phone = "Phone number must be exactly 13 characters long and only contain numbers.";
+        errors.phone = t("phoneError");
       } else if (!isEdit && name === "password" && value.length < 4) {
-        errors.password = "Password must be at least 4 characters long.";
+        errors.password = t("passwordError");
       } else if (value.trim() === '') {
-        errors[name] = `${name} is required`;
+        errors[name] = `${t(name)}${t("error")}`;
+      } else {
+        errors[name] = ""
       }
       setFormErrors({ ...formErrors, ...errors });
     }
@@ -172,11 +178,11 @@ export default function SellerTerminal() {
         if (key === "phones") {
           formValues.phones.forEach((phone) => {
             if (!/^\+?\d*$/.test(phone) || phone.length !== 13) {
-              errors.phones = [...(errors.phones || []), "Phone number must be exactly 13 characters long and only contain numbers."];
+              errors.phones = [...(errors.phones || []), t("phoneError")];
             }
           });
         } else if (formValues[key].trim() === '') {
-          errors[key] = `${key} is required`;
+          errors[key] = `${t(key)}${t("error")}`;
         }
       });
 
@@ -199,11 +205,11 @@ export default function SellerTerminal() {
       Object.keys(formValues).filter((item) => item !== "phones"
       ).forEach(key => {
         if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
-          errors.phone = "Phone number must be exactly 13 characters long and only contain numbers.";
+          errors.phone = t("phoneError");
         } else if (key === "password" && formValues[key].length < 4) {
-          errors.password = "Password must be at least 4 characters long.";
+          errors.password = t("passwordError");
         } else if (formValues[key].trim() === '') {
-          errors[key] = `${key} is required`;
+          errors[key] = `${t(key)}${t("error")}`;
         }
       });
       if (Object.keys(errors).length === 0) {
@@ -233,7 +239,7 @@ export default function SellerTerminal() {
         spacing={{ base: "20px", xl: "20px" }}
       >
         <ComplexTable
-          name="Terminal"
+          name={t("terminal")}
           buttonChild={
             <Button
               bg={bgColor}
@@ -246,8 +252,8 @@ export default function SellerTerminal() {
               onClick={() => {
                 setIsEdit(false)
                 onOpen()
-              }}>Create terminal</Button>}
-          thead={['T/r', 'Name', 'Inn', 'Account', 'Phone', 'Filial code', "Update", "Active"]}
+              }}>{t("createTerminal")}</Button>}
+          thead={['T/r', t("name"), t("inn"), t("account"), t("phone"), t("filial_code"), t("update"), t("active")]}
         >
           {Array.isArray(terminalData.object) && terminalData.object.length > 0 ? terminalData.object.map((item, i) =>
             <Tr key={i}>
@@ -293,7 +299,7 @@ export default function SellerTerminal() {
             </Tr>
           ) :
             <Tr>
-              <Td textAlign={"center"} colSpan={7}>Terminal not found</Td>
+              <Td textAlign={"center"} colSpan={7}>{t("terminal")} {t("notFound")}</Td>
             </Tr>
           }
         </ComplexTable>
@@ -322,17 +328,17 @@ export default function SellerTerminal() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create terminal</ModalHeader>
+          <ModalHeader>{t("createTerminal")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
 
               <FormControl mt={4} isInvalid={!!formErrors.name}>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t("name")}</FormLabel>
                 <Input
                   name="name"
                   ref={initialRef}
-                  placeholder="Enter the terminal name"
+                  placeholder={t("enterTheTermenalName")}
                   value={formValues.name}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -340,10 +346,10 @@ export default function SellerTerminal() {
                 {formErrors.name && <Text color="red.500" fontSize="sm">{formErrors.name}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.account}>
-                <FormLabel>Account</FormLabel>
+                <FormLabel>{t("account")}</FormLabel>
                 <Input
                   name="account"
-                  placeholder="Enter the terminal account"
+                  placeholder={t("enterTheTermenalAccount")}
                   value={formValues.account}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -351,10 +357,10 @@ export default function SellerTerminal() {
                 {formErrors.account && <Text color="red.500" fontSize="sm">{formErrors.account}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.filialCode}>
-                <FormLabel>Filial Code</FormLabel>
+                <FormLabel>{t("filial_code")}</FormLabel>
                 <Input
                   name="filialCode"
-                  placeholder="Enter the terminal filial code"
+                  placeholder={t("enterTheTermenalFilialCode")}
                   value={formValues.filialCode}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -363,10 +369,10 @@ export default function SellerTerminal() {
                   <Text color="red.500" fontSize="sm">{formErrors.filialCode}</Text>}
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.inn}>
-                <FormLabel>Inn</FormLabel>
+                <FormLabel>{t("inn")}</FormLabel>
                 <Input
                   name="inn"
-                  placeholder="Enter the terminal inn"
+                  placeholder={t("enterTheTermenalInn")}
                   value={formValues.inn}
                   onChange={handleChange}
                   color={inputTextColor}
@@ -377,7 +383,7 @@ export default function SellerTerminal() {
                 isEdit ?
                   <FormControl mt={4} isInvalid={formErrors.phones && formErrors.phones.length > 0}>
                     <Flex justifyContent={"space-between"} alignItems={"center"}>
-                      <FormLabel>Phone Numbers</FormLabel>
+                      <FormLabel>{t("phones")}</FormLabel>
                       {formValues.phones.length < 5 && (
                         <Button mt={2} onClick={handleAddPhone} p={0} mb={4} bg={"transparent"}>
                           <FaPlus />
@@ -387,7 +393,7 @@ export default function SellerTerminal() {
                     {formValues.phones.length > 0 && formValues.phones.map((phone, index) => (
                       <InputGroup key={index} mb={3}>
                         <Input
-                          placeholder={`Phone number ${index + 1}`}
+                          placeholder={`${t("phone")} ${index + 1}`}
                           name="phones"
                           value={phone}
                           onChange={(e) => handleChange(e, index)}
@@ -405,16 +411,15 @@ export default function SellerTerminal() {
                       </InputGroup>
                     ))}
                     {formErrors.phones && formErrors.phones.length > 0 &&
-                      <Text color="red.500">Phone number must be exactly 13 characters long and
-                        only contain numbers.</Text>}
+                      <Text color="red.500">{t("phoneError")}</Text>}
 
                   </FormControl>
                   :
                   <FormControl mt={4} isInvalid={!!formErrors.phone}>
-                    <FormLabel>Phone number</FormLabel>
+                    <FormLabel>{t("phone")}</FormLabel>
                     <Input
                       name="phone"
-                      placeholder="Enter the terminal phone number"
+                      placeholder={t("enterTheTermenalPhoneNumber")}
                       value={formValues.phone}
                       onChange={handleChange}
                       color={inputTextColor}
@@ -426,12 +431,12 @@ export default function SellerTerminal() {
               {
                 !isEdit &&
                 <FormControl mt={4} isInvalid={!!formErrors.password}>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <InputGroup>
                     <Input
                       name="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Enter the terminal password"
+                      placeholder={t("enterTheTermenalPassword")}
                       value={formValues.password}
                       onChange={handleChange}
                       color={inputTextColor}
@@ -457,9 +462,9 @@ export default function SellerTerminal() {
               colorScheme="red" onClick={() => {
                 onClose();
                 resetValue();
-              }}>Cancel</Button>
+              }}>{t("cancel")}</Button>
             <Button colorScheme="blue" onClick={handleSave}>
-              Save
+              {t("save")}
             </Button>
           </ModalFooter>
         </ModalContent>
