@@ -70,5 +70,6 @@ export const TranslateRu = {
     wait: "Ожидал",
     canceled: "Отменено",
     confirmed: "Подтвержденный",
-    table: "расписание"
+    table: "расписание",
+    notification: "Уведомление"
 };

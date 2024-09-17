@@ -2,7 +2,7 @@ export const TranslateUz = {
     account: "Hisob",
     action: "Harakat",
     active: "Faolligi",
-    allNotification: "Barcha xabarlar",
+    allNotification: "Barcha bildirishnomalar",
     amount: "Miqdori", 
     cancel: "Bekor qilish",
     cancelModal: "Haqiqatan ham toʻlovni bekor qilmoqchimisiz?",
@@ -70,5 +70,7 @@ export const TranslateUz = {
     wait: "Kutilayotgan",
     canceled: "Bekor qilingan",
     confirmed: "Tasdiqlangan",
-    table: "jadvali"
+    table: "jadvali",
+
+    notification: "Bildirishnoma"
 };
