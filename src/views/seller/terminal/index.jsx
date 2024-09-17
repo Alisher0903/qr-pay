@@ -169,6 +169,9 @@ export default function SellerTerminal() {
     setFormErrors({ ...formErrors, phones: updatedErrors });
   };
 
+  console.log("terminalData?.object", terminalData?.object);
+
+
 
   const handleSave = () => {
     const errors = {};
@@ -189,11 +192,11 @@ export default function SellerTerminal() {
       if (Object.keys(errors).length === 0 || Object.keys(errors).filter((item) => item === "password")) {
         globalPutFunction({
           url: `${terminal_update}${detailData && detailData.id ? detailData.id : 0}`, putData: {
-            name: formValues.name,
-            account: formValues.account,
-            filialCode: formValues.filialCode,
-            inn: formValues.inn,
-            phones: formValues.phones
+            name: formValues?.name,
+            account: formValues?.account,
+            filialCode: formValues?.filialCode,
+            inn: formValues?.inn,
+            phones: formValues?.phones
           }, setLoading: setCreateLoading, getFunction: getFunction
         })
         onClose();
@@ -215,12 +218,12 @@ export default function SellerTerminal() {
       if (Object.keys(errors).length === 0) {
         globalPostFunction({
           url: `${terminal_create}`, postData: {
-            name: formValues.name,
-            account: formValues.account,
-            filialCode: formValues.filialCode,
-            inn: formValues.inn,
-            phone: formValues.phone,
-            password: formValues.password
+            name: formValues?.name,
+            account: formValues?.account,
+            filialCode: formValues?.filialCode,
+            inn: formValues?.inn,
+            phone: formValues?.phone,
+            password: formValues?.password
           }, setLoading: setCreateLoading, getFunction: getFunction
         })
         onClose();
@@ -267,13 +270,13 @@ export default function SellerTerminal() {
                 <Box ms={3}>
                   <button onClick={() => {
                     setFormValues({
-                      name: item.name,
-                      account: item.account,
-                      filialCode: item.filial_code,
-                      inn: item.inn,
+                      name: item?.name,
+                      account: item?.account,
+                      filialCode: item?.filial_code,
+                      inn: item?.inn,
                       password: '',
-                      phone: item.user.phone,
-                      phones: item.phones
+                      phone: item?.user?.phone,
+                      phones: item?.phones
                     })
                     setdetailData(item)
                     setIsEdit(true)
@@ -284,13 +287,15 @@ export default function SellerTerminal() {
                 </Box>
               </Td>
               <Td>
-                <Box disabled={item.status !== 0} onClick={() => {
-                  globalPostFunction({
-                    url: `${terminal_isActive}${item.id}`,
-                    data: {},
-                    setLoading: setCreateLoading,
-                    getFunction: getFunction
-                  })
+                <Box onClick={() => {
+                  if (item.status === 0) {
+                    globalPostFunction({
+                      url: `${terminal_isActive}${item.id}`,
+                      data: {},
+                      setLoading: setCreateLoading,
+                      getFunction: getFunction
+                    })
+                  }
                 }}>
                   <Switch disabled={item.status !== 0} isChecked={item.status === 0}
                     colorScheme='teal' size='lg' />
