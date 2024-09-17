@@ -24,6 +24,7 @@ import {
   Grid,
   Flex
 } from "@chakra-ui/react";
+import { debounce } from 'lodash';
 import { Pagination } from "antd";
 import { terminal_create, terminal_update, terminal_isActive, terminal_get } from "contexts/api";
 import { globalPostFunction, globalPutFunction, globalGetFunction } from "contexts/logic-function/globalFunktion";
@@ -171,7 +172,14 @@ export default function SellerTerminal() {
 
   console.log("terminalData?.object", terminalData?.object);
 
-
+  const debouncedPostFunction = debounce((item) => {
+    globalPostFunction({
+      url: `${terminal_isActive}${item.id}`,
+      data: {},
+      setLoading: setCreateLoading,
+      getFunction: getFunction
+    });
+  }, 300);
 
   const handleSave = () => {
     const errors = {};
@@ -287,19 +295,14 @@ export default function SellerTerminal() {
                 </Box>
               </Td>
               <Td>
-                <Box onClick={() => {
-                  if (item.status === 0) {
-                    globalPostFunction({
-                      url: `${terminal_isActive}${item.id}`,
-                      data: {},
-                      setLoading: setCreateLoading,
-                      getFunction: getFunction
-                    })
-                  }
-                }}>
-                  <Switch disabled={item.status !== 0} isChecked={item.status === 0}
-                    colorScheme='teal' size='lg' />
-                </Box>
+              <Box onClick={() => {
+  if (item.status === 0) {
+    debouncedPostFunction(item);
+  }
+}}>
+  <Switch disabled={item.status !== 0} isChecked={item.status === 0}
+    colorScheme='teal' size='lg' />
+</Box>
               </Td>
             </Tr>
           ) :
