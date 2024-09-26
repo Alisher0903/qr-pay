@@ -74,5 +74,7 @@ export const TranslateRu = {
     canceled: "Отменено",
     confirmed: "Подтвержденный",
     table: "расписание",
+    terminalSerialCode: "Серийный код терминала",
+    optional: "необязательный",
     notification: "Уведомление"
 };

@@ -74,6 +74,8 @@ export const TranslateUz = {
     canceled: "Bekor qilingan",
     confirmed: "Tasdiqlangan",
     table: "jadvali",
+    terminalSerialCode: "Terminalning seriya kodi",
+    optional: "ixtiyory",
 
     notification: "Bildirishnoma"
 };

@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import {Icon} from '@chakra-ui/react';
 import {
     MdBarChart,
     MdPerson,
@@ -6,9 +6,9 @@ import {
     MdLock,
     MdOutlineShoppingCart,
 } from 'react-icons/md';
-import { TbCashRegister } from 'react-icons/tb';
-import { IoQrCode } from 'react-icons/io5';
-import { RiRefund2Line } from 'react-icons/ri';
+import {TbCashRegister} from 'react-icons/tb';
+import {IoQrCode} from 'react-icons/io5';
+import {RiRefund2Line} from 'react-icons/ri';
 import AdminDashboard from 'views/admin/default';
 import SellerDashboard from 'views/seller/default';
 import Partner from 'views/admin/partner';
@@ -33,14 +33,7 @@ export const generateRoutes = (t) => [
         name: t('merchant'),
         layout: '/admin',
         path: '/partner',
-        icon: (
-            <Icon
-                as={MdOutlineShoppingCart}
-                width="20px"
-                height="20px"
-                color="inherit"
-            />
-        ),
+        icon: <Icon as={MdOutlineShoppingCart} width="20px" height="20px" color="inherit"/>,
         component: <Partner/>,
         secondary: true,
     },
