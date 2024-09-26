@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -39,6 +39,7 @@ import {userGetMe} from "contexts/logic-function/globalFunktion";
 import {AppStore} from "contexts/state-management";
 import {globalGetFunction} from "contexts/logic-function/globalFunktion";
 import {NotificationStore} from "contexts/state-management/notification/notificationStore";
+import {useTranslation} from "react-i18next";
 
 const defVal = {phone: '', password: ''}
 
@@ -53,6 +54,7 @@ function SignIn() {
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const brandStars = useColorModeValue("brand.500", "brand.400");
+    const {t} = useTranslation()
 
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
@@ -147,7 +149,7 @@ function SignIn() {
                 flexDirection='column'>
                 <Box me='auto'>
                     <Heading color={textColor} fontSize='36px' mb='10px'>
-                        Sign In
+                        {t('signIn')}
                     </Heading>
                     <Text
                         mb='10px'
@@ -155,7 +157,7 @@ function SignIn() {
                         color={textColorSecondary}
                         fontWeight='400'
                         fontSize='md'>
-                        Enter your phone number and password to sign in!
+                        {t('signInDesc')}
                     </Text>
                 </Box>
                 <Flex
@@ -200,7 +202,7 @@ function SignIn() {
                             fontWeight='500'
                             color={textColor}
                             mb='8px'>
-                            Phone number<Text color={brandStars}>*</Text>
+                            {t('enterYourPhoneNumber')}<Text color={brandStars}>*</Text>
                         </FormLabel>
                         <Input
                             isRequired={true}
@@ -222,13 +224,13 @@ function SignIn() {
                             fontWeight='500'
                             color={textColor}
                             display='flex'>
-                            Password<Text color={brandStars}>*</Text>
+                            {t('password')}<Text color={brandStars}>*</Text>
                         </FormLabel>
                         <InputGroup size='md'>
                             <Input
                                 isRequired={true}
                                 fontSize='sm'
-                                placeholder='Min. 5 characters'
+                                placeholder={t('passwordErrorHolder')}
                                 mb='24px'
                                 size='lg'
                                 type={show ? "text" : "password"}
@@ -284,26 +286,26 @@ function SignIn() {
                                 if (sliceNumber(auth.phone) && auth.password) await authLogin()
                                 else toast.error('Check the data integrity');
                             }}
-                        >{loading ? 'Loading...' : 'Sign In'}</Button>
+                        >{loading ? t('loading') : t('signIn')}</Button>
                     </FormControl>
                     <Flex
-                     flexDirection='column'
-                     justifyContent='center'
-                     alignItems='start'
-                     maxW='100%'
-                     mt='0px'>
-                     <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                       Not registered yet?
-                       <NavLink to='/auth/sign-up'>
-                         <Text
-                           color={textColorBrand}
-                           as='span'
-                           ms='5px'
-                           fontWeight='500'>
-                           Leave a request for registration.
-                         </Text>
-                       </NavLink>
-                     </Text>
+                        flexDirection='column'
+                        justifyContent='center'
+                        alignItems='start'
+                        maxW='100%'
+                        mt='0px'>
+                        <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
+                            Not registered yet?
+                            <NavLink to='/auth/sign-up'>
+                                <Text
+                                    color={textColorBrand}
+                                    as='span'
+                                    ms='5px'
+                                    fontWeight='500'>
+                                    Leave a request for registration.
+                                </Text>
+                            </NavLink>
+                        </Text>
                     </Flex>
                 </Flex>
             </Flex>

@@ -152,6 +152,7 @@ export default function Projects() {
         "unset"
     );
 
+    console.log(notificationData)
     return (
         <>
             <Card mb={{base: "0px", "2xl": "20px"}}>
@@ -197,19 +198,16 @@ export default function Projects() {
                         </Button>
                     </Flex>
                 </Flex>
-                {Array.isArray(notificationData.object) &&
-                notificationData.object.length > 0 ? (
-                    notificationData.object.map((item) => (
-                        <Project
-                            key={item.id} // item.id ni key sifatida ishlating
-                            boxShadow={cardShadow}
-                            mb="20px"
-                            item={item}
-                            image={Project1}
-                            getFunction={getFunction}
-                        />
-                    ))
-                ) : (
+                {(notificationData && notificationData?.object) ? notificationData.object.map((item) => (
+                    <Project
+                        key={item.id}
+                        boxShadow={cardShadow}
+                        mb="20px"
+                        item={item}
+                        image={Project1}
+                        getFunction={getFunction}
+                    />
+                )) : (
                     <Card bg={bg} p="14px">
                         <Flex width={"100%"} justifyContent={"center"}>
                             <Text
@@ -223,8 +221,7 @@ export default function Projects() {
                         </Flex>
                     </Card>
                 )}
-                {Array.isArray(notificationData.object) &&
-                notificationData.object.length > 0 ? (
+                {(notificationData && notificationData?.object) ? (
                     <Pagination
                         showSizeChanger={false}
                         responsive={true}
@@ -234,9 +231,7 @@ export default function Projects() {
                         rootClassName={`mt-10 mb-5 ms-5`}
                         itemRender={itemRender}
                     />
-                ) : (
-                    ""
-                )}
+                ) : ""}
             </Card>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>

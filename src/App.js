@@ -24,7 +24,6 @@ i18n.use(initReactI18next).init({
     fallbackLng: "uz",
 });
 
-
 export default function Main() {
     const { setLanguageData ,languageData } = LanguageStore()
     const [currentTheme, setCurrentTheme] = useState(initialTheme);
