@@ -37,12 +37,12 @@ export async function globalGetFunction({url, setData, setLoading, setTotalEleme
             headers: {Authorization: `Bearer ${token}`,}
         } : config);
 
-        if (data?.error?.code) setData([]);
+        if (data?.error?.code) setData(null);
         else {
             setData(data.data);
 
             if (setTotalElements && data.data.totalElements !== undefined) {
-                setTotalElements(data.data.totalElements); // Agar setTotalElements va totalElements mavjud bo'lsa, qiymatini saqlaymiz
+                setTotalElements(data.data.totalElements);
             }
         }
     } catch (error) {

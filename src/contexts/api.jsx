@@ -1,4 +1,4 @@
-export const base_url = "http://134.122.77.107:8090/";
+export const base_url = "http://185.74.4.138:8090/";
 
 export const getMeUrl = `${base_url}api/user/me`;
 
