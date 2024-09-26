@@ -71,13 +71,22 @@ export default function SellerTerminal() {
         phones: ['']
     }
 
+    const terminalNewUsersInitial = {
+        phone: '',
+        password: ''
+    }
+
     const [formValues, setFormValues] = useState(initialValue);
+    const [terminalNewUsers, setTerminalNewUsers] = useState([terminalNewUsersInitial]);
 
     const [formErrors, setFormErrors] = useState(initialValue);
 
     const resetValue = () => {
         setFormValues(initialValue);
         setFormErrors(initialValue);
+        setTerminalNewUsers([terminalNewUsersInitial])
+        setTerminalSerialCodeInitial(null)
+        setTerminalSerialCode(null)
     };
 
     const handleChange = (e, index) => {
@@ -109,24 +118,6 @@ export default function SellerTerminal() {
 
     const onChange = (page) => setPage(page - 1);
 
-    const handleAddPhone = () => {
-        setFormValues((prev) => ({
-            ...prev,
-            phones: [...prev.phones, ""]
-        }));
-        setFormErrors((prev) => ({
-            ...prev,
-            phones: [...(prev.phones || []), ""]
-        }));
-    };
-
-    const handleRemovePhone = (index) => {
-        const updatedPhones = formValues.phones.filter((_, i) => i !== index);
-        setFormValues({...formValues, phones: updatedPhones});
-        const updatedErrors = (formErrors.phones || []).filter((_, i) => i !== index);
-        setFormErrors({...formErrors, phones: updatedErrors});
-    };
-
     const debouncedPostFunction = debounce((item) => {
         globalPostFunction({
             url: `${terminal_isActive}${item.id}`,
@@ -157,8 +148,8 @@ export default function SellerTerminal() {
                         account: formValues?.account,
                         filialCode: formValues?.filialCode,
                         inn: formValues?.inn,
-                        phones: formValues?.phones,
-                        terminalSerialCode: checkValueSerialCode()
+                        terminalSerialCode: checkValueSerialCode(),
+                        terminalNewUsers: terminalNewUsers
                     }, setLoading: setCreateLoading, getFunction: getFunction
                 })
                 onClose();
@@ -195,6 +186,25 @@ export default function SellerTerminal() {
         else if (terminalSerialCodeInitial && !terminalSerialCode) return terminalSerialCodeInitial
         else if (!terminalSerialCodeInitial && !terminalSerialCode) return null
     }
+
+    const handleAddPhoneNumber = () => {
+        setTerminalNewUsers([...terminalNewUsers, {...terminalNewUsersInitial}]);
+    };
+
+    // Function to handle removing a phone/password field
+    const handleRemovePhoneNumber = (index) => {
+        const updatedList = terminalNewUsers.filter((_, i) => i !== index);
+        setTerminalNewUsers(updatedList);
+    };
+
+    // Function to handle changes in phone field
+    const handleList = (name, value, index) => {
+        const updatedUsers = [...terminalNewUsers];
+        updatedUsers[index][name] = value;
+        setTerminalNewUsers(updatedUsers);
+    };
+
+    console.log(terminalNewUsers)
 
     return (
         <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
@@ -358,39 +368,43 @@ export default function SellerTerminal() {
                             </FormControl>
                             {
                                 isEdit ?
-                                    <FormControl mt={4} isInvalid={formErrors.phones && formErrors.phones.length > 0}>
+                                    <FormControl mt={4}>
                                         <Flex justifyContent={"space-between"} alignItems={"center"}>
-                                            <FormLabel>{t("phones")}</FormLabel>
-                                            {formValues.phones.length < 5 && (
-                                                <Button mt={2} onClick={handleAddPhone} p={0} mb={4} bg={"transparent"}>
-                                                    <FaPlus/>
-                                                </Button>
-                                            )}
+                                            <FormLabel>{t('phone')}</FormLabel>
+                                            <Button mt={2} onClick={handleAddPhoneNumber} p={0} mb={4}
+                                                    bg={"transparent"}>
+                                                <FaPlus/>
+                                            </Button>
                                         </Flex>
-                                        {formValues.phones.length > 0 && formValues.phones.map((phone, index) => (
+                                        {terminalNewUsers && terminalNewUsers.map((user, index) => (
                                             <InputGroup key={index} mb={3}>
                                                 <Input
-                                                    placeholder={`${t("phone")} ${index + 1}`}
+                                                    placeholder={`${t('phone')} ${index + 1}`}
                                                     name="phones"
-                                                    value={phone}
-                                                    onChange={(e) => handleChange(e, index)}
+                                                    value={user.phone}
+                                                    onChange={(e) => handleList('phone', e.target.value, index)}
+                                                    color={inputTextColor}
+                                                    type={`number`}
+                                                />
+                                                <Input
+                                                    placeholder={`${t('password')} ${index + 1}`}
+                                                    name="password"
+                                                    value={user.password}
+                                                    onChange={(e) => handleList('password', e.target.value, index)}
                                                     color={inputTextColor}
                                                 />
                                                 {index > 0 && (
                                                     <InputRightElement>
                                                         <IconButton
                                                             size="sm"
-                                                            onClick={() => handleRemovePhone(index)}
+                                                            onClick={() => handleRemovePhoneNumber(index)}
                                                             icon={<FaMinus/>}
-                                                            aria-label={``}
+                                                            aria-label="Remove"
                                                         />
                                                     </InputRightElement>
                                                 )}
                                             </InputGroup>
                                         ))}
-                                        {formErrors.phones && formErrors.phones.length > 0 &&
-                                            <Text color="red.500">{t("phoneError")}</Text>}
-
                                     </FormControl>
                                     :
                                     <FormControl mt={4} isInvalid={!!formErrors.phone}>
