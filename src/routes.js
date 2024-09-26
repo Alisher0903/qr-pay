@@ -71,7 +71,7 @@ export const generateRoutes = (t) => [
         layout: '/seller',
         path: '/dashboard',
         icon: <Icon as={MdHome} width="20px" height="20px" color="inherit"/>,
-        component: <SellerDashboard/>,
+        component: <AdminDashboard/>,
     },
     {
         name: t('terminal'),

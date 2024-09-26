@@ -1,223 +1,125 @@
-import React, {useRef, useState} from "react";
-import {
-    Box,
-    Button,
-    Flex,
-    FormControl,
-    FormLabel,
-    Grid,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalHeader,
-    ModalOverlay,
-    ModalFooter,
-    Text,
-    useColorModeValue,
-    useDisclosure,
-} from "@chakra-ui/react";
-
-import TableTopCreators from "views/admin/partner/components/TableTopCreators";
-import Card from "components/card/Card.js";
-
-import tableDataTopCreators from "views/admin/partner/variables/tableDataTopCreators.json";
-import {tableColumnsTopCreators} from "views/admin/partner/variables/tableColumnsTopCreators";
-import axios from "axios";
-import {config} from "../../../contexts/token";
-import {user_register} from "../../../contexts/api";
-import {consoleClear, toastMessage} from "../../../contexts/toast-message";
-import toast from "react-hot-toast";
+import {Box, SimpleGrid, Tr, Td, Input, useColorModeValue} from "@chakra-ui/react";
+import ComplexTable from "../dataTables/components/ComplexTable";
+import {Pagination} from "antd";
+import {TerminalStore} from "../../../contexts/state-management/terminal/terminalStory";
+import React, {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
+import {globalGetFunction} from "../../../contexts/logic-function/globalFunktion";
+import {user_merchant} from "../../../contexts/api";
 
 export default function Partner() {
-    // const inputTextColor = useColorModeValue('gray.800', 'white');
-    // const {isOpen, onOpen, onClose} = useDisclosure();
-    // const initialRef = useRef(null);
-    // const finalRef = useRef(null);
-    // const [formValues, setFormValues] = useState({
-    //     firstName: '',
-    //     lastName: '',
-    //     phone: '',
-    //     email: '',
-    //     password: ''
-    // });
-    // const [formErrors, setFormErrors] = useState({
-    //     firstName: '',
-    //     lastName: '',
-    //     phone: '',
-    //     email: '',
-    //     password: ''
-    // });
-    // const [isLoading, setIsLoading] = useState(false)
+    const {t} = useTranslation()
+    const {page, setPage, totalPage, setTotalPages} = TerminalStore()
+    const [merchantData, setMerchantData] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [fullName, setFullName] = useState('')
+    const [inn, setInn] = useState('')
+    const [filialCode, setFilialCode] = useState('')
+    const [phone, setPhone] = useState('')
+    const inputTextColor = useColorModeValue('gray.800', 'white');
 
-    // const merchantSave = async () => {
-    //     setIsLoading(true)
-    //     try {
-    //         const {data} = await axios.post(user_register, formValues, config);
-    //         if (data?.error?.code) {
-    //             setIsLoading(false)
-    //             toastMessage(data?.error?.code)
-    //         }
-    //         else {
-    //             setIsLoading(false)
-    //             toast.success('Merchant saved successfully')
-    //             onClose();
-    //             resetValue()
-    //         }
-    //     } catch (err) {
-    //         setIsLoading(false)
-    //         console.log(err)
-    //         consoleClear()
-    //     }
-    // }
+    useEffect(() => {
+        getMerchant()
+    }, []);
 
-    // const resetValue = () => {
-    //     setFormValues({
-    //         firstName: '',
-    //         lastName: '',
-    //         phone: '',
-    //         email: '',
-    //         password: ''
-    //     });
-    //     setFormErrors({
-    //         firstName: '',
-    //         lastName: '',
-    //         phone: '',
-    //         email: '',
-    //         password: ''
-    //     });
-    // }
+    useEffect(() => {
+        getMerchant()
+    }, [page, fullName, inn, filialCode, phone]);
 
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target;
-    //     setFormValues({...formValues, [name]: value});
+    const getTestUrl = () => {
+        const queryParams = [
+            fullName ? `fullName=${fullName}` : '',
+            inn ? `inn=${inn}` : '',
+            filialCode ? `filialCode=${filialCode}` : '',
+            phone ? `phone=${phone}` : ''
+        ].filter(Boolean).join('&');
 
-    //     // Simple validation example
-    //     const errors = {};
-    //     if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
-    //         errors.phone = "The phone number must start with +998 and contain 13 characters";
-    //     } else if (name === "password" && value.length < 3) errors.password = "Password must be at least 3 characters long.";
-    //     else if (value.trim() === '') errors[name] = `${name} is required`;
-    //     setFormErrors({...formErrors, ...errors});
-    // };
-
-    // const handleSave = async () => {
-    //     const errors = {};
-    //     Object.keys(formValues).forEach(key => {
-    //         if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
-    //             errors.phone = "The phone number must start with +998 and contain 13 characters";
-    //         } else if (key === "password" && formValues[key].length < 3) errors.password = "Password must be at least 3 characters long.";
-    //         else if (formValues[key].trim() === '') errors[key] = `${key} is required`;
-    //     });
-
-    //     if (Object.keys(errors).length === 0) await merchantSave()
-    //     else setFormErrors(errors);
-    // };
+        return `${user_merchant}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+    }
+    const getMerchant = async () => {
+        await globalGetFunction({
+            url: getTestUrl(),
+            setLoading,
+            setTotalElements: setTotalPages,
+            setData: setMerchantData,
+        })
+    }
 
     return (
-        <Box pt={{base: "180px", md: "80px", xl: "80px"}}>
-            {/* Main Fields */}
-            <Grid
-                // mb='20px'
-                gridTemplateColumns={{xl: "repeat(3, 1fr)", "2xl": "1fr 0.46fr"}}
-                gap={{base: "20px", xl: "20px"}}
-                display={{base: "block", xl: "grid"}}>
-                <Flex
-                    flexDirection='column'
-                    gridArea={{xl: "1 / 1 / 2 / 4", "2xl": "1 / 1 / 2 / 2"}}>
-                    <Card px='0px'>
-                        <TableTopCreators
-                            tableData={tableDataTopCreators}
-                            columnsData={tableColumnsTopCreators}
-                        />
-                    </Card>
-                </Flex>
-            </Grid>
-
-                {/* <Modal
-                initialFocusRef={initialRef}
-                finalFocusRef={finalRef}
-                isOpen={isOpen}
-                onClose={() => {
-                    onClose()
-                    resetValue()
-                }}
+        <Box pt={{base: "130px", md: "80px", xl: "90px"}}>
+            <SimpleGrid
+                mb="20px"
+                columns={{sm: 1}}
+                spacing={{base: "20px", xl: "20px"}}
             >
-                <ModalOverlay/>
-                <ModalContent>
-                    <ModalHeader>Create merchant</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody pb={6}>
-                        <FormControl isInvalid={!!formErrors.firstName}>
-                            <FormLabel>First name</FormLabel>
-                            <Input
-                                name="firstName"
-                                ref={initialRef}
-                                placeholder="Enter the firstname"
-                                value={formValues.firstName}
-                                onChange={handleChange}
-                                color={inputTextColor}
-                            />
-                            {formErrors.firstName && <Text color="red.500" fontSize="sm">{formErrors.firstName}</Text>}
-                        </FormControl>
-                        <FormControl mt={4} isInvalid={!!formErrors.lastName}>
-                            <FormLabel>Last name</FormLabel>
-                            <Input
-                                name="lastName"
-                                placeholder="Enter the lastname"
-                                value={formValues.lastName}
-                                onChange={handleChange}
-                                color={inputTextColor}
-                            />
-                            {formErrors.lastName && <Text color="red.500" fontSize="sm">{formErrors.lastName}</Text>}
-                        </FormControl>
-                        <FormControl mt={4} isInvalid={!!formErrors.phone}>
-                            <FormLabel>Phone number</FormLabel>
-                            <Input
-                                name="phone"
-                                placeholder="Enter the phone number"
-                                value={formValues.phone}
-                                onChange={handleChange}
-                                color={inputTextColor}
-                            />
-                            {formErrors.phone && <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
-                        </FormControl>
-                        <FormControl mt={4} isInvalid={!!formErrors.email}>
-                            <FormLabel>Email</FormLabel>
-                            <Input
-                                name="email"
-                                placeholder="Enter the email"
-                                value={formValues.email}
-                                onChange={handleChange}
-                                color={inputTextColor}
-                            />
-                            {formErrors.email && <Text color="red.500" fontSize="sm">{formErrors.email}</Text>}
-                        </FormControl>
-                        <FormControl mt={4} isInvalid={!!formErrors.password}>
-                            <FormLabel>Password</FormLabel>
-                            <Input
-                                name="password"
-                                placeholder="Enter the password"
-                                value={formValues.password}
-                                onChange={handleChange}
-                                color={inputTextColor}
-                            />
-                            {formErrors.password && <Text color="red.500" fontSize="sm">{formErrors.password}</Text>}
-                        </FormControl>
-                    </ModalBody>
-
-                    <ModalFooter display={"flex"} gap={"10px"}>
-                        <Button colorScheme="red" onClick={() => {
-                            onClose()
-                            resetValue()
-                        }}>Cancel</Button>
-                        <Button colorScheme="blue" onClick={handleSave} disabled={isLoading}>
-                            {isLoading ? 'Loading...' : 'Save'}
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal> */}
+                <Box
+                    display="grid"
+                    gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
+                    gap={5}
+                >
+                    <Input
+                        name="fulleName"
+                        type={`search`}
+                        placeholder={`${t('fullName')} ${t('search_by')}`}
+                        value={fullName}
+                        onChange={e => setFullName(e.target.value)}
+                        color={inputTextColor}
+                    />
+                    <Input
+                        name="inn"
+                        type={`search`}
+                        placeholder={`${t('inn')} ${t('search_by')}`}
+                        value={inn}
+                        onChange={e => setInn(e.target.value)}
+                        color={inputTextColor}
+                    />
+                    <Input
+                        name="filialCode"
+                        type={`search`}
+                        placeholder={`${t('filial_code')} ${t('search_by')}`}
+                        value={filialCode}
+                        onChange={e => setFilialCode(e.target.value)}
+                        color={inputTextColor}
+                    />
+                    <Input
+                        name="phone"
+                        type={`search`}
+                        placeholder={`${t('phone')} ${t('search_by')}`}
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        color={inputTextColor}
+                    />
+                </Box>
+                <ComplexTable
+                    name={`${t("merchant")} ${t("table")}`}
+                    thead={['T/r', t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code")]}
+                >
+                    {loading ? <Tr>
+                        <Td textAlign={"center"} colSpan={7}>{t("loading")}</Td>
+                    </Tr> : merchantData && merchantData?.object ?
+                        merchantData?.object.map((item, i) =>
+                            <Tr key={i}>
+                                <Td>{(page * 10) + i + 1}</Td>
+                                <Td>{item.firstName ? item.firstName : '-'}</Td>
+                                <Td>{item.lastName ? item.lastName : '-'}</Td>
+                                <Td>{item.phone ? item.phone : '-'}</Td>
+                                <Td>{item.email ? item.email : '-'}</Td>
+                                <Td>{item.inn ? item.inn : '-'}</Td>
+                                <Td>{item.filial_code ? item.filial_code : '-'}</Td>
+                            </Tr>
+                        ) : <Tr>
+                            <Td textAlign={"center"} colSpan={7}>{t("merchant")} {t("notFound")}</Td>
+                        </Tr>
+                    }
+                </ComplexTable>
+                <Pagination
+                    showSizeChanger={false}
+                    responsive={true}
+                    defaultCurrent={1}
+                    total={totalPage}
+                    onChange={page => setPage(page - 1)}
+                />
+            </SimpleGrid>
         </Box>
     );
 }

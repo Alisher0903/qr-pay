@@ -76,5 +76,7 @@ export const TranslateRu = {
     table: "расписание",
     terminalSerialCode: "Серийный код терминала",
     optional: "необязательный",
+    merchant: "Торговец",
+    search_by: "поиск по",
     notification: "Уведомление"
 };

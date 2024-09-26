@@ -17,35 +17,31 @@ import {
     useDisclosure,
     useColorModeValue,
     Text,
-    Switch,
-    InputGroup,
-    InputRightElement,
-    IconButton,
     Grid,
     Flex,
     GridItem
 } from "@chakra-ui/react";
-import { Pagination, Popover } from "antd";
-import { seller_order_get } from "contexts/api";
-import { admin_notification_count } from "contexts/api";
-import { order_cancel } from "contexts/api";
-import { terminal_order_get } from "contexts/api";
-import { admin_order_get } from "contexts/api";
-import { seller_notification_count } from "contexts/api";
-import { terminal_notification_count } from "contexts/api";
-import { order_create } from "contexts/api";
-import { globalPostFunction } from "contexts/logic-function/globalFunktion";
-import { globalGetFunction } from "contexts/logic-function/globalFunktion";
-import { NotificationStore } from "contexts/state-management/notification/notificationStore";
-import { PaymentStore } from "contexts/state-management/payment/paymentStore";
-import { setConfig } from "contexts/token";
-import { QRCodeSVG } from "qrcode.react";
-import React, { useEffect, useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { RiRefund2Line } from "react-icons/ri";
+import {Pagination, Popover} from "antd";
+import {seller_order_get} from "contexts/api";
+import {admin_notification_count} from "contexts/api";
+import {order_cancel} from "contexts/api";
+import {terminal_order_get} from "contexts/api";
+import {admin_order_get} from "contexts/api";
+import {seller_notification_count} from "contexts/api";
+import {terminal_notification_count} from "contexts/api";
+import {order_create} from "contexts/api";
+import {globalPostFunction} from "contexts/logic-function/globalFunktion";
+import {globalGetFunction} from "contexts/logic-function/globalFunktion";
+import {NotificationStore} from "contexts/state-management/notification/notificationStore";
+import {PaymentStore} from "contexts/state-management/payment/paymentStore";
+import {setConfig} from "contexts/token";
+import {QRCodeSVG} from "qrcode.react";
+import React, {useEffect, useState} from "react";
+import {FaEye} from "react-icons/fa";
+import {RiRefund2Line} from "react-icons/ri";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 import moment from "moment";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 export default function SellerOrder() {
     const {
@@ -54,10 +50,10 @@ export default function SellerOrder() {
         page,
         setTotalPages,
     } = PaymentStore();
-    const { t } = useTranslation()
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { isOpen: isCancelModal, onOpen: openCancelModal, onClose: closeCancelModal } = useDisclosure();
-    const { setCountData, setLoading } = NotificationStore()
+    const {t} = useTranslation()
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const {isOpen: isCancelModal, onOpen: openCancelModal, onClose: closeCancelModal} = useDisclosure();
+    const {setCountData, setLoading} = NotificationStore()
     const [detailData, setDetailData] = useState({})
     const [createLoading, setCreateLoading] = useState(false);
     const [isCreate, setIsCreate] = useState(false);
@@ -118,40 +114,28 @@ export default function SellerOrder() {
         });
     };
 
-    const itemRender = (_, type, originalElement) => {
-        if (type === 'page') {
-            return (
-                <a
-                    className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
-                    {originalElement}
-                </a>
-            );
-        }
-        return originalElement;
-    };
-
     const onChange = (page) => setPage(page - 1)
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
+        const {name, value} = e.target;
+        setFormValues({...formValues, [name]: value});
         const errors = {};
         if (value.trim() === '') {
             errors[name] = `${t(name)}${t("error")}`;
         } else {
             errors[name] = ""
         }
-          setFormErrors({ ...formErrors, ...errors });
+        setFormErrors({...formErrors, ...errors});
         // Simple validation example
     };
 
     const handleSave = () => {
         const errors = {};
         Object.keys(formValues).forEach(key => {
-         if (formValues[key].trim() === '') {
-          errors[key] = `${t(key)}${t("error")}`;
-        }
-      });
+            if (formValues[key].trim() === '') {
+                errors[key] = `${t(key)}${t("error")}`;
+            }
+        });
         if (Object.keys(errors).length === 0) {
             globalPostFunction({
                 url: `${order_create}`, postData: {
@@ -166,11 +150,11 @@ export default function SellerOrder() {
     };
 
     return (
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
             <SimpleGrid
                 mb="20px"
-                columns={{ sm: 1 }}
-                spacing={{ base: "20px", xl: "20px" }}
+                columns={{sm: 1}}
+                spacing={{base: "20px", xl: "20px"}}
             >
                 <ComplexTable
                     name={`${t("payment")} ${t("table")}`}
@@ -178,7 +162,7 @@ export default function SellerOrder() {
                         role !== "ROLE_SUPER_ADMIN" && <Button
                             bg={bgColor}
                             color={textColor}
-                            _hover={{ bg: hoverBgColor }}
+                            _hover={{bg: hoverBgColor}}
                             _active={{
                                 bg: hoverBgColor,
                                 transform: "scale(0.98)",
@@ -189,15 +173,15 @@ export default function SellerOrder() {
                             }}>{t("createPayment")}</Button>}
                     thead={['T/r', t("partner"), t("purpose"), t("date"), t("action"), t("refund")]}
                 >
-                    {
-                        Array.isArray(paymentData.object) && paymentData.object.length > 0 ? paymentData.object.map((item, i) =>
+                    {(paymentData && paymentData?.object) ?
+                        paymentData.object.map((item, i) =>
                             <Tr key={i}>
                                 <Td>{(page * 10) + i + 1}</Td>
                                 <Td>{item.partner ? item.partner : ""}</Td>
                                 <Td>{item.purpose ? item.purpose.length > 25 ? <>
                                     <Popover
                                         title={item.purpose}
-                                        overlayStyle={{ width: '30%' }}
+                                        overlayStyle={{width: '30%'}}
                                     >
                                         {`${item.purpose.slice(0, 25)}...`}
                                     </Popover>
@@ -210,8 +194,8 @@ export default function SellerOrder() {
                                             setDetailData(item)
                                             onOpen()
                                         }}>
-                                            <Popover title={t("viewMore")} overlayStyle={{ textAlign: 'center' }}>
-                                                <FaEye color={navbarIcon} size={23} />
+                                            <Popover title={t("viewMore")} overlayStyle={{textAlign: 'center'}}>
+                                                <FaEye color={navbarIcon} size={23}/>
                                             </Popover>
                                         </button>
                                     </Box>
@@ -222,29 +206,27 @@ export default function SellerOrder() {
                                             setDetailData(item)
                                             openCancelModal()
                                         }}>
-                                            <Popover title={t("refund")} overlayStyle={{ textAlign: 'center' }}>
-                                                <RiRefund2Line color={navbarIcon} size={23} />
+                                            <Popover title={t("refund")} overlayStyle={{textAlign: 'center'}}>
+                                                <RiRefund2Line color={navbarIcon} size={23}/>
                                             </Popover>
                                         </button>
                                     </Box>
                                 </Td>
                             </Tr>
                         ) :
-                            <Tr>
-                                <Td textAlign={"center"} colSpan={5}>{t("payment")}{t("notFound")}</Td>
-                            </Tr>
+                        <Tr>
+                            <Td textAlign={"center"} colSpan={6}>{t("payment")}{t("notFound")}</Td>
+                        </Tr>
                     }
                 </ComplexTable>
             </SimpleGrid>
-            {Array.isArray(paymentData.object) && paymentData.object.length > 0 &&
+            {(paymentData && paymentData?.object) &&
                 <Pagination
                     showSizeChanger={false}
                     responsive={true}
                     defaultCurrent={1}
                     total={totalPage}
                     onChange={onChange}
-                    rootClassName={`mt-10 mb-5 ms-5`}
-                    itemRender={itemRender}
                 />
             }
             <Modal
@@ -257,89 +239,101 @@ export default function SellerOrder() {
                     resetValue();
                 }}
             >
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent>
                     <ModalHeader>{isCreate ? t("createPayment") : ""}</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalCloseButton/>
                     <ModalBody pb={6}>
-                        {
-                            isCreate ?
-                                <>
-                                    <FormControl mt={4} isInvalid={!!formErrors.amount}>
-                                        <FormLabel>{t("amount")}</FormLabel>
-                                        <Input
-                                            type="number"
-                                            name="amount"
-                                            placeholder={t("enterTheAmount")}
-                                            value={formValues.amount}
-                                            onChange={handleChange}
-                                            color={inputTextColor}
-                                        />
-                                        {formErrors.amount &&
-                                            <Text color="red.500" fontSize="sm">{formErrors.amount}</Text>}
-                                    </FormControl>
+                        {isCreate ?
+                            <>
+                                <FormControl mt={4} isInvalid={!!formErrors.amount}>
+                                    <FormLabel>{t("amount")}</FormLabel>
+                                    <Input
+                                        type="number"
+                                        name="amount"
+                                        placeholder={t("enterTheAmount")}
+                                        value={formValues.amount}
+                                        onChange={handleChange}
+                                        color={inputTextColor}
+                                    />
+                                    {formErrors.amount &&
+                                        <Text color="red.500" fontSize="sm">{formErrors.amount}</Text>}
+                                </FormControl>
 
-                                </>
-                                :
-                                <Grid overflow={"hidden"} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={6} px={5}>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("extId")}: </Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("partner")}: </Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("localQRId")}:</Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "-"}</Text>
-                                    </Flex>
-                                    <GridItem colSpan={{ base: 1, md: 2 }} display={"flex"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("purpose")}: </Text>
-                                        <Text width={"70%"}
-                                            fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "-"}</Text>
-                                    </GridItem>
-                                    <GridItem colSpan={{ base: 1, md: 2 }} flexDirection={{ base: "column", md: "row" }} display={"flex"} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("QRId")}:</Text>
-                                        <Text width={'70%'}
-                                            fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "-"}</Text>
-                                    </GridItem>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("QRAmount")}:</Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("rate")}:</Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.rate || detailData.rate === 0 ? detailData.rate : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("status")}:</Text>
-                                        <Text
-                                            fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "-"}</Text>
-                                    </Flex>
-                                    <Flex width={"100%"} flexDirection={{ base: "column", md: "row" }} justifyContent={"space-between"} pe={5}>
-                                        <Text fontSize={"17px"} fontWeight={"700"}>{t("date")}:</Text>
-                                        <Text fontSize={"17px"}>
-                                            {detailData.updated_at || detailData.updated_at === 0 ? `${detailData.updated_at.slice(0, 10)} ${detailData.updated_at.slice(11, 16)}` : "-"}
-                                        </Text>
-                                    </Flex>
-                                    <GridItem width={"100%"} colSpan={{ base: 1, md: 2 }} display={"flex"} justifyContent={"center"}>
-                                        <QRCodeSVG
-                                            value={detailData.url ? detailData.url : "https://qr.nspk.ru/"}
-                                            renderAs="canvas"
-                                        />
-                                    </GridItem>
-                                </Grid>
+                            </>
+                            :
+                            <Grid overflow={"hidden"}
+                                  templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={6} px={5}>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("extId")}: </Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("partner")}: </Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("localQRId")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "-"}</Text>
+                                </Flex>
+                                <GridItem colSpan={{base: 1, md: 2}} display={"flex"}
+                                          flexDirection={{base: "column", md: "row"}}
+                                          justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("purpose")}: </Text>
+                                    <Text width={"70%"}
+                                          fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "-"}</Text>
+                                </GridItem>
+                                <GridItem colSpan={{base: 1, md: 2}} flexDirection={{base: "column", md: "row"}}
+                                          display={"flex"} justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("QRId")}:</Text>
+                                    <Text width={'70%'}
+                                          fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "-"}</Text>
+                                </GridItem>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("QRAmount")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("rate")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.rate || detailData.rate === 0 ? detailData.rate : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("status")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("date")}:</Text>
+                                    <Text fontSize={"17px"}>
+                                        {detailData.updated_at || detailData.updated_at === 0 ? `${detailData.updated_at.slice(0, 10)} ${detailData.updated_at.slice(11, 16)}` : "-"}
+                                    </Text>
+                                </Flex>
+                                <GridItem width={"100%"} colSpan={{base: 1, md: 2}} display={"flex"}
+                                          justifyContent={"center"}>
+                                    <QRCodeSVG
+                                        value={detailData.url ? detailData.url : "https://qr.nspk.ru/"}
+                                        renderAs="canvas"
+                                    />
+                                </GridItem>
+                            </Grid>
                         }
                     </ModalBody>
 
@@ -352,7 +346,7 @@ export default function SellerOrder() {
                                     resetValue();
                                 }}>{t("cancel")}</Button>
                                 <Button colorScheme="blue" onClick={handleSave}>
-                                {t("save")}
+                                    {t("save")}
                                 </Button>
                             </>
                         }
@@ -360,17 +354,17 @@ export default function SellerOrder() {
                 </ModalContent>
             </Modal>
             <Modal isOpen={isCancelModal} onClose={closeCancelModal}>
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent>
                     <ModalHeader>{t("cancel")} {t("payment")}</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalCloseButton/>
                     <ModalBody>
-                    {t("cancelModal")}
+                        {t("cancelModal")}
                     </ModalBody>
 
                     <ModalFooter display={"flex"} gap={"10px"}>
                         <Button colorScheme="red" mr={3} onClick={closeCancelModal}>
-                        {t("close")}
+                            {t("close")}
                         </Button>
                         <Button
                             colorScheme="blue"

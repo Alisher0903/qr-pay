@@ -7,6 +7,7 @@ export const user_register = `${base_url}api/user/register`;
 export const user_login = `${base_url}api/user/login`;
 export const user_request = `${base_url}request/save`;
 export const user_edit = `${base_url}api/user/update`;
+export const user_merchant = `${base_url}api/user/page`;
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;
