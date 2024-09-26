@@ -1,6 +1,6 @@
-import {Box, SimpleGrid, Tr, Td, Input, useColorModeValue} from "@chakra-ui/react";
+import {Box, SimpleGrid, Tr, Td} from "@chakra-ui/react";
 import ComplexTable from "../dataTables/components/ComplexTable";
-import {Pagination} from "antd";
+import {Pagination, Input} from "antd";
 import {TerminalStore} from "../../../contexts/state-management/terminal/terminalStory";
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
@@ -16,7 +16,6 @@ export default function Partner() {
     const [inn, setInn] = useState('')
     const [filialCode, setFilialCode] = useState('')
     const [phone, setPhone] = useState('')
-    const inputTextColor = useColorModeValue('gray.800', 'white');
 
     useEffect(() => {
         getMerchant()
@@ -54,40 +53,36 @@ export default function Partner() {
             >
                 <Box
                     display="grid"
-                    gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
+                    gridTemplateColumns={{base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)"}}
                     gap={5}
                 >
                     <Input
-                        name="fulleName"
-                        type={`search`}
+                        style={{padding: '10px'}}
                         placeholder={`${t('fullName')} ${t('search_by')}`}
                         value={fullName}
                         onChange={e => setFullName(e.target.value)}
-                        color={inputTextColor}
+                        allowClear
                     />
                     <Input
-                        name="inn"
-                        type={`search`}
+                        style={{padding: '10px'}}
                         placeholder={`${t('inn')} ${t('search_by')}`}
                         value={inn}
                         onChange={e => setInn(e.target.value)}
-                        color={inputTextColor}
+                        allowClear
                     />
                     <Input
-                        name="filialCode"
-                        type={`search`}
+                        style={{padding: '10px'}}
                         placeholder={`${t('filial_code')} ${t('search_by')}`}
                         value={filialCode}
                         onChange={e => setFilialCode(e.target.value)}
-                        color={inputTextColor}
+                        allowClear
                     />
                     <Input
-                        name="phone"
-                        type={`search`}
+                        style={{padding: '10px'}}
                         placeholder={`${t('phone')} ${t('search_by')}`}
                         value={phone}
                         onChange={e => setPhone(e.target.value)}
-                        color={inputTextColor}
+                        allowClear
                     />
                 </Box>
                 <ComplexTable

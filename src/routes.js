@@ -1,16 +1,11 @@
 import {Icon} from '@chakra-ui/react';
-import {
-    MdBarChart,
-    MdPerson,
-    MdHome,
-    MdLock,
-    MdOutlineShoppingCart,
-} from 'react-icons/md';
+import {MdHome, MdLock, MdOutlineShoppingCart,} from 'react-icons/md';
 import {TbCashRegister} from 'react-icons/tb';
-import {IoQrCode} from 'react-icons/io5';
+import {IoQrCode, IoTerminal} from 'react-icons/io5';
 import {RiRefund2Line} from 'react-icons/ri';
+import {SiContactlesspayment} from "react-icons/si";
+import {FaCodePullRequest} from "react-icons/fa6";
 import AdminDashboard from 'views/admin/default';
-import SellerDashboard from 'views/seller/default';
 import Partner from 'views/admin/partner';
 import SignInCentered from 'views/auth/signIn';
 import SellerTerminal from 'views/seller/terminal';
@@ -40,7 +35,7 @@ export const generateRoutes = (t) => [
     {
         name: t('payment'),
         layout: '/admin',
-        icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit"/>,
+        icon: <Icon as={SiContactlesspayment} width="20px" height="20px" color="inherit"/>,
         path: '/payments',
         component: <SellerOrder/>,
     },
@@ -48,14 +43,14 @@ export const generateRoutes = (t) => [
         name: t('terminal'),
         layout: '/admin',
         path: '/terminal',
-        icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+        icon: <Icon as={IoTerminal} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
     },
     {
         name: t('request'),
         layout: '/admin',
         path: '/request',
-        icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
+        icon: <Icon as={FaCodePullRequest} width="20px" height="20px" color="inherit"/>,
         component: <Request/>,
     },
     {
