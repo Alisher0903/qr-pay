@@ -57,7 +57,7 @@ export default function Projects() {
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
   const navbarIcon = useColorModeValue("#1B255A", "white");
-  const role = localStorage.getItem("ROLE");
+  const role = sessionStorage.getItem("ROLE");
   const bg = useColorModeValue("white", "navy.700");
 
   const { t } = useTranslation();

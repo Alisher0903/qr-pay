@@ -17,7 +17,7 @@ export function SidebarLinks(props) {
     let brandColor = useColorModeValue("brand.500", "brand.400");
 
     const {routes} = props;
-    const role = localStorage.getItem('ROLE')
+    const role = sessionStorage.getItem('ROLE')
 
     // verifies if routeName is the one active (in browser input)
     const activeRoute = (routeName) => {

@@ -29,12 +29,12 @@ export default function Main() {
     const [currentTheme, setCurrentTheme] = useState(initialTheme);
     const {pathname} = useLocation();
     const navigate = useNavigate();
-    const tokens = localStorage.getItem('token');
-    const role = localStorage.getItem('ROLE');
-    const tokenExpiry = localStorage.getItem('tokenExpiry');
+    const tokens = sessionStorage.getItem('token');
+    const role = sessionStorage.getItem('ROLE');
+    const tokenExpiry = sessionStorage.getItem('tokenExpiry');
 
     useEffect(() => {
-        setLanguageData(localStorage.getItem("selectedLang"))
+        setLanguageData(sessionStorage.getItem("selectedLang"))
     }, []);
 
     useEffect(() => {
@@ -71,14 +71,14 @@ export default function Main() {
         if (tokens && tokenExpiry) {
             const now = new Date().getTime();
             if (now > parseInt(tokenExpiry)) {
-                localStorage.removeItem('token');
-                localStorage.removeItem('tokenExpiry');
-                localStorage.removeItem('ROLE');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('tokenExpiry');
+                sessionStorage.removeItem('ROLE');
             }
         } else {
-            localStorage.removeItem('token');
-            localStorage.removeItem('tokenExpiry');
-            localStorage.removeItem('ROLE');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('tokenExpiry');
+            sessionStorage.removeItem('ROLE');
         }
 
         if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/sign-in');

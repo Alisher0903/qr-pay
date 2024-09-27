@@ -101,9 +101,9 @@ function SignIn() {
             } else {
                 setLoading(false)
                 const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
-                localStorage.setItem('tokenExpiry', expiryTime.toString());
-                localStorage.setItem("token", data.data.token)
-                localStorage.setItem("ROLE", data.data.role)
+                sessionStorage.setItem('tokenExpiry', expiryTime.toString());
+                sessionStorage.setItem("token", data.data.token)
+                sessionStorage.setItem("ROLE", data.data.role)
                 setRoles(data.data.role)
                 await userGetMe({setData: setGetMeeData, token: data.data.token});
                 await globalGetFunction({

@@ -70,7 +70,7 @@ export default function HeaderLinks(props) {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const role = localStorage.getItem("ROLE");
+  const role = sessionStorage.getItem("ROLE");
 
   const initialValue = {
     firstName: "",
@@ -106,8 +106,8 @@ export default function HeaderLinks(props) {
   useEffect(() => {
     if (response) {
       const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000
-      localStorage.setItem('tokenExpiry', expiryTime.toString())
-      localStorage.setItem('token', response)
+      sessionStorage.setItem('tokenExpiry', expiryTime.toString())
+      sessionStorage.setItem('token', response)
       setResponse('')
       onClose()
       userGetMe({ setData: setGetMeeData })
@@ -290,7 +290,7 @@ export default function HeaderLinks(props) {
               <MenuItem minH='30px'
                 onClick={() => {
                   setLanguageData('uz')
-                  localStorage.setItem("selectedLang", 'uz')
+                  sessionStorage.setItem("selectedLang", 'uz')
                 }}>
                 <Image
                   boxSize='2rem'
@@ -304,7 +304,7 @@ export default function HeaderLinks(props) {
               <MenuItem minH='30px'
                 onClick={() => {
                   setLanguageData('ru')
-                  localStorage.setItem("selectedLang", 'ru')
+                  sessionStorage.setItem("selectedLang", 'ru')
                 }}>
                 <Image
                   boxSize='2rem'
@@ -499,9 +499,9 @@ export default function HeaderLinks(props) {
                   px="14px"
                   onClick={() => {
                     sessionStorage.removeItem("pathname");
-                    localStorage.removeItem("ROLE");
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("tokenExpiry");
+                    sessionStorage.removeItem("ROLE");
+                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("tokenExpiry");
                     navigate("/auth/sign-in");
                   }}
                 >

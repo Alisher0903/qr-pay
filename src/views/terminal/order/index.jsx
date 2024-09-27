@@ -32,7 +32,7 @@ import { terminal_order_get } from "contexts/api";
     const finalRef = React.useRef(null);
   
     // Setting input text color based on color mode
-    const role = localStorage.getItem("ROLE");
+    const role = sessionStorage.getItem("ROLE");
     const inputTextColor = useColorModeValue('gray.800', 'white');
     const bgColor = useColorModeValue('#422AFB', '#7551FF');
     const textColor = useColorModeValue('white', 'white');
