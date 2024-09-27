@@ -14,6 +14,7 @@ import { initReactI18next } from "react-i18next";
 import { TranslateUz } from 'variables/locales/translateUz';
 import { TranslateRu } from 'variables/locales/translateRu';
 import { LanguageStore } from 'contexts/state-management/language/languageStore';
+import { siteSecurity } from 'contexts/allRequest';
 
 i18n.use(initReactI18next).init({
     resources: {
@@ -35,6 +36,7 @@ export default function Main() {
 
     useEffect(() => {
         setLanguageData(localStorage.getItem("selectedLang"))
+        siteSecurity()
     }, []);
 
     useEffect(() => {

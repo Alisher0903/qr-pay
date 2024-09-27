@@ -68,7 +68,7 @@ export async function globalPostFunction({url, postData, setLoading, getFunction
         toast.error('Error during create operation:');
     } finally {
         if (setLoading) setLoading(false);
-        // consoleClear()
+        consoleClear()
     }
 }
 
@@ -86,6 +86,6 @@ export async function globalPutFunction({url, putData, setLoading, getFunction, 
         // toast.error('Error during update operation:');
     } finally {
         if (setLoading) setLoading(false);
-        // consoleClear()
+        consoleClear()
     }
 }
