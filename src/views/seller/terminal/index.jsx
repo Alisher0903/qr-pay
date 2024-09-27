@@ -209,7 +209,7 @@ export default function SellerTerminal() {
         setTerminalNewUsers(updatedUsers);
     };
 
-    console.log(terminalNewUsers)
+    // console.log(terminalNewUsers)
 
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>

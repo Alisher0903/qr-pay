@@ -83,7 +83,7 @@ export default function Projects() {
     });
   }, [page]);
 
-  console.log("notificationData", notificationData);
+  // console.log("notificationData", notificationData);
 
   const getFunction = async () => {
     await globalGetFunction({
@@ -155,7 +155,7 @@ export default function Projects() {
     "unset"
   );
 
-  console.log(notificationData);
+  // console.log(notificationData);
   return (
     <>
       <Card mb={{ base: "0px", "2xl": "20px" }}>

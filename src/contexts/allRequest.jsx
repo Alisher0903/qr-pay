@@ -15,7 +15,7 @@ export const apiRequest = async (method, url, data = null, setData) => {
 
         setData(res.data.body);
     } catch (error) {
-        console.error(`Error during ${method.toUpperCase()} request to ${url}:`, error);
+        // console.error(`Error during ${method.toUpperCase()} request to ${url}:`, error);
         throw error;
     }
 };

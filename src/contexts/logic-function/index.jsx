@@ -18,7 +18,7 @@ export const updateRequestStatus = async ({reqID, status, getFunction}) => {
             toast.success('Task completed successfully')
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
     } finally {
         consoleClear()
     }
