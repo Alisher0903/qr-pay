@@ -54,11 +54,19 @@
     "react-error-overlay": "6.0.9"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
+  "extends": [
+    "react-app",
+    "plugin:jest/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.test.js", "**/*.test.jsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+},
   "browserslist": {
     "production": [
       ">0.2%",
