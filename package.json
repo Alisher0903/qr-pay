@@ -53,20 +53,20 @@
   "resolutions": {
     "react-error-overlay": "6.0.9"
   },
-  "eslintConfig": {
-  "extends": [
-    "react-app",
-    "plugin:jest/recommended"
-  ],
-  "overrides": [
-    {
-      "files": ["**/*.test.js", "**/*.test.jsx"],
+  
+    "eslintConfig": {
+      "extends": [
+        "react-app",
+        "plugin:jest/recommended" 
+      ],
+      "plugins": [
+        "jest"
+      ],
       "env": {
         "jest": true
       }
-    }
-  ]
-},
+    },
+  
   "browserslist": {
     "production": [
       ">0.2%",
