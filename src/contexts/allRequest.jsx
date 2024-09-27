@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const sliceNumber = (num) => {
-    if (num.startsWith('998') && num.length === 12) return `+${num}`;
+    if ( num.length === 9) return `+${num}`;
     else return ''
 };
 

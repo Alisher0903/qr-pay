@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -12,20 +12,21 @@ import {
     Icon,
     Input,
     InputGroup,
+    InputLeftElement,
     InputRightElement,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
-import {HSeparator} from "components/separator/Separator";
+import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
 import illustration from "assets/img/auth/auth.png";
 // import { FcGoogle } from "react-icons/fc";
-import {MdOutlineRemoveRedEye} from "react-icons/md";
-import {RiEyeCloseLine} from "react-icons/ri";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { RiEyeCloseLine } from "react-icons/ri";
 import toast from "react-hot-toast";
-import {sliceNumber} from "../../../contexts/allRequest";
+import { sliceNumber } from "../../../contexts/allRequest";
 import axios from "axios";
 import {
     admin_notification_count,
@@ -33,28 +34,28 @@ import {
     terminal_notification_count,
     user_login
 } from "../../../contexts/api";
-import {consoleClear, toastMessage} from "../../../contexts/toast-message";
-import {useNavigate} from "react-router-dom";
-import {userGetMe} from "contexts/logic-function/globalFunktion";
-import {AppStore} from "contexts/state-management";
-import {globalGetFunction} from "contexts/logic-function/globalFunktion";
-import {NotificationStore} from "contexts/state-management/notification/notificationStore";
-import {useTranslation} from "react-i18next";
+import { consoleClear, toastMessage } from "../../../contexts/toast-message";
+import { useNavigate } from "react-router-dom";
+import { userGetMe } from "contexts/logic-function/globalFunktion";
+import { AppStore } from "contexts/state-management";
+import { globalGetFunction } from "contexts/logic-function/globalFunktion";
+import { NotificationStore } from "contexts/state-management/notification/notificationStore";
+import { useTranslation } from "react-i18next";
 
-const defVal = {phone: '', password: ''}
+const defVal = { phone: '', password: '' }
 
 function SignIn() {
     const navigate = useNavigate()
-    const {setCountData} = NotificationStore()
-    const {setGetMeeData} = AppStore()
-    const [auth, setAuth] = useState({phone: '', password: ''});
+    const { setCountData } = NotificationStore()
+    const { setGetMeeData } = AppStore()
+    const [auth, setAuth] = useState({ phone: '', password: '' });
     const [roles, setRoles] = useState('');
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const brandStars = useColorModeValue("brand.500", "brand.400");
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
@@ -91,8 +92,8 @@ function SignIn() {
     const authLogin = async () => {
         setLoading(true)
         try {
-            const {data} = await axios.post(user_login, {
-                phone: `+${auth.phone}`,
+            const { data } = await axios.post(user_login, {
+                phone: `+998${auth.phone}`,
                 password: auth.password
             })
             if (data?.error?.code) {
@@ -105,7 +106,7 @@ function SignIn() {
                 sessionStorage.setItem("token", data.data.token)
                 sessionStorage.setItem("ROLE", data.data.role)
                 setRoles(data.data.role)
-                await userGetMe({setData: setGetMeeData, token: data.data.token});
+                await userGetMe({ setData: setGetMeeData, token: data.data.token });
                 await globalGetFunction({
                     url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
                     setData: setCountData, token: data.data.token
@@ -136,16 +137,16 @@ function SignIn() {
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
             <Flex
-                maxW={{base: "100%", md: "max-content"}}
+                maxW={{ base: "100%", md: "max-content" }}
                 w='100%'
-                mx={{base: "auto", lg: "0px"}}
+                mx={{ base: "auto", lg: "0px" }}
                 me='auto'
                 h='100%'
                 alignItems='start'
                 justifyContent='center'
-                mb={{base: "30px", md: "60px"}}
-                px={{base: "25px", md: "0px"}}
-                mt={{base: "40px", md: "14vh"}}
+                mb={{ base: "30px", md: "60px" }}
+                px={{ base: "25px", md: "0px" }}
+                mt={{ base: "40px", md: "14vh" }}
                 flexDirection='column'>
                 <Box me='auto'>
                     <Heading color={textColor} fontSize='36px' mb='10px'>
@@ -163,13 +164,13 @@ function SignIn() {
                 <Flex
                     zIndex='2'
                     direction='column'
-                    w={{base: "100%", md: "500px"}}
+                    w={{ base: "100%", md: "500px" }}
                     maxW='100%'
                     background='transparent'
                     borderRadius='15px'
-                    mx={{base: "auto", lg: "unset"}}
+                    mx={{ base: "auto", lg: "unset" }}
                     me='auto'
-                    mb={{base: "20px", md: "auto"}}
+                    mb={{ base: "20px", md: "auto" }}
                 >
                     {/*<Button*/}
                     {/*  fontSize='sm'*/}
@@ -188,11 +189,11 @@ function SignIn() {
                     {/*  Sign in with Google*/}
                     {/*</Button>*/}
                     <Flex align='center' mb='30px'>
-                        <HSeparator/>
+                        <HSeparator />
                         {/*<Text color='gray.400' mx='14px'>*/}
                         {/*    or*/}
                         {/*</Text>*/}
-                        <HSeparator/>
+                        <HSeparator />
                     </Flex>
                     <FormControl>
                         <FormLabel
@@ -204,20 +205,28 @@ function SignIn() {
                             mb='8px'>
                             {t('enterYourPhoneNumber')}<Text color={brandStars}>*</Text>
                         </FormLabel>
-                        <Input
-                            isRequired={true}
-                            variant='auth'
-                            fontSize='sm'
-                            ms={{base: "0px", md: "0px"}}
-                            type='number'
-                            placeholder='+998 91 212 02 57'
-                            mb='24px'
-                            fontWeight='500'
-                            size='lg'
-                            value={auth.phone}
-                            onKeyDown={checkKeyPress}
-                            onChange={e => handleAuth('phone', e.target.value)}
-                        />
+                        <InputGroup display={"flex"} alignItems={"center"}>
+                            <InputLeftElement mt={1}>
+                                <Text
+                                fontSize='sm'
+                                fontWeight='500'>+998</Text>
+                            </InputLeftElement>
+                            <Input
+                                isRequired={true}
+                                variant='auth'
+                                fontSize='sm'
+                                ms={{ base: "0px", md: "0px" }}
+                                type='number'
+                                placeholder='-- --- -- --'
+                                mb='24px'
+                                fontWeight='500'
+                                size='lg'
+                                value={auth.phone}
+                                onKeyDown={checkKeyPress}
+                                onChange={e => handleAuth('phone', e.target.value)}
+                            />
+
+                        </InputGroup>
                         <FormLabel
                             ms='4px'
                             fontSize='sm'
@@ -242,7 +251,7 @@ function SignIn() {
                             <InputRightElement display='flex' alignItems='center' mt='4px'>
                                 <Icon
                                     color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
+                                    _hover={{ cursor: "pointer" }}
                                     as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
                                     onClick={handleClick}
                                 />
@@ -284,7 +293,7 @@ function SignIn() {
                             type='submit'
                             onClick={async () => {
                                 if (sliceNumber(auth.phone) && auth.password) await authLogin()
-                                else toast.error('Check the data integrity');
+                                else toast.error(t('checkData'));
                             }}
                         >{loading ? t('loading') : t('signIn')}</Button>
                     </FormControl>
@@ -295,14 +304,14 @@ function SignIn() {
                         maxW='100%'
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                            Not registered yet?
+                        {t("notRegistered")}
                             <NavLink to='/auth/sign-up'>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
                                     ms='5px'
                                     fontWeight='500'>
-                                    Leave a request for registration.
+                                   {t("leaveRequestFor")}
                                 </Text>
                             </NavLink>
                         </Text>

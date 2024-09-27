@@ -34,7 +34,7 @@ export default function Main() {
     const tokenExpiry = sessionStorage.getItem('tokenExpiry');
 
     useEffect(() => {
-        setLanguageData(sessionStorage.getItem("selectedLang"))
+        setLanguageData(localStorage.getItem("selectedLang"))
     }, []);
 
     useEffect(() => {

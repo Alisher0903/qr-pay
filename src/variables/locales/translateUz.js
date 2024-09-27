@@ -78,5 +78,15 @@ export const TranslateUz = {
     optional: "ixtiyory",
     merchant: "Savdogar",
     search_by: "bo'yicha qidirish",
-    notification: "Bildirishnoma"
+    notification: "Bildirishnoma",
+
+    leaveRequest: "So'rov qoldiring",
+    adminVerifed: "Maʼlumotlaringiz tekshirilgandan soʻng admin siz bilan bogʻlanadi.",
+    enterFullName: "Toʻliq ismingizni kiriting",
+    logIn: "Tizimga kirish",
+    iHaveAccount: "Menda allaqachon hisob bor.",
+    send: "Yuborish",
+    checkData: "Ma'lumotlarning to'g'riligini tekshiring",
+    notRegistered: "Hali ro'yxatdan o'tmaganmisiz?",
+    leaveRequestFor: "Ro'yxatdan o'tish uchun ariza qoldiring."
 };

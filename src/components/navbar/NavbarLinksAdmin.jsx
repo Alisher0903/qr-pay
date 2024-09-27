@@ -26,6 +26,7 @@ import {
   ModalContent,
   useDisclosure,
   Image,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
@@ -138,7 +139,7 @@ export default function HeaderLinks(props) {
         errors[name] = `${t(name)}${t("error")}`;
       }
     } else if (name === "password") {
-        errors[name] = "";
+      errors[name] = "";
     } else if (role !== "SUPER_ADMIN" || role === "SELLER" || role === "TERMINAL") {
       if (value.trim() === '' && name !== "email") {
         errors[name] = `${t(name)}${t("error")}`;
@@ -165,10 +166,10 @@ export default function HeaderLinks(props) {
       } else if (key === "email") {
         if (formValues[key].trim() === '') {
           errors[key] = `${t(key)}${t("error")}`;
-        } 
+        }
       } else if (key === "password") {
         errors[key] = "";
-    } else if (role !== "ROLE_SUPER_ADMIN" || role === "ROLE_SELLER" || role === "ROLE_TERMINAL") {
+      } else if (role !== "ROLE_SUPER_ADMIN" || role === "ROLE_SELLER" || role === "ROLE_TERMINAL") {
         if (formValues[key].trim() === '' && key !== "email") {
           errors[key] = `${t(key)}${t("error")}`;
         }
@@ -182,7 +183,7 @@ export default function HeaderLinks(props) {
           firstName: formValues.firstName,
           lastName: formValues.lastName,
           email: formValues.email,
-          phone: formValues.phone,
+          phone: `+998${formValues.phone}`,
           filial_code: formValues.filial_code ? formValues.filial_code : null,
           inn: formValues.inn ? formValues.inn : null,
           password: formValues.password ? formValues.password : null
@@ -290,7 +291,7 @@ export default function HeaderLinks(props) {
               <MenuItem minH='30px'
                 onClick={() => {
                   setLanguageData('uz')
-                  sessionStorage.setItem("selectedLang", 'uz')
+                  localStorage.setItem("selectedLang", 'uz')
                 }}>
                 <Image
                   boxSize='2rem'
@@ -304,7 +305,7 @@ export default function HeaderLinks(props) {
               <MenuItem minH='30px'
                 onClick={() => {
                   setLanguageData('ru')
-                  sessionStorage.setItem("selectedLang", 'ru')
+                  localStorage.setItem("selectedLang", 'ru')
                 }}>
                 <Image
                   boxSize='2rem'
@@ -384,7 +385,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                  {t("firstName")}:{" "}
+                    {t("firstName")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.firstName
@@ -403,7 +404,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                  {t("lastName")}:{" "}
+                    {t("lastName")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.lastName
@@ -422,7 +423,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                  {t("phone")}:{" "}
+                    {t("phone")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.phone
@@ -441,7 +442,7 @@ export default function HeaderLinks(props) {
                   justifyContent={"space-between"}
                 >
                   <Text fontSize="sm" fontWeight={"800"}>
-                  {t("email")}:{" "}
+                    {t("email")}:{" "}
                   </Text>
                   <Text fontSize="sm">
                     {getMeeData && getMeeData.email
@@ -462,7 +463,7 @@ export default function HeaderLinks(props) {
                       justifyContent={"space-between"}
                     >
                       <Text fontSize="sm" fontWeight={"800"}>
-                      {t("inn")}:{" "}
+                        {t("inn")}:{" "}
                       </Text>
                       <Text fontSize="sm">
                         {getMeeData && getMeeData.inn ? getMeeData.inn : "-"}
@@ -479,7 +480,7 @@ export default function HeaderLinks(props) {
                       justifyContent={"space-between"}
                     >
                       <Text fontSize="sm" fontWeight={"800"}>
-                      {t("filial_code")}:{" "}
+                        {t("filial_code")}:{" "}
                       </Text>
                       <Text fontSize="sm">
                         {getMeeData && getMeeData.filial_code
@@ -506,7 +507,7 @@ export default function HeaderLinks(props) {
                   }}
                 >
                   <Text fontSize="md" fontWeight={"800"}>
-                  {t("logOut")}
+                    {t("logOut")}
                   </Text>
                 </MenuItem>
               </Flex>
@@ -529,7 +530,7 @@ export default function HeaderLinks(props) {
           <ModalHeader>{t("updateProfile")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Grid templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={{base: 0, md: 6}} px={5}>
+            <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={{ base: 0, md: 6 }} px={5}>
               <FormControl mt={4} isInvalid={!!formErrors.firstName}>
                 <FormLabel>{t("firstName")}</FormLabel>
                 <Input
@@ -568,13 +569,21 @@ export default function HeaderLinks(props) {
               </FormControl>
               <FormControl mt={4} isInvalid={!!formErrors.phone}>
                 <FormLabel>{t("phone")}</FormLabel>
-                <Input
-                  name="phone"
-                  placeholder={t("enterYourPhoneNumber")}
-                  value={formValues.phone}
-                  onChange={handleChange}
-                  color={inputTextColor}
-                />
+                <InputGroup display={"flex"} alignItems={"center"}>
+                  <InputLeftElement>
+                    <Text
+                      fontSize='sm'
+                      fontWeight='500'>+998</Text>
+                  </InputLeftElement>
+                  <Input
+                   name="phone"
+                   placeholder={t("enterYourPhoneNumber")}
+                   value={formValues.phone}
+                   onChange={handleChange}
+                   color={inputTextColor}
+                  />
+                </InputGroup>
+              
                 {formErrors.phone && <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
               </FormControl>
               {role !== "ROLE_SUPER_ADMIN" &&
@@ -626,8 +635,8 @@ export default function HeaderLinks(props) {
                   </InputRightElement>
                 </InputGroup>
                 {/* {formErrors.password && */}
-                  <Text color="blue.500" fontSize="sm">{t("passwordWarn")}</Text>
-                  {/* } */}
+                <Text color="blue.500" fontSize="sm">{t("passwordWarn")}</Text>
+                {/* } */}
               </FormControl>
             </Grid>
           </ModalBody>
@@ -638,7 +647,7 @@ export default function HeaderLinks(props) {
                 resetValue();
               }}>{t("cancel")}</Button>
             <Button colorScheme="blue" onClick={handleSave}>
-            {t("save")}
+              {t("save")}
             </Button>
           </ModalFooter>
         </ModalContent>

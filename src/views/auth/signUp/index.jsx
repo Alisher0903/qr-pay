@@ -11,6 +11,8 @@ import {
     GridItem,
     Heading,
     Input,
+    InputGroup,
+    InputLeftElement,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -32,6 +34,7 @@ import {
     user_request
 } from "../../../contexts/api";
 import { consoleClear, toastMessage } from "../../../contexts/toast-message";
+import { useTranslation } from "react-i18next";
 
 
 function SignUp() {
@@ -42,6 +45,7 @@ function SignUp() {
         inn: ""
     });
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { t } = useTranslation()
 
     const [loading, setLoading] = useState(false);
     const textColor = useColorModeValue("navy.700", "white");
@@ -55,7 +59,12 @@ function SignUp() {
     const authLogin = async () => {
         setLoading(true)
         try {
-            const { data } = await axios.post(user_request, auth)
+            const { data } = await axios.post(user_request, {
+                fullName: auth.fullName,
+                phone: `+998${auth.phone}`,
+                filialCode: auth.filialCode,
+                inn: auth.inn,
+            })
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
@@ -104,7 +113,7 @@ function SignUp() {
                 flexDirection='column'>
                 <Box me='auto'>
                     <Heading color={textColor} fontSize='36px' mb='10px'>
-                        Leave a request
+                        {t("leaveRequest")}
                     </Heading>
                     <Text
                         mb='10px'
@@ -112,7 +121,7 @@ function SignUp() {
                         color={textColorSecondary}
                         fontWeight='400'
                         fontSize='md'>
-                        An admin will contact you after your details are verified.
+                        {t("adminVerifed")}
                     </Text>
                 </Box>
                 <Flex
@@ -128,7 +137,7 @@ function SignUp() {
                 >
 
                     <FormControl>
-                        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: "repeat(2, 1fr)" }} gap={{base: 0, md: 6}}>
+                        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: "repeat(2, 1fr)" }} gap={{ base: 0, md: 6 }}>
                             <GridItem>
                                 <FormLabel
                                     ms='4px'
@@ -136,13 +145,13 @@ function SignUp() {
                                     fontWeight='500'
                                     color={textColor}
                                     display='flex'>
-                                    Full name<Text color={brandStars}>*</Text>
+                                    {t("fullName")}<Text color={brandStars}>*</Text>
                                 </FormLabel>
 
                                 <Input
                                     isRequired={true}
                                     fontSize='sm'
-                                    placeholder='Enter your full name'
+                                    placeholder={t("enterFullName")}
                                     mb='24px'
                                     size='lg'
                                     onKeyDown={checkKeyPress}
@@ -158,22 +167,29 @@ function SignUp() {
                                     fontWeight='500'
                                     color={textColor}
                                     mb='8px'>
-                                    Phone number<Text color={brandStars}>*</Text>
+                                    {t("phone")}<Text color={brandStars}>*</Text>
                                 </FormLabel>
-                                <Input
-                                    isRequired={true}
-                                    // variant='auth'
-                                    fontSize='sm'
-                                    ms={{ base: "0px", md: "0px" }}
-                                    type='number'
-                                    placeholder='+998 -- --- -- --'
-                                    mb='24px'
-                                    fontWeight='500'
-                                    size='lg'
-                                    value={auth.phone}
-                                    onKeyDown={checkKeyPress}
-                                    onChange={e => handleAuth('phone', e.target.value)}
-                                />
+                                <InputGroup display={"flex"} alignItems={"center"}>
+                                    <InputLeftElement mt={1}>
+                                        <Text
+                                            fontSize='sm'
+                                            fontWeight='500'>+998</Text>
+                                    </InputLeftElement>
+                                    <Input
+                                        isRequired={true}
+                                        // variant='auth'
+                                        fontSize='sm'
+                                        ms={{ base: "0px", md: "0px" }}
+                                        type='number'
+                                        placeholder=' -- --- -- --'
+                                        mb='24px'
+                                        fontWeight='500'
+                                        size='lg'
+                                        value={auth.phone}
+                                        onKeyDown={checkKeyPress}
+                                        onChange={e => handleAuth('phone', e.target.value)}
+                                    />
+                                </InputGroup>
                             </GridItem>
                             <GridItem>
                                 <FormLabel
@@ -183,13 +199,13 @@ function SignUp() {
                                     fontWeight='500'
                                     color={textColor}
                                     mb='8px'>
-                                    Filial code<Text color={brandStars}>*</Text>
+                                    {t("filial_code")}<Text color={brandStars}>*</Text>
                                 </FormLabel>
                                 <Input
                                     isRequired={true}
                                     fontSize='sm'
                                     ms={{ base: "0px", md: "0px" }}
-                                    placeholder='Enter your filial code'
+                                    placeholder={t("enterYourFilialCode")}
                                     mb='24px'
                                     fontWeight='500'
                                     size='lg'
@@ -205,13 +221,13 @@ function SignUp() {
                                 fontWeight='500'
                                 color={textColor}
                                 mb='8px'>
-                                Inn<Text color={brandStars}>*</Text>
+                                {t("inn")}<Text color={brandStars}>*</Text>
                             </FormLabel>
                                 <Input
                                     isRequired={true}
                                     fontSize='sm'
                                     ms={{ base: "0px", md: "0px" }}
-                                    placeholder='Enter your inn'
+                                    placeholder={t("enterTheTermenalInn")}
                                     mb='24px'
                                     fontWeight='500'
                                     size='lg'
@@ -228,19 +244,19 @@ function SignUp() {
                             maxW='100%'
                             mt='0px'>
                             <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                                I already have an account.
+                            {t("iHaveAccount")}
                                 <NavLink to='/auth/sign-in'>
                                     <Text
                                         color={textColorBrand}
                                         as='span'
                                         ms='5px'
                                         fontWeight='500'>
-                                        Log in.
+                                        {t("logIn")}
                                     </Text>
                                 </NavLink>
                             </Text>
                         </Flex>
-                        <Flex width={"100%"} mt={3} justifyContent={{base: "start", md: "end"}}>
+                        <Flex width={"100%"} mt={3} justifyContent={{ base: "start", md: "end" }}>
                             <Button
                                 fontSize='sm'
                                 variant='brand'
@@ -253,7 +269,7 @@ function SignUp() {
                                     if (sliceNumber(auth.phone) && auth.fullName.trim() !== '' && auth.inn.trim() !== '' && auth.filialCode.trim() !== '') await authLogin()
                                     else toast.error('Please enter your information correctly.');
                                 }}
-                            >{loading ? 'Loading...' : 'Send'}</Button>
+                            >{loading ? `${t("loading")}...` : t("send")}</Button>
                         </Flex>
                     </FormControl>
                 </Flex>

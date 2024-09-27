@@ -78,5 +78,15 @@ export const TranslateRu = {
     optional: "необязательный",
     merchant: "Торговец",
     search_by: "поиск по",
-    notification: "Уведомление"
+    notification: "Уведомление",
+
+    leaveRequest: "Оставьте заявку",
+    adminVerifed: "Администратор свяжется с вами после проверки ваших данных.",
+    enterFullName: "Введите ваше полное имя",
+    logIn: "Войти в систему",
+    iHaveAccount: "У меня уже есть аккаунт.",
+    send: "Отправить",
+    checkData: "Проверьте правильность данных",
+    notRegistered: "Вы еще не зарегистрированы?",
+    leaveRequestFor: "Оставьте заявку на регистрацию."
 };
