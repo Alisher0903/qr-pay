@@ -88,5 +88,16 @@ export const TranslateRu = {
     send: "Отправить",
     checkData: "Проверьте правильность данных",
     notRegistered: "Вы еще не зарегистрированы?",
-    leaveRequestFor: "Оставьте заявку на регистрацию."
+    leaveRequestFor: "Оставьте заявку на регистрацию.",
+
+    terminals: "Терминалы",
+  terminalUserCount: "Количество пользователей терминалов",
+  transactions: "Транзакции",
+  totalBalance: "Общий баланс",
+  canceledTransactions: "Отмененные транзакции",
+
+  monthlyStatistic: "Ежемесячная статистика",
+  statistic: "Cтатистика",
+  requestOnWait: "Запросы на ожидание"
+
 };

@@ -7,6 +7,8 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useMemo } from "react";
+
 import Card from "components/card/Card.js";
 import LineChart from "components/charts/LineChart";
 import { get_month_statistic } from "contexts/api";
@@ -14,6 +16,8 @@ import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { DashboardStore } from "contexts/state-management/dashboard/dashboardStore";
 import React, { useEffect } from "react";
 import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
+import { setConfig } from "contexts/token";
+import { useTranslation } from "react-i18next";
 
 export default function TotalSpent(props) {
   const {
@@ -23,6 +27,7 @@ export default function TotalSpent(props) {
   } = DashboardStore();
 
   const { ...rest } = props;
+  const { t } = useTranslation()
   const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   const iconColor = useColorModeValue("brand.500", "white");
@@ -37,6 +42,7 @@ export default function TotalSpent(props) {
   );
 
   useEffect(() => {
+    setConfig()
     getMonth(0);
   }, []);
 
@@ -48,17 +54,21 @@ export default function TotalSpent(props) {
   };
 
   // Create line chart data
-  const lineChartDataTotalSpent = [
-    {
-      name: "Monthly statistics",
-      data: MonthData?.map((item) => item.paymentCount),
-    },
-  ];
+
+  const lineChartDataTotalSpent = useMemo(() => {
+    return [
+      {
+        name: t("monthlyStatistic"),
+        data: MonthData ? MonthData.map((item) => item.paymentCount) : [],
+      },
+    ];
+  }, [MonthData]);
+  
 
   // Check if MonthData is populated for rendering
   const hasData = MonthData?.length > 0;
 
-  const lineChartOptionsTotalSpent = {
+  const lineChartOptionsTotalSpent = useMemo(() => ({
     chart: {
       toolbar: {
         show: false,
@@ -100,9 +110,7 @@ export default function TotalSpent(props) {
     },
     xaxis: {
       type: "numeric",
-      categories: hasData
-        ? MonthData?.map((item) => item.monthName?.slice(0, 3))
-        : [], // Provide an empty array if no data
+      categories: MonthData ? MonthData.map((item) => item.monthName?.slice(0, 3)) : [],
       labels: {
         style: {
           colors: "#A3AED0",
@@ -131,7 +139,8 @@ export default function TotalSpent(props) {
       },
     },
     color: ["#7551FF", "#39B8FF"],
-  };
+  }), [MonthData]);
+  
 
   return (
     <Card
@@ -194,7 +203,7 @@ export default function TotalSpent(props) {
               justifyContent="center"
               minH="310px"
             >
-              <p>No data available</p> {/* Placeholder for no data */}
+              <p>{`${t("statistic")} ${t("notFound")}`}</p> {/* Placeholder for no data */}
             </Box>
           )}
         </Box>

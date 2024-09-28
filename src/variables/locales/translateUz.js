@@ -88,5 +88,15 @@ export const TranslateUz = {
     send: "Yuborish",
     checkData: "Ma'lumotlarning to'g'riligini tekshiring",
     notRegistered: "Hali ro'yxatdan o'tmaganmisiz?",
-    leaveRequestFor: "Ro'yxatdan o'tish uchun ariza qoldiring."
+    leaveRequestFor: "Ro'yxatdan o'tish uchun ariza qoldiring.",
+
+    terminals: "Terminallar",
+    terminalUserCount: "Terminal foydalanuvchilari soni",
+    transactions: "Tranzaktsiyalar",
+    totalBalance: "Umumiy balans",
+    canceledTransactions: "Bekor qilingan tranzaktsiyalar",
+
+  monthlyStatistic: "Oylik statistika",
+  statistic: "Statistika",
+  requestOnWait: "Kutilayotgan so'rovlar"
 };

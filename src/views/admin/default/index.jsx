@@ -109,7 +109,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Terminals'
+                    name={`${t("terminals")}`}
                     value={statisticData ? statisticData?.terminalCount : "0"}
                 />
                 <MiniStatistics
@@ -123,7 +123,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Terminal users count'
+                    name={`${t("terminalUserCount")}`}
                     value={statisticData ? statisticData?.userCount : "0"}
                 />
                 <MiniStatistics
@@ -137,7 +137,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Transactions'
+                    name={`${t("transactions")}`}
                     value={statisticData ? statisticData?.transactionCountWaitOrCompleted : "0"}
                 />
                 <MiniStatistics
@@ -152,7 +152,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Total balance'
+                    name={`${t("totalBalance")}`}
                     value={`${statisticData?.paymentTotalBalance.toFixed(2)} UZS`} // Format the balance
                 />
                 <MiniStatistics
@@ -166,7 +166,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Canceled transactions'
+                    name={`${t("canceledTransactions")}`}
                     value={statisticData ? statisticData?.transactionCountCancel : "0"}
                 />
                 {role === "ROLE_SUPER_ADMIN" &&
@@ -181,7 +181,7 @@ export default function Dashboard() {
                             }
                         />
                     }
-                    name='Requests on wait'
+                    name={`${t("requestOnWait")}`}
                     value={statisticData ? statisticData?.requestWaitCount : "0"}
                 />
                 }
