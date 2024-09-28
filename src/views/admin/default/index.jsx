@@ -141,6 +141,7 @@ export default function Dashboard() {
                     value={statisticData ? statisticData?.transactionCountWaitOrCompleted : "0"}
                 />
                 <MiniStatistics
+                
                     startContent={
                         <IconBox
                             w='56px'
@@ -152,7 +153,7 @@ export default function Dashboard() {
                         />
                     }
                     name='Total balance'
-                    value={`${formatBalance(statisticData?.paymentTotalBalance)} UZS`} // Format the balance
+                    value={`${statisticData?.paymentTotalBalance.toFixed(2)} UZS`} // Format the balance
                 />
                 <MiniStatistics
                     startContent={
@@ -232,7 +233,7 @@ export default function Dashboard() {
                                     <Td>{i + 1}</Td>
                                     <Td>{item.partner}</Td>
                                     <Td>{item.date}</Td>
-                                    <Td>{`${formatBalance(statisticData?.paymentTotalBalance)} UZS`}</Td>
+                                    <Td>{`${statisticData?.paymentTotalBalance.toFixed(2)} UZS`}</Td>
                                     <Td alignSelf="flex-start">
                                         <Text
                                             background={bgGenerator(item.status)[0]}
