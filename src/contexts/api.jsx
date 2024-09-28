@@ -37,3 +37,13 @@ export const terminal_notification_count = `${base_url}notification/count/for-te
 export const requestSave = `${base_url}request/save`
 export const requestUpdateStatus = `${base_url}request/change-status`
 export const requestGetAdmin = `${base_url}request`
+
+
+// STATISTIC CONTROLLER
+
+export const get_admin_statistic = `${base_url}statistics/admin`
+export const get_seller_statistic = `${base_url}statistics/seller                   `
+export const get_admin_request_web = `${base_url}statistics/admin/request-web`
+export const get_month_statistic = `${base_url}statistics/month`
+export const get_payment_statistic_forSeller = `${base_url}statistics/payment`
+export const get_year = `${base_url}statistics/year`

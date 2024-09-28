@@ -54,7 +54,7 @@ export default function Main() {
     }, [tokens, pathname, navigate]);
 
     useEffect(() => {
-        setConfig();
+        // setConfig();
         window.scrollTo(0, 0);
 
         if (pathname === '/') {
