@@ -82,13 +82,13 @@ export const generateRoutes = (t) => [
         icon: <Icon as={IoQrCode} width="20px" height="20px" color="inherit"/>,
         component: <SellerOrder/>,
     },
-    {
-        name: t('refund'),
-        layout: '/seller',
-        path: '/refund',
-        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
-        component: <SellerRefund/>,
-    },
+    // {
+    //     name: t('refund'),
+    //     layout: '/seller',
+    //     path: '/refund',
+    //     icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+    //     component: <SellerRefund/>,
+    // },
     {
         name: '',
         layout: '/seller',

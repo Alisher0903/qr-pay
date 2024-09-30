@@ -10,7 +10,6 @@ import {
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import { get_month_statistic } from "contexts/api";
 import { get_payment_statistic_forSeller } from "contexts/api";
 import { get_admin_request_web } from "contexts/api";
 import { get_seller_statistic } from "contexts/api";
@@ -78,18 +77,18 @@ export default function Dashboard() {
         else if (status === 'CANCEL') return ['red', t("canceled")]
     }
 
-    const formatBalance = (value) => {
-        if (value === null || value === undefined) return "0";
+    // const formatBalance = (value) => {
+    //     if (value === null || value === undefined) return "0";
 
-        const numValue = Number(value);
-        if (numValue >= 1e6) {
-            return `${(numValue / 1e6).toFixed(1)} mln`; // For millions
-        } else if (numValue >= 1e3) {
-            return `${(numValue / 1e3).toFixed(1)} k`; // For thousands
-        } else {
-            return numValue.toString(); // For values less than 1000
-        }
-    };
+    //     const numValue = Number(value);
+    //     if (numValue >= 1e6) {
+    //         return `${(numValue / 1e6).toFixed(1)} mln`; // For millions
+    //     } else if (numValue >= 1e3) {
+    //         return `${(numValue / 1e3).toFixed(1)} k`; // For thousands
+    //     } else {
+    //         return numValue.toString(); // For values less than 1000
+    //     }
+    // };
 
 
     return (
@@ -223,7 +222,7 @@ export default function Dashboard() {
                             ) : <Tr><Td textAlign="center" colSpan={thead.length}>{t("request")} {t("notFound")}</Td></Tr>}
                         </ComplexTable>
                         : <ComplexTable
-                            name={`${t("request")} ${t("table")}`}
+                            name={`${t("payment")} ${t("table")}`}
                             thead={theadPayment}
                         >
                             {WebRequestData ? <Tr>

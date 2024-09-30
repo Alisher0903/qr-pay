@@ -67,6 +67,7 @@ export default function SellerOrder() {
     const textColor = useColorModeValue('white', 'white');
     const navbarIcon = useColorModeValue("#1B255A", "white");
     const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
+    const thead = ['T/r', t("partner"), t("purpose"), t("date"), t("action"), t("refund"), t("status"),]
 
     useEffect(() => {
         setConfig()
@@ -115,6 +116,13 @@ export default function SellerOrder() {
     };
 
     const onChange = (page) => setPage(page - 1)
+
+    const bgGenerator = (status) => {
+        if (status === 'WAIT') return ['yellow', t("wait")]
+        else if (status === 'CONFIRMED') return ['green', t("confirmed")]
+        else if (status === 'CANCEL') return ['red', t("canceled")]
+    }
+
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -171,9 +179,12 @@ export default function SellerOrder() {
                                 setIsCreate(true)
                                 onOpen()
                             }}>{t("createPayment")}</Button>}
-                    thead={['T/r', t("partner"), t("purpose"), t("date"), t("action"), t("refund")]}
+                    thead={thead}
                 >
-                    {(paymentData && paymentData?.object) ?
+                    {createLoading ? <Tr>
+                        <Td textAlign="center" colSpan={thead.length}>{t("loading")}...</Td>
+                    </Tr> : 
+                    (paymentData && paymentData?.object) ?
                         paymentData.object.map((item, i) =>
                             <Tr key={i}>
                                 <Td>{(page * 10) + i + 1}</Td>
@@ -204,14 +215,26 @@ export default function SellerOrder() {
                                     <Box ms={15}>
                                         <button onClick={() => {
                                             setDetailData(item)
+
                                             openCancelModal()
                                         }}>
                                             <Popover title={t("refund")} overlayStyle={{textAlign: 'center'}}>
-                                                <RiRefund2Line color={navbarIcon} size={23}/>
+                                                <RiRefund2Line color={"red"} size={23}/>
                                             </Popover>
                                         </button>
                                     </Box>
                                 </Td>
+                                <Td alignSelf="flex-start">
+                                        <Text
+                                            background={bgGenerator(item.status)[0]}
+                                            color="white"
+                                            py="10px"
+                                            fontWeight="700"
+                                            borderRadius="10px"
+                                            textAlign={'center'}
+                                            width={'130px'}
+                                        >{bgGenerator(item.status)[1]}</Text>
+                                    </Td>
                             </Tr>
                         ) :
                         <Tr>

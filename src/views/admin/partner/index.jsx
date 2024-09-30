@@ -90,7 +90,7 @@ export default function Partner() {
                     thead={['T/r', t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code")]}
                 >
                     {loading ? <Tr>
-                        <Td textAlign={"center"} colSpan={7}>{t("loading")}</Td>
+                        <Td textAlign={"center"} colSpan={7}>{t("loading")}...</Td>
                     </Tr> : merchantData && merchantData?.object ?
                         merchantData?.object.map((item, i) =>
                             <Tr key={i}>
