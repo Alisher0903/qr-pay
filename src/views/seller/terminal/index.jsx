@@ -287,19 +287,19 @@ export default function SellerTerminal() {
                                 </Tr>
                             ) :
                             <Tr>
-                                <Td textAlign={"center"} colSpan={7}>{t("terminal")} {t("notFound")}</Td>
+                                <Td textAlign={"center"} colSpan={thead.length}>{t("terminal")} {t("notFound")}</Td>
                             </Tr>
                     }
                 </ComplexTable>
-                {Array.isArray(terminalData.object) && terminalData.object.length > 0 &&
-                    <Pagination
-                        showSizeChanger={false}
-                        responsive={true}
-                        defaultCurrent={1}
-                        total={totalPage}
-                        onChange={onChange}
-                    />
-                }
+                {/*{Array.isArray(terminalData.object) && terminalData.object.length > 0 &&*/}
+                <Pagination
+                    showSizeChanger={false}
+                    responsive={true}
+                    defaultCurrent={1}
+                    total={totalPage}
+                    onChange={onChange}
+                />
+                {/*}*/}
             </SimpleGrid>
             <Modal
                 size={"3xl"}
