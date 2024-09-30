@@ -67,7 +67,7 @@ export default function SellerOrder() {
     const textColor = useColorModeValue('white', 'white');
     const navbarIcon = useColorModeValue("#1B255A", "white");
     const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
-    const thead = ['T/r', t("partner"), t("purpose"), t("date"), t("action"), t("refund"), t("status"),]
+    const thead = [t('tableTr'), t("partner"), t("purpose"), t("date"), t("action"), t("refund"), t("status"),]
 
     useEffect(() => {
         setConfig()

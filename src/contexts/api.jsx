@@ -8,6 +8,7 @@ export const user_login = `${base_url}api/user/login`;
 export const user_request = `${base_url}request/save`;
 export const user_edit = `${base_url}api/user/update`;
 export const user_merchant = `${base_url}api/user/page`;
+export const user_terminal = `${base_url}api/user/terminal`;
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;
@@ -20,7 +21,6 @@ export const order_create = `${base_url}payment/create`
 export const seller_order_get = `${base_url}payment/list/for/seller`
 export const terminal_order_get = `${base_url}payment/list/for/terminal`
 export const admin_order_get = `${base_url}payment/list/for/admin`
-// export const order_update = `${base_url}`
 export const order_cancel = `${base_url}payment/cancel`
 
 // Notification CONTROLLER
@@ -40,7 +40,6 @@ export const requestGetAdmin = `${base_url}request`
 
 
 // STATISTIC CONTROLLER
-
 export const get_admin_statistic = `${base_url}statistics/admin`
 export const get_seller_statistic = `${base_url}statistics/seller                   `
 export const get_admin_request_web = `${base_url}statistics/admin/request-web`

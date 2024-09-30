@@ -36,8 +36,8 @@ export default function Dashboard() {
     const brandColor = useColorModeValue("brand.500", "white");
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
     const { t } = useTranslation()
-    const thead = ['T/r', t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status"),]
-    const theadPayment = ['T/r', t("partner"), t("date"), t("amount"), t("status"),]
+    const thead = [t('tableTr'), t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status"),]
+    const theadPayment = [t('tableTr'), t("partner"), t("date"), t("amount"), t("status"),]
 
     const role = sessionStorage.getItem("ROLE");
 

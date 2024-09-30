@@ -10,10 +10,12 @@ import Partner from 'views/admin/partner';
 import SignInCentered from 'views/auth/signIn';
 import SellerTerminal from 'views/seller/terminal';
 import SellerOrder from 'views/seller/order';
-import SellerRefund from 'views/seller/refund';
+// import SellerRefund from 'views/seller/refund';
 import Notification from 'views/notification/notification';
 import Request from "./views/admin/request";
 import SignUp from 'views/auth/signUp';
+import UserTerminal from "./views/seller/users-terminal";
+import {FaUsersCog} from "react-icons/fa";
 
 export const generateRoutes = (t) => [
     // Admin panel route
@@ -74,6 +76,13 @@ export const generateRoutes = (t) => [
         path: '/terminal',
         icon: <Icon as={TbCashRegister} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
+    },
+    {
+        name: t('terminalUsers'),
+        layout: '/seller',
+        path: '/users-terminal',
+        icon: <Icon as={FaUsersCog} width="20px" height="20px" color="inherit"/>,
+        component: <UserTerminal/>,
     },
     {
         name: t('payment'),

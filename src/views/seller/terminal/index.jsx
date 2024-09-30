@@ -5,20 +5,20 @@ import {
     InputLeftElement,
     GridItem
 } from "@chakra-ui/react";
-import { debounce } from 'lodash';
-import { Pagination } from "antd";
-import { terminal_create, terminal_update, terminal_isActive, terminal_get } from "contexts/api";
-import { globalPostFunction, globalPutFunction, globalGetFunction } from "contexts/logic-function/globalFunktion";
-import { TerminalStore } from "contexts/state-management/terminal/terminalStory";
-import { setConfig } from "contexts/token";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { FaEdit, FaEye, FaEyeSlash, FaMinus, FaPlus } from "react-icons/fa";
+import {debounce} from 'lodash';
+import {Pagination} from "antd";
+import {terminal_create, terminal_update, terminal_isActive, terminal_get} from "contexts/api";
+import {globalPostFunction, globalPutFunction, globalGetFunction} from "contexts/logic-function/globalFunktion";
+import {TerminalStore} from "contexts/state-management/terminal/terminalStory";
+import {setConfig} from "contexts/token";
+import React, {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
+import {FaEdit, FaEye, FaEyeSlash, FaMinus, FaPlus} from "react-icons/fa";
 import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 
 export default function SellerTerminal() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { t } = useTranslation()
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const {t} = useTranslation()
     const {
         setTerminalData, terminalData, isEdit, setIsEdit, setPage,
         totalPage,
@@ -32,13 +32,14 @@ export default function SellerTerminal() {
     const [terminalSerialCode, setTerminalSerialCode] = useState(null);
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
+    const role = sessionStorage.getItem('ROLE')
 
     const inputTextColor = useColorModeValue('gray.800', 'white');
     const navbarIcon = useColorModeValue("#1B255A", "white");
     const bgColor = useColorModeValue('#422AFB', '#7551FF');
     const textColor = useColorModeValue('white', 'white');
     const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
-    const thead = ['T/r', t("name"), t("inn"), t("account"), t("phone"), t("filial_code"), t("update"), t("active")]
+    const thead = [t('tableTr'), t("name"), t("inn"), t("account"), t("phone"), t("filial_code"), t("update"), t("active")]
 
     useEffect(() => {
         setConfig()
@@ -93,11 +94,11 @@ export default function SellerTerminal() {
     };
 
     const handleChange = (e, index) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         if (isEdit && name === "phones") {
             const updatedPhones = [...formValues.phones];
             updatedPhones[index] = value;
-            setFormValues({ ...formValues, phones: updatedPhones });
+            setFormValues({...formValues, phones: updatedPhones});
 
             const errors = {};
             updatedPhones.forEach((phone) => {
@@ -105,9 +106,9 @@ export default function SellerTerminal() {
                     errors.phones = [...(errors.phones || []), t("phoneError")];
                 } else errors.phones = [""]
             });
-            setFormErrors({ ...formErrors, ...errors });
+            setFormErrors({...formErrors, ...errors});
         } else {
-            setFormValues({ ...formValues, [name]: value });
+            setFormValues({...formValues, [name]: value});
 
             const errors = {};
             if (!isEdit && name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
@@ -115,7 +116,7 @@ export default function SellerTerminal() {
             } else if (!isEdit && name === "password" && value.length < 4) errors.password = t("passwordError");
             else if (value.trim() === '') errors[name] = `${t(name)}${t("error")}`;
             else errors[name] = ""
-            setFormErrors({ ...formErrors, ...errors });
+            setFormErrors({...formErrors, ...errors});
         }
     };
 
@@ -194,7 +195,7 @@ export default function SellerTerminal() {
     }
 
     const handleAddPhoneNumber = () => {
-        setTerminalNewUsers([...terminalNewUsers, { ...terminalNewUsersInitial }]);
+        setTerminalNewUsers([...terminalNewUsers, {...terminalNewUsersInitial}]);
     };
 
     // Function to handle removing a phone/password field
@@ -210,88 +211,84 @@ export default function SellerTerminal() {
         setTerminalNewUsers(updatedUsers);
     };
 
-    // console.log(terminalNewUsers)
-
     return (
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
             <SimpleGrid
                 mb="20px"
-                columns={{ sm: 1 }}
-                spacing={{ base: "20px", xl: "20px" }}
+                columns={{sm: 1}}
+                spacing={{base: "20px", xl: "20px"}}
             >
                 <ComplexTable
                     name={`${t("terminal")} ${t("table")}`}
-                    buttonChild={
-                        <Button
-                            bg={bgColor}
-                            color={textColor}
-                            _hover={{ bg: hoverBgColor }}
-                            _active={{
-                                bg: hoverBgColor,
-                                transform: "scale(0.98)",
-                            }}
-                            onClick={() => {
-                                setIsEdit(false)
-                                onOpen()
-                            }}>
-                            {t("createTerminal")}
-                        </Button>
+                    buttonChild={role === 'ROLE_SUPER_ADMIN' ? <Button
+                        bg={bgColor}
+                        color={textColor}
+                        _hover={{bg: hoverBgColor}}
+                        _active={{
+                            bg: hoverBgColor,
+                            transform: "scale(0.98)",
+                        }}
+                        onClick={() => {
+                            setIsEdit(false)
+                            onOpen()
+                        }}>
+                        {t("createTerminal")}
+                    </Button> : <></>
                     }
                     thead={thead}
                 >
-
                     {createLoading ? <Tr>
-                        <Td textAlign="center" colSpan={thead.length}>{t("loading")}...</Td>
-                    </Tr> : 
-                    terminalData && terminalData?.object ?
-                        terminalData?.object.map((item, i) =>
-                            <Tr key={i}>
-                                <Td>{(page * 10) + i + 1}</Td>
-                                <Td>{item?.name}</Td>
-                                <Td>{item?.inn}</Td>
-                                <Td>{item?.account}</Td>
-                                <Td>{item?.user?.phone}</Td>
-                                <Td>{item?.filial_code}</Td>
-                                <Td>
-                                    <Box ms={3}>
-                                        <button onClick={() => {
-                                            setFormValues({
-                                                name: item?.name,
-                                                account: item?.account,
-                                                filialCode: item?.filial_code,
-                                                inn: item?.inn,
-                                                password: '',
-                                                phone: item?.user?.phone,
-                                                phones: item?.phones
-                                            })
-                                            setTerminalSerialCode(item.terminalSerialCode)
-                                            setTerminalSerialCodeInitial(item.terminalSerialCode)
-                                            setdetailData(item)
-                                            setIsEdit(true)
-                                            onOpen()
+                            <Td textAlign="center" colSpan={thead.length}>{t("loading")}...</Td>
+                        </Tr> :
+                        terminalData && terminalData?.object ?
+                            terminalData?.object.map((item, i) =>
+                                <Tr key={i}>
+                                    <Td>{(page * 10) + i + 1}</Td>
+                                    <Td>{item?.name}</Td>
+                                    <Td>{item?.inn}</Td>
+                                    <Td>{item?.account}</Td>
+                                    <Td>{item?.user?.phone}</Td>
+                                    <Td>{item?.filial_code}</Td>
+                                    <Td>
+                                        <Box ms={3}>
+                                            <button onClick={() => {
+                                                setFormValues({
+                                                    name: item?.name,
+                                                    account: item?.account,
+                                                    filialCode: item?.filial_code,
+                                                    inn: item?.inn,
+                                                    password: '',
+                                                    phone: item?.user?.phone,
+                                                    phones: item?.phones
+                                                })
+                                                setTerminalSerialCode(item.terminalSerialCode)
+                                                setTerminalSerialCodeInitial(item.terminalSerialCode)
+                                                setdetailData(item)
+                                                setIsEdit(true)
+                                                onOpen()
+                                            }}>
+                                                <FaEdit color={navbarIcon} size={23}/>
+                                            </button>
+                                        </Box>
+                                    </Td>
+                                    <Td>
+                                        <Box onClick={() => {
+                                            if (item.status === 0) {
+                                                debouncedPostFunction(item);
+                                            }
                                         }}>
-                                            <FaEdit color={navbarIcon} size={23} />
-                                        </button>
-                                    </Box>
-                                </Td>
-                                <Td>
-                                    <Box onClick={() => {
-                                        if (item.status === 0) {
-                                            debouncedPostFunction(item);
-                                        }
-                                    }}>
-                                        <Switch
-                                            disabled={item.status !== 0}
-                                            isChecked={item.status === 0}
-                                            colorScheme='teal' size='lg'
-                                        />
-                                    </Box>
-                                </Td>
+                                            <Switch
+                                                disabled={item.status !== 0}
+                                                isChecked={item.status === 0}
+                                                colorScheme='teal' size='lg'
+                                            />
+                                        </Box>
+                                    </Td>
+                                </Tr>
+                            ) :
+                            <Tr>
+                                <Td textAlign={"center"} colSpan={7}>{t("terminal")} {t("notFound")}</Td>
                             </Tr>
-                        ) :
-                        <Tr>
-                            <Td textAlign={"center"} colSpan={7}>{t("terminal")} {t("notFound")}</Td>
-                        </Tr>
                     }
                 </ComplexTable>
                 {Array.isArray(terminalData.object) && terminalData.object.length > 0 &&
@@ -314,10 +311,10 @@ export default function SellerTerminal() {
                     resetValue();
                 }}
             >
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent>
-                    <ModalHeader>{t("createTerminal")}</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalHeader>{isEdit ? t('editTerminal') : t("createTerminal")}</ModalHeader>
+                    <ModalCloseButton/>
                     <ModalBody pb={6}>
                         <Grid templateColumns='repeat(2, 1fr)' gap={6} px={5}>
                             <FormControl mt={4} isInvalid={!!formErrors.name}>
@@ -376,72 +373,71 @@ export default function SellerTerminal() {
                                     color={inputTextColor}
                                 />
                             </FormControl>
-                            {
-                                isEdit ?
-                                    <GridItem colSpan={2}>
-                                        <FormControl mt={4}>
-                                            <Flex justifyContent={"space-between"} alignItems={"center"}>
-                                                <FormLabel>{t('phone')}</FormLabel>
-                                                <Button mt={2} onClick={handleAddPhoneNumber} p={0} mb={4}
+                            {isEdit ?
+                                <GridItem colSpan={2}>
+                                    <FormControl mt={4}>
+                                        <Flex justifyContent={"space-between"} alignItems={"center"}>
+                                            <FormLabel>{t('phone')}</FormLabel>
+                                            <Button mt={2} onClick={handleAddPhoneNumber} p={0} mb={4}
                                                     bg={"transparent"}>
-                                                    <FaPlus />
-                                                </Button>
-                                            </Flex>
-                                            {terminalNewUsers && terminalNewUsers.map((user, index) => (
-                                                <InputGroup gap={5} key={index} mb={3}>
-                                                    <InputLeftElement>
-                                                        <Text mx={4}>+998</Text>
-                                                    </InputLeftElement>
-                                                    <Input
-                                                        placeholder={`${t('phone')} ${index + 1}`}
-                                                        name="phones"
-                                                        value={user.phone}
-                                                        onChange={(e) => handleList('phone', e.target.value, index)}
-                                                        color={inputTextColor}
-                                                        type={`number`}
-                                                    />
-                                                    <Input
-                                                        placeholder={`${t('password')} ${index + 1}`}
-                                                        name="password"
-                                                        value={user.password}
-                                                        onChange={(e) => handleList('password', e.target.value, index)}
-                                                        color={inputTextColor}
-                                                    />
-                                                    {index > 0 && (
-                                                        <InputRightElement>
-                                                            <IconButton
-                                                                size="sm"
-                                                                onClick={() => handleRemovePhoneNumber(index)}
-                                                                icon={<FaMinus />}
-                                                                aria-label="Remove"
-                                                            />
-                                                        </InputRightElement>
-                                                    )}
-                                                </InputGroup>
-                                            ))}
-                                        </FormControl>
-                                    </GridItem>
-                                    :
-                                    <FormControl mt={4} isInvalid={!!formErrors.phone}>
-                                        <FormLabel>{t("phone")}</FormLabel>
-                                        <InputGroup display={"flex"} alignItems={"center"}>
-                                            <InputLeftElement>
-                                                <Text
-                                                    fontSize='sm'
-                                                    fontWeight='500'>+998</Text>
-                                            </InputLeftElement>
-                                            <Input
-                                                 name="phone"
-                                                 placeholder={t("enterTheTermenalPhoneNumber")}
-                                                 value={formValues.phone}
-                                                 onChange={handleChange}
-                                                 color={inputTextColor}
-                                            />
-                                        </InputGroup>
-                                       
-                                        {formErrors.phone &&
-                                            <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
+                                                <FaPlus/>
+                                            </Button>
+                                        </Flex>
+                                        {terminalNewUsers && terminalNewUsers.map((user, index) => (
+                                            <InputGroup gap={5} key={index} mb={3}>
+                                                <InputLeftElement>
+                                                    <Text mx={4}>+998</Text>
+                                                </InputLeftElement>
+                                                <Input
+                                                    placeholder={`${t('phone')} ${index + 1}`}
+                                                    name="phones"
+                                                    value={user.phone}
+                                                    onChange={(e) => handleList('phone', e.target.value, index)}
+                                                    color={inputTextColor}
+                                                    type={`number`}
+                                                />
+                                                <Input
+                                                    placeholder={`${t('password')} ${index + 1}`}
+                                                    name="password"
+                                                    value={user.password}
+                                                    onChange={(e) => handleList('password', e.target.value, index)}
+                                                    color={inputTextColor}
+                                                />
+                                                {index > 0 && (
+                                                    <InputRightElement>
+                                                        <IconButton
+                                                            size="sm"
+                                                            onClick={() => handleRemovePhoneNumber(index)}
+                                                            icon={<FaMinus/>}
+                                                            aria-label="Remove"
+                                                        />
+                                                    </InputRightElement>
+                                                )}
+                                            </InputGroup>
+                                        ))}
                                     </FormControl>
+                                </GridItem>
+                                :
+                                <FormControl mt={4} isInvalid={!!formErrors.phone}>
+                                    <FormLabel>{t("phone")}</FormLabel>
+                                    <InputGroup display={"flex"} alignItems={"center"}>
+                                        <InputLeftElement>
+                                            <Text
+                                                fontSize='sm'
+                                                fontWeight='500'>+998</Text>
+                                        </InputLeftElement>
+                                        <Input
+                                            name="phone"
+                                            placeholder={t("enterTheTermenalPhoneNumber")}
+                                            value={formValues.phone}
+                                            onChange={handleChange}
+                                            color={inputTextColor}
+                                        />
+                                    </InputGroup>
+
+                                    {formErrors.phone &&
+                                        <Text color="red.500" fontSize="sm">{formErrors.phone}</Text>}
+                                </FormControl>
                             }
                             {
                                 !isEdit &&
@@ -458,7 +454,7 @@ export default function SellerTerminal() {
                                         />
                                         <InputRightElement>
                                             <IconButton
-                                                icon={showPassword ? <FaEyeSlash /> : <FaEye />}
+                                                icon={showPassword ? <FaEyeSlash/> : <FaEye/>}
                                                 onClick={() => setShowPassword(!showPassword)}
                                                 variant="ghost"
                                                 size="sm"
@@ -475,9 +471,9 @@ export default function SellerTerminal() {
                     <ModalFooter display={"flex"} gap={"10px"}>
                         <Button
                             colorScheme="red" onClick={() => {
-                                onClose();
-                                resetValue();
-                            }}>{t("cancel")}</Button>
+                            onClose();
+                            resetValue();
+                        }}>{t("cancel")}</Button>
                         <Button colorScheme="blue" onClick={handleSave}>
                             {t("save")}
                         </Button>

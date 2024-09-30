@@ -87,7 +87,7 @@ export default function Partner() {
                 </Box>
                 <ComplexTable
                     name={`${t("merchant")} ${t("table")}`}
-                    thead={['T/r', t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code")]}
+                    thead={[t('tableTr'), t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code")]}
                 >
                     {loading ? <Tr>
                         <Td textAlign={"center"} colSpan={7}>{t("loading")}...</Td>

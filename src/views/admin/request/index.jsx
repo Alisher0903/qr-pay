@@ -5,17 +5,17 @@ import {globalGetFunction} from "../../../contexts/logic-function/globalFunktion
 import {requestGetAdmin} from "../../../contexts/api";
 import {Pagination} from "antd";
 import {updateRequestStatus} from "../../../contexts/logic-function";
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 
 const Request = () => {
-    const { t } = useTranslation()
+    const {t} = useTranslation()
     const [requestList, setRequestList] = useState(null)
     const [loading, setLoading] = useState(false)
     const [totalElement, setTotalElements] = useState(0)
     const [page, setPage] = useState(0)
-    
-    const thead = ['T/r', t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status"), t("action"),]
+
+    const thead = [t('tableTr'), t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status"), t("action"),]
     const getFunctionRequest = async () => {
         await globalGetFunction({
             url: requestGetAdmin,
@@ -29,6 +29,10 @@ const Request = () => {
     useEffect(() => {
         getFunctionRequest()
     }, []);
+
+    useEffect(() => {
+        getFunctionRequest()
+    }, [page]);
 
     const bgGenerator = (status) => {
         if (status === 'WAIT') return ['yellow', t("wait")]

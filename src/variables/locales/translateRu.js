@@ -3,7 +3,7 @@ export const TranslateRu = {
     action: "Действие",
     active: "Активность",
     allNotification: "Все уведомления",
-    amount: "Сумма", 
+    amount: "Сумма",
     cancel: "Отмена",
     cancelModal: "Вы действительно хотите отменить платеж?",
     chequeAmount: "Сумма чека",
@@ -11,7 +11,9 @@ export const TranslateRu = {
     continue: "Продолжить",
     createPayment: "Создать платеж",
     createTerminal: "Создать терминал",
-    dashboard: "Панель управления", 
+    editTerminal: "Редактирование терминала",
+    tableTr: "Т/р",
+    dashboard: "Панель управления",
     date: "Дата",
     deleteNotification: "Удалить уведомление",
     email: "Электронная почта",
@@ -29,7 +31,7 @@ export const TranslateRu = {
     enterYourLastName: "Введите вашу фамилию",
     enterYourPassword: "Введите ваш пароль",
     enterYourPhoneNumber: "Введите ваш номер телефона",
-    error: " требуется", 
+    error: " требуется",
     extId: "Ext id",
     filial_code: "Филиальный код",
     firstName: "Имя",
@@ -66,6 +68,8 @@ export const TranslateRu = {
     signUp: "Регистрация",
     status: "Статус",
     terminal: "Терминал",
+    terminalName: "Имя терминала",
+    terminalUsers: "Пользователи терминала",
     update: "Изменить",
     updateProfile: "Обновить аккаунт",
     viewMore: "Посмотреть больше",
@@ -91,13 +95,13 @@ export const TranslateRu = {
     leaveRequestFor: "Оставьте заявку на регистрацию.",
 
     terminals: "Терминалы",
-  terminalUserCount: "Количество пользователей терминалов",
-  transactions: "Транзакции",
-  totalBalance: "Общий баланс",
-  canceledTransactions: "Отмененные транзакции",
+    terminalUserCount: "Количество пользователей терминалов",
+    transactions: "Транзакции",
+    totalBalance: "Общий баланс",
+    canceledTransactions: "Отмененные транзакции",
 
-  monthlyStatistic: "Ежемесячная статистика",
-  statistic: "Cтатистика",
-  requestOnWait: "Запросы на ожидание"
+    monthlyStatistic: "Ежемесячная статистика",
+    statistic: "Cтатистика",
+    requestOnWait: "Запросы на ожидание"
 
 };
