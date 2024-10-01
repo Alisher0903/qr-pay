@@ -1,4 +1,4 @@
-import {Box, SimpleGrid, Tr, Td} from "@chakra-ui/react";
+import {Box, SimpleGrid, Tr, Td, Select} from "@chakra-ui/react";
 import ComplexTable from "../dataTables/components/ComplexTable";
 import {Pagination, Input} from "antd";
 import {TerminalStore} from "../../../contexts/state-management/terminal/terminalStory";
@@ -6,6 +6,7 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {globalGetFunction} from "../../../contexts/logic-function/globalFunktion";
 import {user_merchant} from "../../../contexts/api";
+import { updateUserStatus } from "contexts/logic-function";
 
 export default function Partner() {
     const {t} = useTranslation()
@@ -24,6 +25,12 @@ export default function Partner() {
     useEffect(() => {
         getMerchant()
     }, [page, fullName, inn, filialCode, phone]);
+
+    const bgGenerator = (status) => {
+        if (status === 'ACTIVE') return ['green', t("Active")]
+        else if (status === 'INACTIVE') return ['red', t("inActive")]
+       
+    }
 
     const getTestUrl = () => {
         const queryParams = [
@@ -87,10 +94,10 @@ export default function Partner() {
                 </Box>
                 <ComplexTable
                     name={`${t("merchant")} ${t("table")}`}
-                    thead={[t('tableTr'), t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code")]}
+                    thead={[t('tableTr'), t("name"), t('lastName'), t("phone"), t('email'), t("inn"), t("filial_code"),  t("active")]}
                 >
                     {loading ? <Tr>
-                        <Td textAlign={"center"} colSpan={7}>{t("loading")}...</Td>
+                        <Td textAlign={"center"} colSpan={8}>{t("loading")}...</Td>
                     </Tr> : merchantData && merchantData?.object ?
                         merchantData?.object.map((item, i) =>
                             <Tr key={i}>
@@ -101,6 +108,23 @@ export default function Partner() {
                                 <Td>{item.email ? item.email : '-'}</Td>
                                 <Td>{item.inn ? item.inn : '-'}</Td>
                                 <Td>{item.filial_code ? item.filial_code : '-'}</Td>
+                                <Td>
+                                <Select
+                                    onChange={async (e) => {
+                                        
+                                        await updateUserStatus({
+                                            userId: item.id,
+                                            status: e.target.value,
+                                            getFunction: getMerchant
+                                        })
+                                    }}
+                                    width={'150px'}
+                                    value={item.status}
+                                >
+                                    <option value='ACTIVE'>{bgGenerator('ACTIVE')[1]}</option>
+                                    <option value='INACTIVE'>{bgGenerator('INACTIVE')[1]}</option>
+                                </Select>
+                            </Td>
                             </Tr>
                         ) : <Tr>
                             <Td textAlign={"center"} colSpan={7}>{t("merchant")} {t("notFound")}</Td>

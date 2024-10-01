@@ -102,6 +102,9 @@ export const TranslateRu = {
 
     monthlyStatistic: "Ежемесячная статистика",
     statistic: "Cтатистика",
-    requestOnWait: "Запросы на ожидание"
+    requestOnWait: "Запросы на ожидание",
 
+    Active: "Активный",
+    inActive: "Не активен",
+    selectActive: "Выберите статус"
 };

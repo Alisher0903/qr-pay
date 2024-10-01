@@ -9,6 +9,8 @@ export const user_request = `${base_url}request/save`;
 export const user_edit = `${base_url}api/user/update`;
 export const user_merchant = `${base_url}api/user/page`;
 export const user_terminal = `${base_url}api/user/terminal`;
+export const user_edit_status = `${base_url}api/user/user-active`;
+
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;

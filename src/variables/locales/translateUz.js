@@ -102,5 +102,9 @@ export const TranslateUz = {
 
     monthlyStatistic: "Oylik statistika",
     statistic: "Statistika",
-    requestOnWait: "Kutilayotgan so'rovlar"
+    requestOnWait: "Kutilayotgan so'rovlar",
+
+    Active: "Faol",
+    inActive: "Faol emas",
+    selectActive: "Holatni tanlang"
 };
