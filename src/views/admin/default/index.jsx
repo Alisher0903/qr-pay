@@ -152,7 +152,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("totalBalance")}`}
-                    value={`${statisticData?.paymentTotalBalance.toFixed(2)} UZS`} // Format the balance
+                    value={`${statisticData?.paymentTotalBalance ? statisticData?.paymentTotalBalance.toFixed(2) : "0"} UZS`} // Format the balance
                 />
                 <MiniStatistics
                     startContent={
@@ -202,10 +202,10 @@ export default function Dashboard() {
                             </Tr> : WebRequestData ? WebRequestData?.map((item, i) =>
                                 <Tr key={i}>
                                     <Td>{i + 1}</Td>
-                                    <Td>{item.fullName}</Td>
-                                    <Td>{item.phone}</Td>
-                                    <Td>{item.filialCode}</Td>
-                                    <Td>{item.inn}</Td>
+                                    <Td>{item.fullName ? item.fullName : "-"}</Td>
+                                    <Td>{item.phone ? item.phone : "-"}</Td>
+                                    <Td>{item.filialCode ? item.filialCode : "-"}</Td>
+                                    <Td>{item.inn ? item.inn : "-"}</Td>
                                     <Td alignSelf="flex-start">
                                         <Text
                                             background={bgGenerator(item.status)[0]}
@@ -215,7 +215,7 @@ export default function Dashboard() {
                                             borderRadius="10px"
                                             textAlign={'center'}
                                             width={'130px'}
-                                        >{bgGenerator(item.status)[1]}</Text>
+                                        >{item.status ? bgGenerator(item.status)[1] : "-"}</Text>
                                     </Td>
 
                                 </Tr>
