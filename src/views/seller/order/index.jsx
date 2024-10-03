@@ -287,30 +287,25 @@ export default function SellerOrder() {
                             :
                             <Grid overflow={"hidden"}
                                   templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={6} px={5}>
-                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                {/* <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("extId")}: </Text>
                                     <Text
                                         fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
-                                </Flex>
-                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
-                                      justifyContent={"space-between"} pe={5}>
-                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
-                                    <Text
-                                        fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? detailData.chequeAmount : "-"}</Text>
-                                </Flex>
+                                </Flex> */}
+                                
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("partner")}: </Text>
                                     <Text
                                         fontSize={"17px"}>{detailData.partner || detailData.partner === 0 ? detailData.partner : "-"}</Text>
                                 </Flex>
-                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                {/* <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("localQRId")}:</Text>
                                     <Text
                                         fontSize={"17px"}>{detailData.local_qrc_id || detailData.local_qrc_id === 0 ? detailData.local_qrc_id : "-"}</Text>
-                                </Flex>
+                                </Flex> */}
                                 <GridItem colSpan={{base: 1, md: 2}} display={"flex"}
                                           flexDirection={{base: "column", md: "row"}}
                                           justifyContent={"space-between"} pe={5}>
@@ -318,17 +313,23 @@ export default function SellerOrder() {
                                     <Text width={"70%"}
                                           fontSize={"17px"}>{detailData.purpose || detailData.purpose === 0 ? detailData.purpose : "-"}</Text>
                                 </GridItem>
-                                <GridItem colSpan={{base: 1, md: 2}} flexDirection={{base: "column", md: "row"}}
+                                {/* <GridItem colSpan={{base: 1, md: 2}} flexDirection={{base: "column", md: "row"}}
                                           display={"flex"} justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("QRId")}:</Text>
                                     <Text width={'70%'}
                                           fontSize={"17px"}>{detailData.qrc_id || detailData.qrc_id === 0 ? detailData.qrc_id : "-"}</Text>
-                                </GridItem>
+                                </GridItem> */}
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("QRAmount")}:</Text>
                                     <Text
-                                        fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? detailData.qrAmount : "-"}</Text>
+                                        fontSize={"17px"}>{detailData.qrAmount || detailData.qrAmount === 0 ? `${detailData.qrAmount} RUB` : "-"}</Text>
+                                </Flex>
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                      justifyContent={"space-between"} pe={5}>
+                                    <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
+                                    <Text
+                                        fontSize={"17px"}>{detailData.chequeAmount || detailData.chequeAmount === 0 ? `${detailData.chequeAmount} UZS` : "-"}</Text>
                                 </Flex>
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
@@ -346,7 +347,7 @@ export default function SellerOrder() {
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("date")}:</Text>
                                     <Text fontSize={"17px"}>
-                                        {detailData.updated_at || detailData.updated_at === 0 ? `${detailData.updated_at.slice(0, 10)} ${detailData.updated_at.slice(11, 16)}` : "-"}
+                                        {detailData.cheque_created_at || detailData.cheque_created_at === 0 ? `${detailData.cheque_created_at.slice(0, 10)} ${detailData.cheque_created_at.slice(11, 16)}` : "-"}
                                     </Text>
                                 </Flex>
                                 <GridItem width={"100%"} colSpan={{base: 1, md: 2}} display={"flex"}
