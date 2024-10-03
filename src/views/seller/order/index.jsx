@@ -341,7 +341,7 @@ export default function SellerOrder() {
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("status")}:</Text>
                                     <Text
-                                        fontSize={"17px"}>{detailData.pay_status || detailData.pay_status === 0 ? detailData.pay_status : "-"}</Text>
+                                        fontSize={"17px"}>{detailData.status || detailData.status === 0 ? detailData.status : "-"}</Text>
                                 </Flex>
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
