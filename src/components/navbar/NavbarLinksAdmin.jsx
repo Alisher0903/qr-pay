@@ -124,8 +124,8 @@ export default function HeaderLinks(props) {
 
     // Simple validation example
     const errors = {};
-    if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
-      errors.phone = "Phone number must be exactly 13 characters long and only contain numbers.";
+    if (name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 9)) {
+      errors.phone = "Phone number must be exactly 9 characters long and only contain numbers.";
     } else if (name === "firstName") {
       if (value.trim() === '') {
         errors[name] = `${t(name)}${t("error")}`;
@@ -153,7 +153,7 @@ export default function HeaderLinks(props) {
 
     Object.keys(formValues).filter((item) => item !== "phones"
     ).forEach(key => {
-      if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
+      if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 9)) {
         errors.phone = t("phoneError");
       } else if (key === "firstName") {
         if (formValues[key].trim() === '') {

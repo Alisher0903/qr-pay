@@ -65,6 +65,8 @@ export default function SellerTerminal() {
         });
     }
 
+   
+
     const initialValue = {
         name: "",
         account: "",
@@ -85,6 +87,10 @@ export default function SellerTerminal() {
 
     const [formErrors, setFormErrors] = useState(initialValue);
 
+    const isEmptyNewUsers = terminalNewUsers?.every(
+        (user) => !user.phone && !user.password
+      );
+
     const resetValue = () => {
         setFormValues(initialValue);
         setFormErrors(initialValue);
@@ -102,7 +108,7 @@ export default function SellerTerminal() {
 
             const errors = {};
             updatedPhones.forEach((phone) => {
-                if (!/^\+?\d*$/.test(phone) || phone.length !== 13) {
+                if (!/^\+?\d*$/.test(phone) || phone.length !== 9) {
                     errors.phones = [...(errors.phones || []), t("phoneError")];
                 } else errors.phones = [""]
             });
@@ -111,7 +117,7 @@ export default function SellerTerminal() {
             setFormValues({...formValues, [name]: value});
 
             const errors = {};
-            if (!isEdit && name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 13)) {
+            if (!isEdit && name === "phone" && (!/^\+?\d*$/.test(value) || value.length !== 9)) {
                 errors.phone = t("phoneError");
             } else if (!isEdit && name === "password" && value.length < 4) errors.password = t("passwordError");
             else if (value.trim() === '') errors[name] = `${t(name)}${t("error")}`;
@@ -131,6 +137,7 @@ export default function SellerTerminal() {
         });
     }, 300);
 
+
     const handleSave = () => {
         const errors = {};
         if (isEdit === true) {
@@ -138,7 +145,7 @@ export default function SellerTerminal() {
             ).forEach(key => {
                 if (key === "phones") {
                     formValues.phones.forEach((phone) => {
-                        if (!/^\+?\d*$/.test(phone) || phone.length !== 13) {
+                        if (!/^\+?\d*$/.test(phone) || phone.length !== 49) {
                             errors.phones = [...(errors.phones || []), t("phoneError")];
                         }
                     });
@@ -153,10 +160,10 @@ export default function SellerTerminal() {
                         filialCode: formValues?.filialCode,
                         inn: formValues?.inn,
                         terminalSerialCode: checkValueSerialCode(),
-                        terminalNewUsers: terminalNewUsers ? terminalNewUsers.map((item) => ({
+                        terminalNewUsers: isEmptyNewUsers ? null : terminalNewUsers.map((item) => ({
                             phone: `+998${item.phone}`,
                             password: item.password
-                        })) : []
+                        })),
                     }, setLoading: setCreateLoading, getFunction: getFunction
                 })
                 onClose();
@@ -165,7 +172,7 @@ export default function SellerTerminal() {
         } else {
             Object.keys(formValues).filter((item) => item !== "phones"
             ).forEach(key => {
-                if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 13)) {
+                if (key === "phone" && (!/^\+?\d*$/.test(formValues[key]) || formValues[key].length !== 9)) {
                     errors.phone = t("phoneError");
                 } else if (key === "password" && formValues[key].length < 4) errors.password = t("passwordError");
                 else if (formValues[key].trim() === '') errors[key] = `${t(key)}${t("error")}`;

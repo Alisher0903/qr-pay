@@ -54,7 +54,7 @@ export const TranslateUz = {
     passwordWarn: "Agar eski parolni saqlab qolmoqchi bo'lsangiz hech qanday malumot kiritmang!",
     payment: "To'lov",
     phone: "Telefon raqam",
-    phoneError: "Telefon raqami aniq 13 ta belgidan iborat bo'lishi va faqat raqamlardan iborat bo'lishi kerak.",
+    phoneError: "Telefon raqami aniq 9 ta belgidan iborat bo'lishi va faqat raqamlardan iborat bo'lishi kerak.",
     phones: "Telefon raqamlar",
     purpose: "Maqsad",
     QRAmount: "QR miqdori",

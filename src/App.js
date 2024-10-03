@@ -36,7 +36,7 @@ export default function Main() {
 
     useEffect(() => {
         setLanguageData(localStorage.getItem("selectedLang"))
-        siteSecurity()
+        // siteSecurity()
     }, []);
 
     useEffect(() => {
