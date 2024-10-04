@@ -123,7 +123,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("terminalUserCount")}`}
-                    value={statisticData.userCount ? statisticData?.userCount : "0"}
+                    value={statisticData?.userCount ? statisticData?.userCount : "0"}
                 />
                 <MiniStatistics
                     startContent={
