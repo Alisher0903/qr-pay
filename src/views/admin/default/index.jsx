@@ -109,7 +109,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("terminals")}`}
-                    value={statisticData ? statisticData?.terminalCount : "0"}
+                    value={statisticData?.terminalCount ? statisticData?.terminalCount : "0"}
                 />
                 <MiniStatistics
                     startContent={
@@ -123,7 +123,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("terminalUserCount")}`}
-                    value={statisticData ? statisticData?.userCount : "0"}
+                    value={statisticData.userCount ? statisticData?.userCount : "0"}
                 />
                 <MiniStatistics
                     startContent={
@@ -137,7 +137,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("transactions")}`}
-                    value={statisticData ? statisticData?.transactionCountWaitOrCompleted : "0"}
+                    value={statisticData?.transactionCountWaitOrCompleted ? statisticData?.transactionCountWaitOrCompleted : "0"}
                 />
                 <MiniStatistics
                 
@@ -166,7 +166,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("canceledTransactions")}`}
-                    value={statisticData ? statisticData?.transactionCountCancel : "0"}
+                    value={statisticData?.transactionCountCancel ? statisticData?.transactionCountCancel : "0"}
                 />
                 {role === "ROLE_SUPER_ADMIN" &&
                 <MiniStatistics
@@ -181,7 +181,7 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("requestOnWait")}`}
-                    value={statisticData ? statisticData?.requestWaitCount : "0"}
+                    value={statisticData?.requestWaitCount ? statisticData?.requestWaitCount : "0"}
                 />
                 }
             </SimpleGrid>
