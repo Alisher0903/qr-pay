@@ -87,7 +87,7 @@ export default function Main() {
         if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
 
         setTimeout(() => {
-            consoleClear();
+            // consoleClear();
         }, 10000)
     }, [pathname, tokens, navigate]);
 

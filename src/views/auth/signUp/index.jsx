@@ -80,7 +80,7 @@ function SignUp() {
             }
         } catch (err) {
             setLoading(false)
-            consoleClear()
+            // consoleClear()
         }
     }
 

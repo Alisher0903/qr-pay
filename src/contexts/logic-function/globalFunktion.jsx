@@ -16,7 +16,7 @@ export const userGetMe = async ({setData, token}) => {
     } catch (err) {
         setData(null)
     } finally {
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -47,10 +47,10 @@ export async function globalGetFunction({url, setData, setLoading, setTotalEleme
         }
     } catch (error) {
         setData(null);
-        consoleClear()
+        // consoleClear()
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -68,7 +68,7 @@ export async function globalPostFunction({url, postData, setLoading, getFunction
         toast.error('Error during create operation:');
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }
 
@@ -86,6 +86,6 @@ export async function globalPutFunction({url, putData, setLoading, getFunction, 
         // toast.error('Error during update operation:');
     } finally {
         if (setLoading) setLoading(false);
-        consoleClear()
+        // consoleClear()
     }
 }

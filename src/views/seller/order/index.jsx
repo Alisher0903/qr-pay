@@ -226,14 +226,14 @@ export default function SellerOrder() {
                                 </Td>
                                 <Td alignSelf="flex-start">
                                         <Text
-                                            background={bgGenerator(item.status)[0]}
+                                            background={item?.status ? bgGenerator(item?.status)[0] : ""}
                                             color="white"
                                             py="10px"
                                             fontWeight="700"
                                             borderRadius="10px"
                                             textAlign={'center'}
                                             width={'130px'}
-                                        >{bgGenerator(item.status)[1]}</Text>
+                                        >{item?.status ? bgGenerator(item?.status)[1] : ""}</Text>
                                     </Td>
                             </Tr>
                         ) :
