@@ -106,5 +106,10 @@ export const TranslateUz = {
 
     Active: "Faol",
     inActive: "Faol emas",
-    selectActive: "Holatni tanlang"
+    selectActive: "Holatni tanlang",
+
+    delete: "O'chirish",
+    createUser: "Foydalanuvchi qo'shish",
+    selectTerminal: "Terminalni tanlang"
+
 };

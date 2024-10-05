@@ -74,46 +74,46 @@ export default function SellerTerminal() {
         inn: "",
         password: "",
         phone: "",
-        phones: ['']
+        // phones: ['']
     }
 
-    const terminalNewUsersInitial = {
-        phone: '',
-        password: ''
-    }
+    // const terminalNewUsersInitial = {
+    //     phone: '',
+    //     password: ''
+    // }
 
     const [formValues, setFormValues] = useState(initialValue);
-    const [terminalNewUsers, setTerminalNewUsers] = useState([terminalNewUsersInitial]);
+    // const [terminalNewUsers, setTerminalNewUsers] = useState([terminalNewUsersInitial]);
 
     const [formErrors, setFormErrors] = useState(initialValue);
 
-    const isEmptyNewUsers = terminalNewUsers?.every(
-        (user) => !user.phone && !user.password
-      );
+    // const isEmptyNewUsers = terminalNewUsers?.every(
+    //     (user) => !user.phone && !user.password
+    //   );
 
     const resetValue = () => {
         setFormValues(initialValue);
         setFormErrors(initialValue);
-        setTerminalNewUsers([terminalNewUsersInitial])
+        // setTerminalNewUsers([terminalNewUsersInitial])
         setTerminalSerialCodeInitial(null)
         setTerminalSerialCode(null)
     };
 
     const handleChange = (e, index) => {
         const {name, value} = e.target;
-        if (isEdit && name === "phones") {
-            const updatedPhones = [...formValues.phones];
-            updatedPhones[index] = value;
-            setFormValues({...formValues, phones: updatedPhones});
+        // if (isEdit && name === "phones") {
+            // const updatedPhones = [...formValues.phones];
+            // updatedPhones[index] = value;
+            // setFormValues({...formValues, phones: updatedPhones});
 
-            const errors = {};
-            updatedPhones.forEach((phone) => {
-                if (!/^\+?\d*$/.test(phone) || phone.length !== 9) {
-                    errors.phones = [...(errors.phones || []), t("phoneError")];
-                } else errors.phones = [""]
-            });
-            setFormErrors({...formErrors, ...errors});
-        } else {
+            // const errors = {};
+            // updatedPhones.forEach((phone) => {
+            //     if (!/^\+?\d*$/.test(phone) || phone.length !== 9) {
+            //         errors.phones = [...(errors.phones || []), t("phoneError")];
+            //     } else errors.phones = [""]
+            // });
+            // setFormErrors({...formErrors, ...errors});
+        // } else {
             setFormValues({...formValues, [name]: value});
 
             const errors = {};
@@ -123,7 +123,7 @@ export default function SellerTerminal() {
             else if (value.trim() === '') errors[name] = `${t(name)}${t("error")}`;
             else errors[name] = ""
             setFormErrors({...formErrors, ...errors});
-        }
+        // }
     };
 
     const onChange = (page) => setPage(page - 1);
@@ -141,16 +141,16 @@ export default function SellerTerminal() {
     const handleSave = () => {
         const errors = {};
         if (isEdit === true) {
-            Object.keys(formValues).filter((item) => item !== "password" || item !== "phone"
-            ).forEach(key => {
-                if (key === "phones") {
-                    formValues.phones.forEach((phone) => {
-                        if (!/^\+?\d*$/.test(phone) || phone.length !== 49) {
-                            errors.phones = [...(errors.phones || []), t("phoneError")];
-                        }
-                    });
-                } else if (formValues[key].trim() === '') errors[key] = `${t(key)}${t("error")}`;
-            });
+            // Object.keys(formValues).filter((item) => item !== "password" || item !== "phone"
+            // ).forEach(key => {
+                // if (key === "phones") {
+                    // formValues.phones.forEach((phone) => {
+                    //     if (!/^\+?\d*$/.test(phone) || phone.length !== 49) {
+                    //         errors.phones = [...(errors.phones || []), t("phoneError")];
+                    //     }
+                    // });
+                // } else if (formValues[key].trim() === '') errors[key] = `${t(key)}${t("error")}`;
+            // });
 
             if (Object.keys(errors).length === 0 || Object.keys(errors).filter((item) => item === "password")) {
                 globalPutFunction({
@@ -160,10 +160,10 @@ export default function SellerTerminal() {
                         filialCode: formValues?.filialCode,
                         inn: formValues?.inn,
                         terminalSerialCode: checkValueSerialCode(),
-                        terminalNewUsers: isEmptyNewUsers ? null : terminalNewUsers.map((item) => ({
-                            phone: `+998${item.phone}`,
-                            password: item.password
-                        })),
+                        // terminalNewUsers: isEmptyNewUsers ? null : terminalNewUsers.map((item) => ({
+                        //     phone: `+998${item.phone}`,
+                        //     password: item.password
+                        // })),
                     }, setLoading: setCreateLoading, getFunction: getFunction
                 })
                 onClose();
@@ -201,22 +201,22 @@ export default function SellerTerminal() {
         else if (!terminalSerialCodeInitial && !terminalSerialCode) return null
     }
 
-    const handleAddPhoneNumber = () => {
-        setTerminalNewUsers([...terminalNewUsers, {...terminalNewUsersInitial}]);
-    };
+    // const handleAddPhoneNumber = () => {
+    //     setTerminalNewUsers([...terminalNewUsers, {...terminalNewUsersInitial}]);
+    // };
 
     // Function to handle removing a phone/password field
-    const handleRemovePhoneNumber = (index) => {
-        const updatedList = terminalNewUsers.filter((_, i) => i !== index);
-        setTerminalNewUsers(updatedList);
-    };
+    // const handleRemovePhoneNumber = (index) => {
+    //     const updatedList = terminalNewUsers.filter((_, i) => i !== index);
+    //     setTerminalNewUsers(updatedList);
+    // };
 
     // Function to handle changes in phone field
-    const handleList = (name, value, index) => {
-        const updatedUsers = [...terminalNewUsers];
-        updatedUsers[index][name] = value;
-        setTerminalNewUsers(updatedUsers);
-    };
+    // const handleList = (name, value, index) => {
+    //     const updatedUsers = [...terminalNewUsers];
+    //     updatedUsers[index][name] = value;
+    //     setTerminalNewUsers(updatedUsers);
+    // };
 
     return (
         <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
@@ -380,51 +380,53 @@ export default function SellerTerminal() {
                                     color={inputTextColor}
                                 />
                             </FormControl>
-                            {isEdit ?
-                                <GridItem colSpan={2}>
-                                    <FormControl mt={4}>
-                                        <Flex justifyContent={"space-between"} alignItems={"center"}>
-                                            <FormLabel>{t('phone')}</FormLabel>
-                                            <Button mt={2} onClick={handleAddPhoneNumber} p={0} mb={4}
-                                                    bg={"transparent"}>
-                                                <FaPlus/>
-                                            </Button>
-                                        </Flex>
-                                        {terminalNewUsers && terminalNewUsers.map((user, index) => (
-                                            <InputGroup gap={5} key={index} mb={3}>
-                                                <InputLeftElement>
-                                                    <Text mx={4}>+998</Text>
-                                                </InputLeftElement>
-                                                <Input
-                                                    placeholder={`${t('phone')} ${index + 1}`}
-                                                    name="phones"
-                                                    value={user.phone}
-                                                    onChange={(e) => handleList('phone', e.target.value, index)}
-                                                    color={inputTextColor}
-                                                    type={`number`}
-                                                />
-                                                <Input
-                                                    placeholder={`${t('password')} ${index + 1}`}
-                                                    name="password"
-                                                    value={user.password}
-                                                    onChange={(e) => handleList('password', e.target.value, index)}
-                                                    color={inputTextColor}
-                                                />
-                                                {index > 0 && (
-                                                    <InputRightElement>
-                                                        <IconButton
-                                                            size="sm"
-                                                            onClick={() => handleRemovePhoneNumber(index)}
-                                                            icon={<FaMinus/>}
-                                                            aria-label="Remove"
-                                                        />
-                                                    </InputRightElement>
-                                                )}
-                                            </InputGroup>
-                                        ))}
-                                    </FormControl>
-                                </GridItem>
-                                :
+                            {
+                            // isEdit ?
+                            //     <GridItem colSpan={2}>
+                            //         <FormControl mt={4}>
+                            //             <Flex justifyContent={"space-between"} alignItems={"center"}>
+                            //                 <FormLabel>{t('phone')}</FormLabel>
+                            //                 <Button mt={2} onClick={handleAddPhoneNumber} p={0} mb={4}
+                            //                         bg={"transparent"}>
+                            //                     <FaPlus/>
+                            //                 </Button>
+                            //             </Flex>
+                            //             {terminalNewUsers && terminalNewUsers.map((user, index) => (
+                            //                 <InputGroup gap={5} key={index} mb={3}>
+                            //                     <InputLeftElement>
+                            //                         <Text mx={4}>+998</Text>
+                            //                     </InputLeftElement>
+                            //                     <Input
+                            //                         placeholder={`${t('phone')} ${index + 1}`}
+                            //                         name="phones"
+                            //                         value={user.phone}
+                            //                         onChange={(e) => handleList('phone', e.target.value, index)}
+                            //                         color={inputTextColor}
+                            //                         type={`number`}
+                            //                     />
+                            //                     <Input
+                            //                         placeholder={`${t('password')} ${index + 1}`}
+                            //                         name="password"
+                            //                         value={user.password}
+                            //                         onChange={(e) => handleList('password', e.target.value, index)}
+                            //                         color={inputTextColor}
+                            //                     />
+                            //                     {index > 0 && (
+                            //                         <InputRightElement>
+                            //                             <IconButton
+                            //                                 size="sm"
+                            //                                 onClick={() => handleRemovePhoneNumber(index)}
+                            //                                 icon={<FaMinus/>}
+                            //                                 aria-label="Remove"
+                            //                             />
+                            //                         </InputRightElement>
+                            //                     )}
+                            //                 </InputGroup>
+                            //             ))}
+                            //         </FormControl>
+                            //     </GridItem>
+                            //     :
+                            !isEdit &&
                                 <FormControl mt={4} isInvalid={!!formErrors.phone}>
                                     <FormLabel>{t("phone")}</FormLabel>
                                     <InputGroup display={"flex"} alignItems={"center"}>

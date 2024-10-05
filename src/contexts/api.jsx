@@ -10,11 +10,14 @@ export const user_edit = `${base_url}api/user/update`;
 export const user_merchant = `${base_url}api/user/page`;
 export const user_terminal = `${base_url}api/user/terminal`;
 export const user_edit_status = `${base_url}api/user/user-active`;
+export const user_terminal_add = `${base_url}terminal/add-terminal-user`;
+export const user_terminal_delete = `${base_url}terminal/delete-terminal-user`;
 
 
 // TERMINAL CONTROLLER
 export const terminal_create = `${base_url}terminal/create`;
 export const terminal_get = `${base_url}terminal/list`;
+export const terminal_get_list = `${base_url}terminal/select-terminal-list`;
 export const terminal_update = `${base_url}terminal/update/`; // id kirib keladi
 export const terminal_isActive = `${base_url}terminal/deactive/`; // id kirib keladi
 

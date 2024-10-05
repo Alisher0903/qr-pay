@@ -59,13 +59,28 @@ export async function globalPostFunction({url, postData, setLoading, getFunction
     if (setLoading) setLoading(true);
     try {
         const {data} = await axios.post(url, postData, config)
-        if (data?.error?.code) toastMessage(data.error.code)
+        if (data?.error?.message) toast.error(data.error.message)
         else {
             toast.success("Task completed successfully")
             getFunction()
         }
-    } catch (error) {
-        toast.error('Error during create operation:');
+    } catch{
+    } finally {
+        if (setLoading) setLoading(false);
+        // consoleClear()
+    }
+}
+
+export async function globaldeleteFunction({url, setLoading, getFunction}) {
+    if (setLoading) setLoading(true);
+    try {
+        const {data} = await axios.delete(url, config)
+        if (data?.error?.message) toast.error(data.error.message)
+        else {
+            toast.success("Task completed successfully")
+            getFunction()
+        }
+    } catch{
     } finally {
         if (setLoading) setLoading(false);
         // consoleClear()
@@ -76,7 +91,7 @@ export async function globalPutFunction({url, putData, setLoading, getFunction, 
     try {
         if (setLoading) setLoading(true);
         const {data} = await axios.put(url, putData, config)
-        if (data?.error?.code) toastMessage(data.error.code)
+        if (data?.error?.message) toast.error(data.error.message)
         else {
             if (setResponse) setResponse(data.data)
             if (getFunction) getFunction()
