@@ -29,7 +29,7 @@ export default function Partner() {
     const bgGenerator = (status) => {
         if (status === 'ACTIVE') return ['green', t("Active")]
         else if (status === 'INACTIVE') return ['red', t("inActive")]
-       
+        else return ['gray', t("unknown")]; // Default case
     }
 
     const getTestUrl = () => {

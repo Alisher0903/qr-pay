@@ -42,7 +42,7 @@ const Request = () => {
         switch (status) {
             case 'WAIT':
                 return ['yellow', t("wait")];
-            case 'CONFIRMED':
+            case 'COMPLETED':
                 return ['green', t("confirmed")];
             case 'CANCEL':
                 return ['red', t("canceled")];

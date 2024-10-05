@@ -80,7 +80,7 @@ export default function Dashboard() {
 
     const bgGenerator = (status) => {
         if (status === 'WAIT') return ['yellow', t("wait")];
-        else if (status === 'CONFIRMED') return ['green', t("confirmed")];
+        else if (status === 'COMPLETED') return ['green', t("confirmed")];
         else if (status === 'CANCEL') return ['red', t("canceled")];
         else return ['gray', t("unknown")]; // Default case
     };
