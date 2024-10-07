@@ -16,6 +16,7 @@ import Request from "./views/admin/request";
 import SignUp from 'views/auth/signUp';
 import UserTerminal from "./views/seller/users-terminal";
 import {FaUsersCog} from "react-icons/fa";
+import CheckCode from 'views/auth/signIn/checkCode';
 
 export const generateRoutes = (t) => [
     // Admin panel route
@@ -126,6 +127,13 @@ export const generateRoutes = (t) => [
         path: '/sign-in',
         icon: <Icon as={MdLock} width="20px" height="20px" color="inherit"/>,
         component: <SignInCentered/>,
+    },
+    {
+        name: "ckeck code",
+        layout: '/auth',
+        path: '/check-code',
+        icon: <Icon as={MdLock} width="20px" height="20px" color="inherit"/>,
+        component: <CheckCode/>,
     },
     {
         name: t('signUp'),

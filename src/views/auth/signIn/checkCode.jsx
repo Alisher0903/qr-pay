@@ -11,7 +11,6 @@ import {
     Heading,
     Input,
     InputGroup,
-    InputLeftElement,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
@@ -22,21 +21,28 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 // import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
-import { sliceNumber } from "../../../contexts/allRequest";
 import axios from "axios";
 import {
+    admin_notification_count,
+    seller_notification_count,
+    terminal_notification_count,
+    user_login,
     user_sendCode
 } from "../../../contexts/api";
-import { consoleClear, toastMessage } from "../../../contexts/toast-message";
+import { toastMessage } from "../../../contexts/toast-message";
 import { useNavigate } from "react-router-dom";
+import { userGetMe } from "contexts/logic-function/globalFunktion";
 import { AppStore } from "contexts/state-management";
+import { globalGetFunction } from "contexts/logic-function/globalFunktion";
+import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 import { useTranslation } from "react-i18next";
 
 const defVal = { phone: '', password: '' }
 
-function SignIn() {
+function CheckCode() {
     const navigate = useNavigate()
-    const { setPhonenumber, phonenumber } = AppStore()
+    const { setCountData } = NotificationStore()
+    const { setGetMeeData, phonenumber } = AppStore()
     const [auth, setAuth] = useState({ phone: '', password: '' });
     const [roles, setRoles] = useState('');
     const [show, setShow] = useState(false);
@@ -48,6 +54,7 @@ function SignIn() {
 
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
+
 
     useEffect(() => {
         if (roles === 'ROLE_SUPER_ADMIN') {
@@ -71,6 +78,35 @@ function SignIn() {
     const authLogin = async () => {
         setLoading(true)
         try {
+            const { data } = await axios.post(user_login, {
+                phone: `+998${phonenumber}`,
+                code: auth.password
+            })
+            if (data?.error?.code) {
+                setLoading(false)
+                toastMessage(data.error.code)
+            } else {
+                setLoading(false)
+                const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+                sessionStorage.setItem('tokenExpiry', expiryTime.toString());
+                sessionStorage.setItem("token", data.data.token)
+                sessionStorage.setItem("ROLE", data.data.role)
+                setRoles(data.data.role)
+                await userGetMe({ setData: setGetMeeData, token: data.data.token });
+                await globalGetFunction({
+                    url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
+                    setData: setCountData, token: data.data.token
+                })
+            }
+        } catch (err) {
+            setLoading(false)
+        }
+    }
+
+    const reSend = async () => {
+        toast.success("Kod qayta yuborildi!")
+        setLoading(true)
+        try {
             const { data } = await axios.post(user_sendCode, {
                 phone: `+998${phonenumber}`,
             })
@@ -84,6 +120,14 @@ function SignIn() {
         } catch (err) {
             setLoading(false)
         }
+    }
+
+    const handleClick = () => setShow(!show);
+
+    const handleAuth = (name, val) => {
+        setAuth({
+            ...auth, [name]: val
+        })
     }
 
     function checkKeyPress(event) {
@@ -137,7 +181,7 @@ function SignIn() {
                         <HSeparator />
                     </Flex>
                     <FormControl>
-                        <FormLabel
+                        {/* <FormLabel
                             display='flex'
                             ms='4px'
                             fontSize='sm'
@@ -145,13 +189,9 @@ function SignIn() {
                             color={textColor}
                             mb='8px'>
                             {t('enterYourPhoneNumber')}<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup display={"flex"} alignItems={"center"}>
-                            <InputLeftElement mt={1}>
-                                <Text
-                                fontSize='sm'
-                                fontWeight='500'>+998</Text>
-                            </InputLeftElement>
+                        </FormLabel> */}
+                        {/* <InputGroup display={"flex"} alignItems={"center"}>
+
                             <Input
                                 isRequired={true}
                                 variant='auth'
@@ -162,16 +202,35 @@ function SignIn() {
                                 mb='24px'
                                 fontWeight='500'
                                 size='lg'
-                                value={phonenumber}
+                                value={auth.phone}
                                 onKeyDown={checkKeyPress}
-                                onChange={e => setPhonenumber(e.target.value)}
-                            />
+                                onChange={e => handleAuth('phone', e.target.value)}
+                            /> */}
 
+                        {/* </InputGroup> */}
+                        <FormLabel
+                            ms='4px'
+                            fontSize='sm'
+                            fontWeight='500'
+                            color={textColor}
+                            display='flex'>
+                            SMS codni kiriting<Text color={brandStars}>*</Text>
+                        </FormLabel>
+                        <InputGroup size='md'>
+                            <Input
+                                isRequired={true}
+                                fontSize='sm'
+                                placeholder={"-- --"}
+                                mb='24px'
+                                size='lg'
+                                variant='auth'
+                                onKeyDown={checkKeyPress}
+                                value={auth.password}
+                                onChange={e => handleAuth('password', e.target.value)}
+                            />
+                            
                         </InputGroup>
-                       <NavLink onClick={() => {
-                        if (sliceNumber(phonenumber))  authLogin()
-                        else toast.error(t('checkData'))
-                       }} to={sliceNumber(phonenumber) ? '/auth/check-code' : ""}>
+                       
                         <Button
                             fontSize='sm'
                             variant='brand'
@@ -180,9 +239,11 @@ function SignIn() {
                             h='50'
                             mb='24px'
                             type='submit'
-                            
-                        >{loading ? t('loading') : t('continue')}</Button>
-                       </NavLink>
+                            onClick={async () => {
+                                if (auth.password) await authLogin()
+                                else toast.error(t('checkData'));
+                            }}
+                        >{loading ? t('loading') : t('signIn')}</Button>
                     </FormControl>
                     <Flex
                         flexDirection='column'
@@ -191,14 +252,16 @@ function SignIn() {
                         maxW='100%'
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                        {t("notRegistered")}
-                            <NavLink to='/auth/sign-up'>
+                        Kod kelmadimi?
+                            <NavLink onClick={() => {   
+                                reSend()
+                            }}>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
                                     ms='5px'
                                     fontWeight='500'>
-                                   {t("leaveRequestFor")}
+                                   {"Kodni qayta yuborish"}
                                 </Text>
                             </NavLink>
                         </Text>
@@ -209,4 +272,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default CheckCode;
