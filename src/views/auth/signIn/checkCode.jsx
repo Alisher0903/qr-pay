@@ -104,7 +104,7 @@ function CheckCode() {
     }
 
     const reSend = async () => {
-        toast.success("Kod qayta yuborildi!")
+        toast.success(t("codeResent"))
         setLoading(true)
         try {
             const { data } = await axios.post(user_sendCode, {
@@ -161,7 +161,7 @@ function CheckCode() {
                         color={textColorSecondary}
                         fontWeight='400'
                         fontSize='md'>
-                        {t('signInDesc')}
+                        {t('code')}{`+998${phonenumber}`}{t('codeSend')}
                     </Text>
                 </Box>
                 <Flex
@@ -214,7 +214,7 @@ function CheckCode() {
                             fontWeight='500'
                             color={textColor}
                             display='flex'>
-                            SMS codni kiriting<Text color={brandStars}>*</Text>
+                            {t('enterCode')}<Text color={brandStars}>*</Text>
                         </FormLabel>
                         <InputGroup size='md'>
                             <Input
@@ -252,7 +252,7 @@ function CheckCode() {
                         maxW='100%'
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                        Kod kelmadimi?
+                        {t('codeNotGet')}
                             <NavLink onClick={() => {   
                                 reSend()
                             }}>
@@ -261,7 +261,7 @@ function CheckCode() {
                                     as='span'
                                     ms='5px'
                                     fontWeight='500'>
-                                   {"Kodni qayta yuborish"}
+                                  {t('resend')}
                                 </Text>
                             </NavLink>
                         </Text>

@@ -64,7 +64,6 @@ export const TranslateRu = {
     request: "Запросы",
     save: "Сохранить",
     signIn: "Вход в систему",
-    signInDesc: "Введите свой номер телефона и пароль для входа!",
     signUp: "Регистрация",
     status: "Статус",
     terminal: "Терминал",
@@ -106,5 +105,16 @@ export const TranslateRu = {
 
     Active: "Активный",
     inActive: "Не активен",
-    selectActive: "Выберите статус"
+    selectActive: "Выберите статус",
+
+    serialCode: "Серийный код",
+signInDesc: "Введите свой номер телефона для входа, и вам будет отправлен SMS-код.",
+code: "Код",
+codeSend: " отправлен на номер.",
+enterCode: "Введите SMS-код",
+codeNotGet: "Не получили код?",
+resend: "Отправить код повторно",
+
+codeResent: "Код отправлен повторно!"
+
 };

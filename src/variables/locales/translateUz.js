@@ -64,7 +64,6 @@ export const TranslateUz = {
     request: "So'rovlar",
     save: "Saqlash",
     signIn: "Tizimga kirish",
-    signInDesc: "Kirish uchun telefon raqamingiz va parolingizni kiriting!",
     signUp: "Ro'yhatdan o'tish",
     status: "Status",
     terminal: "Terminal",
@@ -110,6 +109,16 @@ export const TranslateUz = {
 
     delete: "O'chirish",
     createUser: "Foydalanuvchi qo'shish",
-    selectTerminal: "Terminalni tanlang"
+    selectTerminal: "Terminalni tanlang",
 
+    serialCode: "Serial code",
+    signInDesc: "Kirish uchun telefon raqamingizni kiriting va sizga sms kod yuboriladi.",
+    code: "Kod ",
+    codeSend: " raqamiga yuborildi.",
+    enterCode: "SMS codni kiriting",
+    codeNotGet: "Kod kelmadimi?",
+    resend: "Kodni qayta yuborish",
+
+    
+codeResent: "Kod qayta yuborildi!"
 };
