@@ -39,7 +39,7 @@ export default function SellerTerminal() {
     const bgColor = useColorModeValue('#422AFB', '#7551FF');
     const textColor = useColorModeValue('white', 'white');
     const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
-    const thead = [t('tableTr'), t("name"), t("inn"), t("account"), t("phone"), t("filial_code"), t("update"), t("active")]
+    const thead = [t('tableTr'), t("name"), t("inn"), t("account"),"Serial code", t("phone"), t("filial_code"), t("update"), t("active")]
 
     useEffect(() => {
         setConfig()
@@ -251,11 +251,12 @@ export default function SellerTerminal() {
                             terminalData?.object.map((item, i) =>
                                 <Tr key={i}>
                                     <Td>{(page * 10) + i + 1}</Td>
-                                    <Td>{item?.name}</Td>
-                                    <Td>{item?.inn}</Td>
-                                    <Td>{item?.account}</Td>
-                                    <Td>{item?.user?.phone}</Td>
-                                    <Td>{item?.filial_code}</Td>
+                                    <Td>{item?.name ? item?.name : "-"}</Td>
+                                    <Td>{item?.inn ? item?.inn : "-"}</Td>
+                                    <Td>{item?.account ? item?.account : "-"}</Td>
+                                    <Td>{item?.terminalSerialCode ? item?.terminalSerialCode : "-"}</Td>
+                                    <Td>{item?.user?.phone ? item?.user?.phone : "-"}</Td>
+                                    <Td>{item?.filial_code ? item?.filial_code : "-"}</Td>
                                     <Td>
                                         <Box ms={3}>
                                             <button onClick={() => {
