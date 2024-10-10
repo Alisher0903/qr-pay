@@ -103,7 +103,7 @@ const Request = () => {
                                         value={item?.status}
                                     >
                                         <option value='CANCEL'>{bgGenerator('CANCEL')[1]}</option>
-                                        <option value='COMPLETED'>{bgGenerator('COMPLETED')[1]}</option>
+                                        <option value='CONFIRMED'>{bgGenerator('COMPLETED')[1]}</option>
                                         <option value='WAIT'>{bgGenerator('WAIT')[1]}</option> {/* Added WAIT option for completeness */}
                                     </Select>
                                 </Td>
