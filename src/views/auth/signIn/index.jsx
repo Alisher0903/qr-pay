@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import {
     Box,
     Button,
+    Checkbox,
     // Checkbox,
     Flex,
     FormControl,
@@ -37,9 +38,7 @@ const defVal = { phone: '', password: '' }
 function SignIn() {
     const navigate = useNavigate()
     const { setPhonenumber, phonenumber } = AppStore()
-    const [auth, setAuth] = useState({ phone: '', password: '' });
-    const [roles, setRoles] = useState('');
-    const [show, setShow] = useState(false);
+    const [policy, setPolicy] = useState(false);
     const [loading, setLoading] = useState(false);
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
@@ -48,25 +47,6 @@ function SignIn() {
 
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
-
-    useEffect(() => {
-        if (roles === 'ROLE_SUPER_ADMIN') {
-            toast.success('You have successfully logged in')
-            navigate('/admin/dashboard')
-            sessionStorage.setItem('pathname', 'Dashboard')
-            setAuth(defVal)
-        } else if (roles === 'ROLE_SELLER') {
-            toast.success('You have successfully logged in')
-            navigate('/seller/dashboard')
-            sessionStorage.setItem('pathname', 'Dashboard')
-            setAuth(defVal)
-        } else if (roles === 'ROLE_TERMINAL') {
-            toast.success('You have successfully logged in')
-            navigate('/terminal/payment')
-            sessionStorage.setItem('pathname', 'Terminal dashboard')
-            setAuth(defVal)
-        }
-    }, [roles]);
 
     const authLogin = async () => {
         setLoading(true)
@@ -79,7 +59,7 @@ function SignIn() {
                 toastMessage(data.error.code)
             } else {
                 setLoading(false)
-              
+
             }
         } catch (err) {
             setLoading(false)
@@ -133,7 +113,7 @@ function SignIn() {
                 >
                     <Flex align='center' mb='30px'>
                         <HSeparator />
-                       
+
                         <HSeparator />
                     </Flex>
                     <FormControl>
@@ -149,8 +129,8 @@ function SignIn() {
                         <InputGroup display={"flex"} alignItems={"center"}>
                             <InputLeftElement mt={1}>
                                 <Text
-                                fontSize='sm'
-                                fontWeight='500'>+998</Text>
+                                    fontSize='sm'
+                                    fontWeight='500'>+998</Text>
                             </InputLeftElement>
                             <Input
                                 isRequired={true}
@@ -168,21 +148,50 @@ function SignIn() {
                             />
 
                         </InputGroup>
-                       <NavLink onClick={() => {
-                        if (sliceNumber(phonenumber))  authLogin()
-                        else toast.error(t('checkData'))
-                       }} to={sliceNumber(phonenumber) ? '/auth/check-code' : ""}>
-                        <Button
-                            fontSize='sm'
-                            variant='brand'
-                            fontWeight='500'
-                            w='100%'
-                            h='50'
-                            mb='24px'
-                            type='submit'
-                            
-                        >{loading ? t('loading') : t('continue')}</Button>
-                       </NavLink>
+                        <Flex
+                            flexDirection='row'
+                            justifyContent='center'
+                            alignItems='center'
+                            maxW='100%'
+                            gap={3}
+                            mb='20px'>
+                            <Checkbox value={policy} onChange={(e) =>{
+                                setPolicy(e.target.checked);   
+                            }} border={"#000"} />
+                            <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
+                                {t('enterBy')}
+                                <NavLink to='/auth/privacy-policy'>
+                                    <Text
+                                        color={textColorBrand}
+                                        as='span'
+                                        ms='5px'
+                                        fontWeight='500'>
+                                        {t('termsAndPolicy') }
+                                    </Text>
+                                </NavLink>
+                               {' '} {t('agree')}
+                            </Text>
+                        </Flex>
+                        <NavLink onClick={() => {
+                            if (policy) {
+                                if (sliceNumber(phonenumber)) authLogin()
+                                else toast.error(t('checkData'))
+                            } else {
+                                toast.error(t('policyNotChecked'))
+                            }
+                        }} to={sliceNumber(phonenumber) ? '/auth/check-code' : ""}>
+                            <Button
+                                disabled={!policy}
+                                fontSize='sm'
+                                variant='brand'
+                                fontWeight='500'
+                                w='100%'
+                                h='50'
+                                mb='24px'
+                                type='submit'
+
+                            >{loading ? t('loading') : t('continue')}</Button>
+                        </NavLink>
                     </FormControl>
                     <Flex
                         flexDirection='column'
@@ -191,14 +200,14 @@ function SignIn() {
                         maxW='100%'
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                        {t("notRegistered")}
+                            {t("notRegistered")}
                             <NavLink to='/auth/sign-up'>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
                                     ms='5px'
                                     fontWeight='500'>
-                                   {t("leaveRequestFor")}
+                                    {t("leaveRequestFor")}
                                 </Text>
                             </NavLink>
                         </Text>
