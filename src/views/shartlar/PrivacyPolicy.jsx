@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
         Maxfiylik siyosati
       </Heading>
       <Text mb={2}><strong>Oxirgi yangilangan:</strong> 14.10.2024</Text>
-      
+
       <List spacing={3} mt={4}>
         <ListItem>
           <ListIcon as={LockIcon} color="blue.500" />
@@ -33,8 +33,38 @@ const PrivacyPolicy = () => {
           </List>
         </ListItem>
 
-        {/* Add other privacy sections similarly */}
-        
+        <ListItem>
+          <ListIcon as={LockIcon} color="blue.500" />
+          <strong>3. Ma'lumotlarni almashish</strong>
+          <Text>
+            Ha, biz sizning maʼlumotlaringizni toʻlovlarni qayta ishlash uchun foydalanayotgan Rossiya toʻlov tizimlari kabi uchinchi tomon xizmat koʻrsatuvchi provayderlari bilan baham koʻrishimiz mumkin. Ular o'zlarining ma'lumotlar maxfiyligi amaliyotiga ega va ma'lumotlar bazalarida to'lov bilan bog'liq ma'lumotlarni saqlash uchun javobgardirlar.
+          </Text>
+        </ListItem>
+
+        <ListItem>
+          <ListIcon as={LockIcon} color="blue.500" />
+          <strong>4. Ma'lumotlarni saqlash</strong>
+          <Text>
+            Biz to'plagan ma'lumotlar bizning xavfsiz ma'lumotlar bazalarimizda saqlanadi. Rossiya toʻlov tizimlari bilan baham koʻrilgan maʼlumotlar ham ularning tegishli xavfsiz tizimlarida saqlanadi. Biz barcha saqlash tizimlari ma'lumotlarni himoya qilish qoidalariga muvofiqligini va ruxsatsiz kirishdan himoyalanganligini ta'minlash uchun choralar ko'ramiz.
+          </Text>
+        </ListItem>
+
+        <ListItem>
+          <ListIcon as={LockIcon} color="blue.500" />
+          <strong>5. Ma'lumotlar xavfsizligi</strong>
+          <Text>
+            Ma'lumotlaringizni ruxsatsiz kirish yoki oshkor qilishdan himoya qilish uchun biz sanoat standartidagi shifrlash va kirishni boshqarish vositalaridan foydalanamiz. Barcha tranzaktsiyalar xavfsiz tarzda qayta ishlanadi va biz tizimimizni zaifliklar uchun doimiy ravishda kuzatib boramiz.
+          </Text>
+        </ListItem>
+
+        <ListItem>
+          <ListIcon as={LockIcon} color="blue.500" />
+          <strong>6. Foydalanuvchi huquqlari</strong>
+          <Text>
+            Foydalanuvchilar o'zlarining shaxsiy ma'lumotlariga kirishni talab qilish yoki ma'lumotlarini o'chirishni so'rash huquqiga ega. Bunday so'rovlar Sfera yechimlari orqali bizning qo'llab-quvvatlash guruhimizga yuborilishi kerak
+          </Text>
+        </ListItem>
+
         <ListItem>
           <ListIcon as={LockIcon} color="blue.500" />
           <strong>7. Maxfiylik siyosatiga yangilanishlar</strong>
