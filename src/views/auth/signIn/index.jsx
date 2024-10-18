@@ -32,9 +32,6 @@ import { consoleClear, toastMessage } from "../../../contexts/toast-message";
 import { useNavigate } from "react-router-dom";
 import { AppStore } from "contexts/state-management";
 import { useTranslation } from "react-i18next";
-
-const defVal = { phone: '', password: '' }
-
 function SignIn() {
     const navigate = useNavigate()
     const { setPhonenumber, phonenumber } = AppStore()
@@ -57,11 +54,13 @@ function SignIn() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
+                consoleClear()
             } else {
                 setLoading(false)
-
+                consoleClear()
             }
         } catch (err) {
+            consoleClear()
             setLoading(false)
         }
     }

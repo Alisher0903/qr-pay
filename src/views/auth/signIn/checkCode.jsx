@@ -29,7 +29,7 @@ import {
     user_login,
     user_sendCode
 } from "../../../contexts/api";
-import { toastMessage } from "../../../contexts/toast-message";
+import { consoleClear, toastMessage } from "../../../contexts/toast-message";
 import { useNavigate } from "react-router-dom";
 import { userGetMe } from "contexts/logic-function/globalFunktion";
 import { AppStore } from "contexts/state-management";
@@ -85,6 +85,7 @@ function CheckCode() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
+                consoleClear()
             } else {
                 setLoading(false)
                 const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
@@ -97,9 +98,11 @@ function CheckCode() {
                     url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
                     setData: setCountData, token: data.data.token
                 })
+                consoleClear()
             }
         } catch (err) {
             setLoading(false)
+            consoleClear()
         }
     }
 
@@ -113,16 +116,17 @@ function CheckCode() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
+                consoleClear()
             } else {
                 setLoading(false)
               
+                consoleClear()
             }
         } catch (err) {
             setLoading(false)
+            consoleClear()
         }
     }
-
-    const handleClick = () => setShow(!show);
 
     const handleAuth = (name, val) => {
         setAuth({

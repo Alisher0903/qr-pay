@@ -20,7 +20,7 @@ export const updateRequestStatus = async ({reqID, status, getFunction}) => {
     } catch (err) {
         // console.log(err)
     } finally {
-        // consoleClear()
+        consoleClear()
     }
 }
 
@@ -37,6 +37,6 @@ export const updateUserStatus = async ({userId, status, getFunction}) => {
     } catch (err) {
         // console.log(err)
     } finally {
-        // consoleClear()
+        consoleClear()
     }
 }
