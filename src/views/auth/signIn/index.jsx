@@ -54,13 +54,13 @@ function SignIn() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
-                consoleClear()
+                // consoleClear()
             } else {
                 setLoading(false)
-                consoleClear()
+                // consoleClear()
             }
         } catch (err) {
-            consoleClear()
+            // consoleClear()
             setLoading(false)
         }
     }

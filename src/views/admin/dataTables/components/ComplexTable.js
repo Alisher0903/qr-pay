@@ -25,7 +25,7 @@ export default function ComplexTable({thead, children, name, buttonChild }) {
       flexDirection="column"
       w="100%"
       px="0px"
-      overflowX={{ sm: 'scroll', lg: 'hidden' }}
+      overflowX={"auto"}
     >
       <Flex px="25px" mb="8px" justifyContent="space-between" align="center">
         <Text
@@ -60,7 +60,7 @@ export default function ComplexTable({thead, children, name, buttonChild }) {
               ))}
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody width={"100%"} overflowX={"auto"}>
             {children}
           </Tbody>
         </Table>

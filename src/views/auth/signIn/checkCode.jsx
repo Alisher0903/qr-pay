@@ -36,6 +36,7 @@ import { AppStore } from "contexts/state-management";
 import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { NotificationStore } from "contexts/state-management/notification/notificationStore";
 import { useTranslation } from "react-i18next";
+// import { toastMessage } from "contexts/toast-message";
 
 const defVal = { phone: '', password: '' }
 
@@ -85,7 +86,7 @@ function CheckCode() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
-                consoleClear()
+                // consoleClear()
             } else {
                 setLoading(false)
                 const expiryTime = new Date().getTime() + 24 * 60 * 60 * 1000;
@@ -98,11 +99,11 @@ function CheckCode() {
                     url: data.data.role === "ROLE_TERMINAL" ? terminal_notification_count : data.data.role === "ROLE_SELLER" ? seller_notification_count : data.data.role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
                     setData: setCountData, token: data.data.token
                 })
-                consoleClear()
+                // consoleClear()
             }
         } catch (err) {
             setLoading(false)
-            consoleClear()
+            // consoleClear()
         }
     }
 
@@ -116,15 +117,15 @@ function CheckCode() {
             if (data?.error?.code) {
                 setLoading(false)
                 toastMessage(data.error.code)
-                consoleClear()
+                // consoleClear()
             } else {
                 setLoading(false)
               
-                consoleClear()
+                // consoleClear()
             }
         } catch (err) {
             setLoading(false)
-            consoleClear()
+            // consoleClear()
         }
     }
 

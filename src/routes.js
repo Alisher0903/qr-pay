@@ -18,6 +18,7 @@ import UserTerminal from "./views/seller/users-terminal";
 import {FaUsersCog} from "react-icons/fa";
 import CheckCode from 'views/auth/signIn/checkCode';
 import PrivacyTermsPage from 'views/shartlar/PrivacyTermsPage';
+import WordsPage from 'views/admin/words';
 
 export const generateRoutes = (t) => [
     // Admin panel route
@@ -56,6 +57,13 @@ export const generateRoutes = (t) => [
         path: '/request',
         icon: <Icon as={FaCodePullRequest} width="20px" height="20px" color="inherit"/>,
         component: <Request/>,
+    },
+    {
+        name: t("words"),
+        layout: '/admin',
+        path: '/words',
+        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        component: <WordsPage/>,
     },
     {
         name: '',

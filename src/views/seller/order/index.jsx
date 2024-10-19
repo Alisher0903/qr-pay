@@ -67,7 +67,7 @@ export default function SellerOrder() {
     const textColor = useColorModeValue('white', 'white');
     const navbarIcon = useColorModeValue("#1B255A", "white");
     const hoverBgColor = useColorModeValue('blue.600', 'purple.600');
-    const thead = [t('tableTr'), t("partner"), t("purpose"), t("date"), t("action"), t("refund"), t("status"),]
+    const thead = [t('tableTr'), t("partner"), t("extId"), t("purpose"), t("date"), t("action"), t("refund"), t("status"),]
 
     useEffect(() => {
         setConfig()
@@ -189,7 +189,8 @@ export default function SellerOrder() {
                         paymentData.object.map((item, i) =>
                             <Tr key={i}>
                                 <Td>{(page * 10) + i + 1}</Td>
-                                <Td>{item.partner ? item.partner : ""}</Td>
+                                <Td>{item.partner ? item.partner : "-"}</Td>
+                                <Td>{item.ext_id ? item.ext_id : "-"}</Td>
                                 <Td>{item.purpose ? item.purpose.length > 25 ? <>
                                     <Popover
                                         title={item.purpose}
@@ -197,8 +198,8 @@ export default function SellerOrder() {
                                     >
                                         {`${item.purpose.slice(0, 25)}...`}
                                     </Popover>
-                                </> : item.purpose : ""}</Td>
-                                <Td>{item.updated_at ? moment(item.updated_at.slice(0, 10)).format('DD.MM.YYYY') : ""}</Td>
+                                </> : item.purpose : "-"}</Td>
+                                <Td>{item.updated_at ? moment(item.updated_at.slice(0, 10)).format('DD.MM.YYYY') : "-"}</Td>
                                 <Td>
                                     <Box ms={3}>
                                         <button onClick={() => {
@@ -288,12 +289,12 @@ export default function SellerOrder() {
                             :
                             <Grid overflow={"hidden"}
                                   templateColumns={{base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)'}} gap={6} px={5}>
-                                {/* <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
+                                <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("extId")}: </Text>
                                     <Text
                                         fontSize={"17px"}>{detailData.ext_id || detailData.ext_id === 0 ? detailData.ext_id : "-"}</Text>
-                                </Flex> */}
+                                </Flex>
                                 
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>

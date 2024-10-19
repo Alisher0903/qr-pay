@@ -44,6 +44,13 @@ export const requestSave = `${base_url}request/save`
 export const requestUpdateStatus = `${base_url}request/change-status`
 export const requestGetAdmin = `${base_url}request`
 
+// WORDS CONTROLLER
+export const words_get = `${base_url}words?status=`
+export const words_put = `${base_url}words/edit`
+export const words_post = `${base_url}words/save?webOrMobile=`
+export const wordsEdit = `${base_url}words/edit`
+
+
 
 // STATISTIC CONTROLLER
 export const get_admin_statistic = `${base_url}statistics/admin`
