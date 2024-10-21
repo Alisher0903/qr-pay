@@ -106,11 +106,9 @@ const WordsPage = () => {
         getFunction: globalGetFunction({
           url: `${words_get}${status}`,
           setData: setWordsWeb,
-          setLoading: setLoading,
+          setLoading: setLoading
         })
       })
-      console.log(formValues);
-
       onClose();
       resetValue();
     } else setFormErrors(errors);
