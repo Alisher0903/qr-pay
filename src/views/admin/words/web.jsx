@@ -16,6 +16,7 @@ import { words_put } from "contexts/api";
 
 function WebWords(props) {
     const { item = {}, getFunction, ...rest } = props;
+    const inputTextColor = useColorModeValue('#422AFB', 'white');
 
     // State to hold input values
     const [inputValues, setInputValues] = useState({
@@ -27,7 +28,6 @@ function WebWords(props) {
 
     // Chakra Color Mode
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-    const brandStars = useColorModeValue("brand.500", "brand.400");
     const navbarIcon = useColorModeValue("#1B255A", "white");
 
     // Handle input change
@@ -49,7 +49,7 @@ function WebWords(props) {
     };
 
     return (
-        <Card border={"2px"} borderColor={"#422AFB"} {...rest} p="14px" mb={10}>
+        <Card border={"2px"} borderColor={inputTextColor} {...rest} p="14px" mb={10}>
             <Flex
                 gap={5}
                 align="center"
@@ -65,8 +65,9 @@ function WebWords(props) {
                     alignItems="center"
                     direction={{ base: "column", md: "row" }}
                 >
-                    <Text color={brandStars}>Description</Text>
+                        <Text color={inputTextColor}>Description</Text>
                     <Input
+                        color={textColorPrimary}
                         isRequired
                         variant="outline"
                         fontSize="sm"
@@ -84,8 +85,9 @@ function WebWords(props) {
                     alignItems="center"
                     direction={{ base: "column", md: "row" }}
                 >
-                    <Text color={brandStars}>Key</Text>
+                    <Text color={inputTextColor}>Key</Text>
                     <Input
+                        color={textColorPrimary}
                         isRequired
                         variant="outline"
                         fontSize="sm"
@@ -111,8 +113,9 @@ function WebWords(props) {
                     alignItems="center"
                     direction={{ base: "column", md: "row" }}
                 >
-                    <Text color={brandStars}>UZ</Text>
+                    <Text color={inputTextColor}>UZ</Text>
                     <Input
+                        color={textColorPrimary}
                         isRequired
                         variant="outline"
                         fontSize="sm"
@@ -130,8 +133,9 @@ function WebWords(props) {
                     alignItems="center"
                     direction={{ base: "column", md: "row" }}
                 >
-                    <Text color={brandStars}>Ru</Text>
+                    <Text color={inputTextColor}>Ru</Text>
                     <Input
+                        color={textColorPrimary}
                         isRequired
                         variant="outline"
                         fontSize="sm"

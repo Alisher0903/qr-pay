@@ -200,6 +200,7 @@ export default function HeaderLinks(props) {
       <Link to={"/seller/notification"} id="seller_push"></Link>
       <Link to={"/admin/notification"} id="admin_push"></Link>
       <Link to={"/terminal/notification"} id="terminal_push"></Link>
+      
       <Flex
         w={{ sm: "100%", md: "auto" }}
         alignItems="center"

@@ -205,7 +205,7 @@ const UserTerminal = () => {
                                 <Td>{item.firstName || '-'}</Td>
                                 <Td>{item.lastName || '-'}</Td>
                                 <Td>{item.terminalName || '-'}</Td>
-                                <Td>{item.phone || '-'}</Td>
+                                <Td>{item.phone ? `+998 (${item.phone.slice(4, 6)}) ${item.phone.slice(6, 9)} ${item.phone.slice(9, 11)} ${item.phone.slice(11)}` : '-'}</Td>
                                 <Td>{item.email || '-'}</Td>
                                 <Td>{item.inn || '-'}</Td>
                                 <Td>{item.filialCode || '-'}</Td>

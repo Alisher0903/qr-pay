@@ -39,16 +39,10 @@ const Request = () => {
     }, [page]); // Combined the two useEffect hooks
 
     const bgGenerator = (status) => {
-        switch (status) {
-            case 'WAIT':
-                return ['yellow', t("wait")];
-            case 'COMPLETED':
-                return ['green', t("confirmed")];
-            case 'CANCEL':
-                return ['red', t("canceled")];
-            default:
-                return ['gray', t("unknown")]; // Default case to handle unexpected statuses
-        }
+        if (status === 'WAIT') return ['orange', t("wait")];
+        else if (status === 'CONFIRMED') return ['green', t("confirmed")];
+        else if (status === 'CANCEL') return ['red', t("canceled")];
+        else return ['gray', t("unknown")]; // Default case
     };
 
     return (
@@ -73,13 +67,13 @@ const Request = () => {
                             <Tr key={item.id || i}>
                                 <Td>{(page * 10) + i + 1}</Td>
                                 <Td>{item.fullName || "-"}</Td>
-                                <Td>{item.phone || "-"}</Td>
+                                <Td>{item.phone ? `+998 (${item.phone.slice(4, 6)}) ${item.phone.slice(6, 9)} ${item.phone.slice(9, 11)} ${item.phone.slice(11)}` : '-'}</Td>
                                 <Td>{item.filialCode || "-"}</Td>
                                 <Td>{item.inn || "-"}</Td>
                                 <Td alignSelf="flex-start">
                                     <Text
-                                        background={bgGenerator(item?.status)[0]}
-                                        color="white"
+                                        background={"#ECEFF8"}
+                                        color={bgGenerator(item.status)[0]}
                                         py="10px"
                                         fontWeight="700"
                                         borderRadius="10px"
@@ -103,7 +97,7 @@ const Request = () => {
                                         value={item?.status}
                                     >
                                         <option value='CANCEL'>{bgGenerator('CANCEL')[1]}</option>
-                                        <option value='CONFIRMED'>{bgGenerator('COMPLETED')[1]}</option>
+                                        <option value='CONFIRMED'>{bgGenerator('CONFIRMED')[1]}</option>
                                         <option value='WAIT'>{bgGenerator('WAIT')[1]}</option> {/* Added WAIT option for completeness */}
                                     </Select>
                                 </Td>

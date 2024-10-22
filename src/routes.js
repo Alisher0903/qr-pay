@@ -1,8 +1,8 @@
 import {Icon} from '@chakra-ui/react';
 import {MdHome, MdLock, MdOutlineShoppingCart,} from 'react-icons/md';
 import {TbCashRegister} from 'react-icons/tb';
-import {IoQrCode, IoTerminal} from 'react-icons/io5';
-import {RiRefund2Line} from 'react-icons/ri';
+import {IoQrCode, IoStatsChart, IoTerminal} from 'react-icons/io5';
+import {RiFileList3Line, RiRefund2Line} from 'react-icons/ri';
 import {SiContactlesspayment} from "react-icons/si";
 import {FaCodePullRequest} from "react-icons/fa6";
 import AdminDashboard from 'views/admin/default';
@@ -19,6 +19,7 @@ import {FaUsersCog} from "react-icons/fa";
 import CheckCode from 'views/auth/signIn/checkCode';
 import PrivacyTermsPage from 'views/shartlar/PrivacyTermsPage';
 import WordsPage from 'views/admin/words';
+import OrderStats from 'views/admin/orderStats';
 
 export const generateRoutes = (t) => [
     // Admin panel route
@@ -38,19 +39,20 @@ export const generateRoutes = (t) => [
         secondary: true,
     },
     {
-        name: t('payment'),
-        layout: '/admin',
-        icon: <Icon as={SiContactlesspayment} width="20px" height="20px" color="inherit"/>,
-        path: '/payments',
-        component: <SellerOrder/>,
-    },
-    {
         name: t('terminal'),
         layout: '/admin',
         path: '/terminal',
         icon: <Icon as={IoTerminal} width="20px" height="20px" color="inherit"/>,
         component: <SellerTerminal/>,
     },
+    {
+        name: t('payment'),
+        layout: '/admin',
+        icon: <Icon as={SiContactlesspayment} width="20px" height="20px" color="inherit"/>,
+        path: '/payment',
+        component: <SellerOrder/>,
+    },
+   
     {
         name: t('request'),
         layout: '/admin',
@@ -59,10 +61,17 @@ export const generateRoutes = (t) => [
         component: <Request/>,
     },
     {
+        name: t('paymentStats'),
+        layout: '/admin',
+        path: '/statistic',
+        icon: <Icon as={IoStatsChart} width="20px" height="20px" color="inherit"/>,
+        component: <OrderStats/>,
+    },
+    {
         name: t("words"),
         layout: '/admin',
         path: '/words',
-        icon: <Icon as={RiRefund2Line} width="20px" height="20px" color="inherit"/>,
+        icon: <Icon as={RiFileList3Line} width="20px" height="20px" color="inherit"/>,
         component: <WordsPage/>,
     },
     {

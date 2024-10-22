@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import {
   Box,
   Flex,
@@ -25,7 +24,7 @@ export default function ComplexTable({thead, children, name, buttonChild }) {
       flexDirection="column"
       w="100%"
       px="0px"
-      overflowX={"auto"}
+      overflowX={"scroll"}
     >
       <Flex px="25px" mb="8px" justifyContent="space-between" align="center">
         <Text
@@ -39,13 +38,14 @@ export default function ComplexTable({thead, children, name, buttonChild }) {
         {buttonChild}
       </Flex>
       <Box>
-        <Table variant="simple" color="gray.500" mt="12px">
+        <Table width={"100%"} variant="striped" color="gray.500" mt="12px">
           <Thead>
             <Tr>
               {thead.length > 0 && thead.map((header, index) => (
                 <Th
                   key={index}
                   pe="10px"
+                  // width={"200px"}
                   borderColor={borderColor}
                 >
                   <Flex

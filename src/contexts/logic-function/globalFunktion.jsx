@@ -55,16 +55,21 @@ export async function globalGetFunction({url, setData, setLoading, setTotalEleme
 }
 
 
-export async function globalPostFunction({url, postData, setLoading, getFunction}) {
+export async function globalPostFunction({url, postData, setLoading, getFunction, setData}) {
     if (setLoading) setLoading(true);
     try {
         const {data} = await axios.post(url, postData, config)
-        if (data?.error?.message) toast.error(data.error.message)
+        if (data?.error?.message) {
+            toast.error(data.error.message)
+            if (setData) setData(data.error)
+        }
         else {
             toast.success("Task completed successfully")
-            getFunction()
+            if (setData) setData(data.data)
+            if (getFunction) getFunction()
         }
     } catch{
+        if (setData) setData(null);
     } finally {
         if (setLoading) setLoading(false);
         // consoleClear()

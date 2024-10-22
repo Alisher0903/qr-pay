@@ -43,8 +43,9 @@ import ComplexTable from "views/admin/dataTables/components/ComplexTable";
 import moment from "moment";
 import {useTranslation} from "react-i18next";
 import { order_get_by_id } from "contexts/api";
+import { order_stats } from "contexts/api";
 
-export default function SellerOrder() {
+export default function OrderStats() {
     const {
         setPaymentData, paymentData, setPage,
         totalPage,
@@ -78,7 +79,7 @@ export default function SellerOrder() {
 
     useEffect(() => {
         globalGetFunction({
-            url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "",
+            url: order_stats,
             setLoading: setCreateLoading,
             setData: setPaymentData,
             setTotalElements: setTotalPages,
@@ -86,28 +87,13 @@ export default function SellerOrder() {
         });
     }, [page])
 
-    useEffect(() => {
-        if (postData) {
-            globalGetFunction({
-                url: `${order_get_by_id}${postData.id}`,
-                setData: setDetailData
-            })
-            setIsCreate(false)
-            resetValue();
-        }
-    }, [postData])
-
     const getFunction = () => {
         globalGetFunction({
-            url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "",
+            url: order_stats,
             setLoading: setCreateLoading,
             setData: setPaymentData,
             setTotalElements: setTotalPages
         });
-        globalGetFunction({
-            url: role === "ROLE_TERMINAL" ? terminal_notification_count : role === "ROLE_SELLER" ? seller_notification_count : role === "ROLE_SUPER_ADMIN" ? admin_notification_count : "",
-            setData: setCountData
-        })
     }
 
     // State to manage form values and validation
@@ -179,20 +165,7 @@ export default function SellerOrder() {
                 spacing={{base: "20px", xl: "20px"}}
             >
                 <ComplexTable
-                    name={`${t("payment")} ${t("table")}`}
-                    buttonChild={
-                        role !== "ROLE_SUPER_ADMIN" && <Button
-                            bg={bgColor}
-                            color={textColor}
-                            _hover={{bg: hoverBgColor}}
-                            _active={{
-                                bg: hoverBgColor,
-                                transform: "scale(0.98)",
-                            }}
-                            onClick={() => {
-                                setIsCreate(true)
-                                onOpen()
-                            }}>{t("createPayment")}</Button>}
+                    name={`${t("paymentStats")} ${t("table")}`}
                     thead={thead}
                 >
                     {createLoading ? <Tr>

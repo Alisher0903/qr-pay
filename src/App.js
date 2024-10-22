@@ -15,6 +15,8 @@ import {TranslateUz} from 'variables/locales/translateUz';
 import {TranslateRu} from 'variables/locales/translateRu';
 import {LanguageStore} from 'contexts/state-management/language/languageStore';
 import {siteSecurity} from 'contexts/allRequest';
+import { globalGetFunction } from 'contexts/logic-function/globalFunktion';
+import { words_get } from 'contexts/api';
 
 i18n.use(initReactI18next).init({
     resources: {
@@ -26,7 +28,7 @@ i18n.use(initReactI18next).init({
 });
 
 export default function Main() {
-    const {setLanguageData, languageData} = LanguageStore()
+    const {setLanguageData, languageData, setWordsListData, wordsListData} = LanguageStore()
     const [currentTheme, setCurrentTheme] = useState(initialTheme);
     const {pathname} = useLocation();
     const navigate = useNavigate();
@@ -42,6 +44,33 @@ export default function Main() {
     useEffect(() => {
         i18n.changeLanguage(languageData);
     }, [languageData]);
+
+    // useEffect(() => {
+    //     const getWords = () => {
+    //         globalGetFunction({
+    //             url: `${words_get}WEB`,
+    //             setData: (data) => {
+    //                 setWordsListData(data);
+    //                 if (!data) {
+    //                     setTimeout(getWords, 1000); // Agar ma'lumotlar null bo'lsa, 1 soniyadan keyin qayta urinish
+    //                 }
+    //             }
+    //         });
+    //     };
+    //     getWords();
+    // }, []);
+
+    console.log("WORsssssssssssssss",Array.isArray(wordsListData) 
+    && wordsListData.find(item => item.key === "PANEL_CONTROL")?.[languageData === "uz" ? "uz" : "ru"]);
+
+    useEffect(() => {
+        if (!wordsListData) {
+            globalGetFunction({
+                url: `${words_get}WEB`,
+                setData: setWordsListData
+            });
+        }
+    }, [wordsListData]);
 
     useEffect(() => {
         setConfig();

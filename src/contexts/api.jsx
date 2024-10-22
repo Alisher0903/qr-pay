@@ -28,6 +28,8 @@ export const seller_order_get = `${base_url}payment/list/for/seller`
 export const terminal_order_get = `${base_url}payment/list/for/terminal`
 export const admin_order_get = `${base_url}payment/list/for/admin`
 export const order_cancel = `${base_url}payment/cancel`
+export const order_get_by_id = `${base_url}payment/one/`
+export const order_stats = `${base_url}payment/statistics`
 
 // Notification CONTROLLER
 export const delete_notification = `${base_url}notification/delete`
@@ -48,7 +50,8 @@ export const requestGetAdmin = `${base_url}request`
 export const words_get = `${base_url}words?status=`
 export const words_put = `${base_url}words/edit`
 export const words_post = `${base_url}words/save?webOrMobile=`
-export const wordsEdit = `${base_url}words/edit`
+export const words_post_language = `${base_url}words/save/language`
+export const words_get_language = `${base_url}words/language`
 
 
 

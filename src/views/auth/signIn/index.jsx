@@ -178,7 +178,7 @@ function SignIn() {
                             } else {
                                 toast.error(t('policyNotChecked'))
                             }
-                        }} to={sliceNumber(phonenumber) ? '/auth/check-code' : ""}>
+                        }} to={sliceNumber(phonenumber) && policy ? '/auth/check-code' : ""}>
                             <Button
                                 disabled={!policy}
                                 fontSize='sm'
