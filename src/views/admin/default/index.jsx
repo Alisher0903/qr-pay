@@ -201,7 +201,7 @@ export default function Dashboard() {
                                 WebRequestData.map((item, i) => (
                                     <Tr key={i}>
                                         <Td>{i + 1}</Td>
-                                        <Td>{item.fullName || "-"}</Td>
+                                        <Td>{item?.fullName || "-"}</Td>
                                         <Td>{item?.phone ? `+998 (${item?.phone.slice(4, 6)}) ${item?.phone.slice(6, 9)} ${item?.phone.slice(9, 11)} ${item?.phone.slice(11)}` : '-'}</Td>
                                         <Td>{item?.filialCode || "-"}</Td>
                                         <Td>{item?.account || "-"}</Td>
