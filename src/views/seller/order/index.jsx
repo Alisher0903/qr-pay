@@ -90,7 +90,6 @@ export default function SellerOrder() {
         await onOpen()
     }
 
-    console.log("isCreate eeeeeeeeeeeeeeeeeeeeeeeeeee",isCreate);
     
 
 
@@ -390,7 +389,7 @@ export default function SellerOrder() {
                                 <GridItem width={"100%"} colSpan={{base: 1, md: 2}} display={"flex"}
                                           justifyContent={"center"}>
                                     <QRCodeSVG
-                                        value={detailData?.url ? detailData?.url : "https://qr.nspk.ru/"}
+                                        value={detailData?.url ? detailData?.url : ""}
                                         renderAs="canvas"
                                     />
                                 </GridItem>
