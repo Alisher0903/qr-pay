@@ -19,6 +19,7 @@ const Request = () => {
         t("fullName"),
         t("phone"),
         t("filial_code"),
+        t("account"),
         t("inn"),
         t("status"),
         t("action"),
@@ -64,16 +65,17 @@ const Request = () => {
                         </Tr>
                     ) : requestList && requestList.object && requestList.object.length > 0 ? (
                         requestList.object.map((item, i) => (
-                            <Tr key={item.id || i}>
+                            <Tr key={item?.id || i}>
                                 <Td>{(page * 10) + i + 1}</Td>
-                                <Td>{item.fullName || "-"}</Td>
-                                <Td>{item.phone ? `+998 (${item.phone.slice(4, 6)}) ${item.phone.slice(6, 9)} ${item.phone.slice(9, 11)} ${item.phone.slice(11)}` : '-'}</Td>
-                                <Td>{item.filialCode || "-"}</Td>
-                                <Td>{item.inn || "-"}</Td>
+                                <Td>{item?.fullName || "-"}</Td>
+                                <Td>{item?.phone ? `+998 (${item?.phone.slice(4, 6)}) ${item?.phone.slice(6, 9)} ${item?.phone.slice(9, 11)} ${item?.phone.slice(11)}` : '-'}</Td>
+                                <Td>{item?.filialCode || "-"}</Td>
+                                <Td>{item?.account || "-"}</Td>
+                                <Td>{item?.inn || "-"}</Td>
                                 <Td alignSelf="flex-start">
                                     <Text
                                         background={"#ECEFF8"}
-                                        color={bgGenerator(item.status)[0]}
+                                        color={bgGenerator(item?.status)[0]}
                                         py="10px"
                                         fontWeight="700"
                                         borderRadius="10px"

@@ -128,4 +128,6 @@ export const TranslateRu = {
 
   words: "Настройка слов",
   paymentStats: "Статистика платежей",
+  createDate: "Дата создания",
+  paymentDate: "Дата платежа",
 };

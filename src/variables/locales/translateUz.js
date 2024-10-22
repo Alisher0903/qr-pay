@@ -132,4 +132,6 @@ export const TranslateUz = {
 
   words: "So'zlarni sozlash",
   paymentStats: "To'lov statistikasi",
+  createDate: "Yaratilgan sana",
+  paymentDate: "To'langan sana",
 };

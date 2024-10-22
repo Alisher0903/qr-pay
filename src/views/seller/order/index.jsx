@@ -50,7 +50,8 @@ export default function SellerOrder() {
         totalPage,
         page,
         setTotalPages,
-        modalOpen
+        modalOpen,
+        setModalOpen
     } = PaymentStore();
     const {t} = useTranslation()
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -231,7 +232,7 @@ export default function SellerOrder() {
                                     </Popover>
                                 </> : item.purpose : "-"}</Td>
                                 {/* <Td>{item.qrAmount ? `${item.qrAmount} RUB` : "-"}</Td> */}
-                                <Td>{item.chequeAmount ? `${item.chequeAmount} UZS` : "-"}</Td>
+                                <Td>{item.chequeAmount ? `${item.chequeAmount.toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} UZS` : "-"}</Td>
                                 <Td>{item.rate ? item.rate : "-"}</Td>
                                 <Td>{item.updated_at ? moment(item.updated_at.slice(0, 10)).format('DD.MM.YYYY') : "-"}</Td>
                                 <Td>
@@ -294,6 +295,7 @@ export default function SellerOrder() {
                 isOpen={isOpen}
                 onClose={() => {
                     onClose();
+                    setModalOpen(false)
                     resetValue();
                 }}
             >
@@ -358,13 +360,13 @@ export default function SellerOrder() {
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("QRAmount")}:</Text>
                                     <Text
-                                        fontSize={"17px"}>{detailData?.qrAmount || detailData?.qrAmount === 0 ? `${detailData.qrAmount} RUB` : "-"}</Text>
+                                        fontSize={"17px"}>{detailData?.qrAmount || detailData?.qrAmount === 0 ? `${detailData.qrAmount.toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} RUB` : "-"}</Text>
                                 </Flex>
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
                                     <Text fontSize={"17px"} fontWeight={"700"}>{t("chequeAmount")}:</Text>
                                     <Text
-                                        fontSize={"17px"}>{detailData?.chequeAmount || detailData?.chequeAmount === 0 ? `${detailData.chequeAmount} UZS` : "-"}</Text>
+                                        fontSize={"17px"}>{detailData?.chequeAmount || detailData?.chequeAmount === 0 ? `${detailData.chequeAmount.toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} UZS` : "-"}</Text>
                                 </Flex>
                                 <Flex width={"100%"} flexDirection={{base: "column", md: "row"}}
                                       justifyContent={"space-between"} pe={5}>
@@ -402,6 +404,7 @@ export default function SellerOrder() {
                             <>
                                 <Button colorScheme="red" onClick={() => {
                                     onClose();
+                                    setModalOpen(false)
                                     resetValue();
                                 }}>{t("cancel")}</Button>
                                 <Button colorScheme="blue" onClick={handleSave}>
