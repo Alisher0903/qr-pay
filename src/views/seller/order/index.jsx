@@ -50,15 +50,16 @@ export default function SellerOrder() {
         totalPage,
         page,
         setTotalPages,
+        modalOpen
     } = PaymentStore();
     const {t} = useTranslation()
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {isOpen: isCancelModal, onOpen: openCancelModal, onClose: closeCancelModal} = useDisclosure();
     const {setCountData, setLoading} = NotificationStore()
     const [detailData, setDetailData] = useState({})
-    const [postData, setPostData] = useState({})
+    const [postData, setPostData] = useState(null)
     const [createLoading, setCreateLoading] = useState(false);
-    const [isCreate, setIsCreate] = useState(false);
+    const [isCreate, setIsCreate] = useState(true);
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
 
@@ -74,7 +75,24 @@ export default function SellerOrder() {
     useEffect(() => {
         setConfig()
         getFunction()
+        
     }, [])
+
+    useEffect(() => {
+        if (modalOpen) {
+            openModal()
+        }
+    }, [modalOpen])
+
+    const openModal = async () => {
+        await setIsCreate(true)
+        await onOpen()
+    }
+
+    console.log("isCreate eeeeeeeeeeeeeeeeeeeeeeeeeee",isCreate);
+    
+
+
 
     useEffect(() => {
         globalGetFunction({

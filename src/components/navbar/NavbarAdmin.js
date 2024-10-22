@@ -14,9 +14,11 @@ import React, { useState, useEffect } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { PaymentStore } from "contexts/state-management/payment/paymentStore";
 
 export default function AdminNavbar(props) {
   const { secondary, message, brandText } = props;
+  const { setModalOpen } = PaymentStore()
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const pathName = sessionStorage.getItem("pathname");
@@ -156,7 +158,7 @@ export default function AdminNavbar(props) {
                 : ""
             }/payment`}
           >
-            <Button px={15} colorScheme="blue" size="md" mb={3}>
+            <Button onClick={() => setModalOpen(true)} px={15} colorScheme="blue" size="md" mb={3}>
               {t("createPayment")}
             </Button>
           </Link>

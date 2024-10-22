@@ -11,4 +11,6 @@ export const PaymentStore = create((set) => ({
     setPage: (val) => set({ page: val }),
     size: 10,
     setSize: (val) => set({ size: val }),
+    modalOpen: false,
+    setModalOpen: (val) => set({ modalOpen: val }),
 }))
