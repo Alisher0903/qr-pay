@@ -90,11 +90,7 @@ export default function SellerOrder() {
         await onOpen()
     }
 
-    console.log("isCreate eeeeeeeeeeeeeeeeeeeeeeeeeee",isCreate);
-    
-
-
-
+    // console.log("isCreate eeeeeeeeeeeeeeeeeeeeeeeeee",isCreate);
     useEffect(() => {
         globalGetFunction({
             url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "",
