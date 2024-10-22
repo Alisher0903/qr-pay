@@ -91,6 +91,10 @@ export default function SellerOrder() {
     }
 
     // console.log("isCreate eeeeeeeeeeeeeeeeeeeeeeeeee",isCreate);
+    
+
+
+
     useEffect(() => {
         globalGetFunction({
             url: role === "ROLE_TERMINAL" ? terminal_order_get : role === "ROLE_SELLER" ? seller_order_get : role === "ROLE_SUPER_ADMIN" ? admin_order_get : "",
@@ -386,7 +390,7 @@ export default function SellerOrder() {
                                 <GridItem width={"100%"} colSpan={{base: 1, md: 2}} display={"flex"}
                                           justifyContent={"center"}>
                                     <QRCodeSVG
-                                        value={detailData?.url ? detailData?.url : "https://qr.nspk.ru/"}
+                                        value={detailData?.url ? detailData?.url : ""}
                                         renderAs="canvas"
                                     />
                                 </GridItem>

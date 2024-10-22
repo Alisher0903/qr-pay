@@ -127,7 +127,7 @@ export const TranslateRu = {
   agree: " ",
 
   words: "Настройка слов",
-  paymentStats: "Статистика платежей",
+  paymentStats: "Платежный отчет",
   createDate: "Дата создания",
   paymentDate: "Дата платежа",
 };

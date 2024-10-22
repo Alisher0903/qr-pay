@@ -131,7 +131,7 @@ export const TranslateUz = {
   agree: "rozilik bildirasiz",
 
   words: "So'zlarni sozlash",
-  paymentStats: "To'lov statistikasi",
+  paymentStats: "To'lov hisoboti",
   createDate: "Yaratilgan sana",
   paymentDate: "To'langan sana",
 };

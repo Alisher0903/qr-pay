@@ -26,7 +26,7 @@ export default function OrderStats() {
     const [createLoading, setCreateLoading] = useState(false);
 
     // Setting input text color based on color mode
-    const thead = ["T/r",t('merchant'), t("terminalName"), t("amount"), t("filial_code"), t("rate"), t("createDate"), t("paymentDate"), t("status"),]
+    const thead = ["T/r",t('merchant'), t("amount"), t("filial_code"), t("rate"), t("createDate"), t("paymentDate"), t("status"),]
 
     useEffect(() => {
         setConfig()
@@ -81,7 +81,7 @@ export default function OrderStats() {
                             <Tr key={i}>
                                 <Td>{(page * 10) + i + 1}</Td>
                                 <Td>{item.merchant ? item.merchant : "-"}</Td>
-                                <Td>{item.terminalName ? item.terminalName : "-"}</Td>
+                                {/* <Td>{item.terminalName ? item.terminalName : "-"}</Td> */}
                                 <Td>{item.amount ? `${item.amount.toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2})} UZS` : "-"}</Td>
                                 <Td>{item.filial_code ? item.filial_code : "-"}</Td>
                                 <Td>{item.rate ? item.rate : "-"}</Td>
