@@ -52,7 +52,6 @@ export const generateRoutes = (t) => [
         path: '/payment',
         component: <SellerOrder/>,
     },
-   
     {
         name: t('request'),
         layout: '/admin',

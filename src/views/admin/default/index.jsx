@@ -43,7 +43,7 @@ export default function Dashboard() {
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
     const { t } = useTranslation();
 
-    const thead = [t('tableTr'), t("fullName"), t("phone"), t("filial_code"), t("inn"), t("status")];
+    const thead = [t('tableTr'), t("fullName"), t("phone"), t("filial_code"), t("account"), t("inn"), t("status")];
     const theadPayment = [t('tableTr'), t("partner"), t("date"), t("amount"), t("status")];
 
     const role = sessionStorage.getItem("ROLE");
@@ -147,7 +147,7 @@ export default function Dashboard() {
                     }
                     name={`${t("totalBalance")}`}
                     value={`${statisticData?.paymentTotalBalance ? 
-                        (123458979755+statisticData.paymentTotalBalance).toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 
+                        (statisticData.paymentTotalBalance).toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 
                         "0"} UZS`}
                 />
                 <MiniStatistics
@@ -201,21 +201,22 @@ export default function Dashboard() {
                                 WebRequestData.map((item, i) => (
                                     <Tr key={i}>
                                         <Td>{i + 1}</Td>
-                                        <Td>{item.fullName || "-"}</Td>
-                                        <Td>{item.phone ? `+998 (${item.phone.slice(4, 6)}) ${item.phone.slice(6, 9)} ${item.phone.slice(9, 11)} ${item.phone.slice(11)}` : '-'}</Td>
-                                        <Td>{item.filialCode || "-"}</Td>
-                                        <Td>{item.inn || "-"}</Td>
+                                        <Td>{item?.fullName || "-"}</Td>
+                                        <Td>{item?.phone ? `+998 (${item?.phone.slice(4, 6)}) ${item?.phone.slice(6, 9)} ${item?.phone.slice(9, 11)} ${item?.phone.slice(11)}` : '-'}</Td>
+                                        <Td>{item?.filialCode || "-"}</Td>
+                                        <Td>{item?.account || "-"}</Td>
+                                        <Td>{item?.inn || "-"}</Td>
                                         <Td alignSelf="flex-start">
                                             <Text
                                                 background={"#ECEFF8"}
-                                                color={bgGenerator(item.status)[0]}
+                                                color={bgGenerator(item?.status)[0]}
                                                 py="10px"
                                                 fontWeight="700"
                                                 borderRadius="10px"
                                                 textAlign={'center'}
                                                 width={'130px'}
                                             >
-                                                {bgGenerator(item.status)[1]}
+                                                {bgGenerator(item?.status)[1]}
                                             </Text>
                                         </Td>
                                     </Tr>
@@ -239,20 +240,20 @@ export default function Dashboard() {
                                 PaymentData.map((item, i) => (
                                     <Tr key={i}>
                                         <Td>{i + 1}</Td>
-                                        <Td>{item.partner}</Td>
-                                        <Td>{item.date}</Td>
-                                        <Td>{`${item.amount ? item.amount.toFixed(2) : "0"} UZS`}</Td>
+                                        <Td>{item?.partner}</Td>
+                                        <Td>{item?.date}</Td>
+                                        <Td>{`${item?.amount ? item?.amount.toFixed(2) : "0"} UZS`}</Td>
                                         <Td alignSelf="flex-start">
                                             <Text
                                                 background={"#ECEFF8"}
-                                                color={bgGenerator(item.status)[0]}
+                                                color={bgGenerator(item?.status)[0]}
                                                 py="10px"
                                                 fontWeight="700"
                                                 borderRadius="10px"
                                                 textAlign={'center'}
                                                 width={'130px'}
                                             >
-                                                {bgGenerator(item.status)[1]}
+                                                {bgGenerator(item?.status)[1]}
                                             </Text>
                                         </Td>
                                     </Tr>
