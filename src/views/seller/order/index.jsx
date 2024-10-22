@@ -59,7 +59,7 @@ export default function SellerOrder() {
     const [detailData, setDetailData] = useState({})
     const [postData, setPostData] = useState(null)
     const [createLoading, setCreateLoading] = useState(false);
-    const [isCreate, setIsCreate] = useState(true);
+    const [isCreate, setIsCreate] = useState(false);
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
 
