@@ -147,16 +147,10 @@ export default function AdminNavbar(props) {
           {/*    {brandText}*/}
           {/*</Link>*/}
         </Box>
-        {role !== "ROLE_SUPER_ADMIN" && (
+        {role === "ROLE_SELLER" && (
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
           <Link
-            to={`/${
-                 role === "ROLE_SELLER"
-                ? "seller"
-                : role === "ROLE_TERMINAL"
-                ? "terminal"
-                : ""
-            }/payment`}
+            to={`/seller/payment`}
           >
             <Button onClick={() => setModalOpen(true)} px={15} colorScheme="blue" size="md" mb={3}>
               {t("createPayment")}

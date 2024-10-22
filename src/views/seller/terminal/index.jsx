@@ -255,7 +255,7 @@ export default function SellerTerminal() {
                                     <Td>{item?.inn ? item?.inn : "-"}</Td>
                                     <Td>{item?.account ? item?.account : "-"}</Td>
                                     <Td>{item?.terminalSerialCode ? item?.terminalSerialCode : "-"}</Td>
-                                    <Td width={'350px'}>{item?.user?.phone ? `+998 (${item?.user?.phone.slice(4, 6)}) ${item?.user?.phone.slice(6, 9)} ${item?.user?.phone.slice(9, 11)} ${item?.user?.phone.slice(11)}` : '-'}</Td>
+                                    <Td width={'300px'}>{item?.user?.phone ? `+998 (${item?.user?.phone.slice(4, 6)}) ${item?.user?.phone.slice(6, 9)} ${item?.user?.phone.slice(9, 11)} ${item?.user?.phone.slice(11)}` : '-'}</Td>
                                     <Td>{item?.filial_code ? item?.filial_code : "-"}</Td>
                                     <Td>
                                         <Box ms={3}>

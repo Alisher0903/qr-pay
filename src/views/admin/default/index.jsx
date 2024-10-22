@@ -186,7 +186,7 @@ export default function Dashboard() {
                 <TotalSpent />
             </SimpleGrid>
 
-            <SimpleGrid columns={{ base: 1, md: 1, lg: 4 }} gap="20px" mb="20px">
+            <SimpleGrid columns={{ base: 1 }} gap="20px" mb="20px">
                 <Box gridColumn={{ lg: "span 3" }}>
                     {role === "ROLE_SUPER_ADMIN" ? (
                         <ComplexTable
@@ -202,7 +202,7 @@ export default function Dashboard() {
                                     <Tr key={i}>
                                         <Td>{i + 1}</Td>
                                         <Td>{item?.fullName || "-"}</Td>
-                                        <Td>{item?.phone ? `+998 (${item?.phone.slice(4, 6)}) ${item?.phone.slice(6, 9)} ${item?.phone.slice(9, 11)} ${item?.phone.slice(11)}` : '-'}</Td>
+                                        <Td width={'300px'}>{item?.phone ? `+998 (${item?.phone.slice(4, 6)}) ${item?.phone.slice(6, 9)} ${item?.phone.slice(9, 11)} ${item?.phone.slice(11)}` : '-'}</Td>
                                         <Td>{item?.filialCode || "-"}</Td>
                                         <Td>{item?.account || "-"}</Td>
                                         <Td>{item?.inn || "-"}</Td>
@@ -266,11 +266,11 @@ export default function Dashboard() {
                         </ComplexTable>
                     )}
                 </Box>
-                <SimpleGrid columns={{ base: 1 }}>
+                {/* <SimpleGrid columns={{ base: 1 }}>
                     <Box display={{ base: "none", lg: "block" }}>
                         <MiniCalendar h="100%" minW="100%" selectRange={false} />
                     </Box>
-                </SimpleGrid>
+                </SimpleGrid> */}
             </SimpleGrid>
         </Box>
     );
