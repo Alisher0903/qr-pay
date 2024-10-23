@@ -15,6 +15,7 @@ import {
 import { delete_notification } from 'contexts/api';
 import { isRead_notification } from 'contexts/api';
 import { globalPostFunction } from 'contexts/logic-function/globalFunktion';
+import { t } from 'i18next';
 import React, { useState } from 'react';
 import { IoCheckmarkSharp } from 'react-icons/io5';
 // Assets
@@ -30,6 +31,8 @@ export default function Project(props) {
   const navbarIcon = useColorModeValue('#1B255A', 'white');
   const brandColor = useColorModeValue('brand.500', 'white');
   const textColor = useColorModeValue('black', 'white');
+  console.log(item);
+
   return (
     <Accordion
       border={item.isRead ? '1px solid #f8f8f8' : '1px solid #00c675'}
@@ -126,7 +129,11 @@ export default function Project(props) {
                   >
                     {item.createdAt.slice(11, 16)}
                   </Link>
+
                 </Text>
+                <Text>{item.content}</Text>
+                <Text>{item.priceRu || '0'} {t('rub')}</Text>
+                <Text>{item.priceUz || '0'} {t('uzs')} </Text>
               </Box>
             </Flex>
           </Flex>
