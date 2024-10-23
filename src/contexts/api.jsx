@@ -29,7 +29,8 @@ export const terminal_order_get = `${base_url}payment/list/for/terminal`
 export const admin_order_get = `${base_url}payment/list/for/admin`
 export const order_cancel = `${base_url}payment/cancel`
 export const order_get_by_id = `${base_url}payment/one/`
-export const order_stats = `${base_url}payment/statistics`
+export const order_stats = `${base_url}payment/statistics/filter/admin`
+export const order_stats_seller_and_terminal = `${base_url}payment/statistics/filter/seller-or-terminal`
 
 // Notification CONTROLLER
 export const delete_notification = `${base_url}notification/delete`
@@ -57,8 +58,10 @@ export const words_get_language = `${base_url}words/language`
 
 // STATISTIC CONTROLLER
 export const get_admin_statistic = `${base_url}statistics/admin`
-export const get_seller_statistic = `${base_url}statistics/seller                   `
+export const get_seller_statistic = `${base_url}statistics/seller`
 export const get_admin_request_web = `${base_url}statistics/admin/request-web`
 export const get_month_statistic = `${base_url}statistics/month`
 export const get_payment_statistic_forSeller = `${base_url}statistics/payment`
 export const get_year = `${base_url}statistics/year`
+export const download_file = `${base_url}download`
+export const download_interval = `${base_url}download/interval`

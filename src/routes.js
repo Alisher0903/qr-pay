@@ -66,6 +66,7 @@ export const generateRoutes = (t) => [
         icon: <Icon as={IoStatsChart} width="20px" height="20px" color="inherit"/>,
         component: <OrderStats/>,
     },
+
     {
         name: t("words"),
         layout: '/admin',
@@ -108,6 +109,13 @@ export const generateRoutes = (t) => [
         path: '/payment',
         icon: <Icon as={IoQrCode} width="20px" height="20px" color="inherit"/>,
         component: <SellerOrder/>,
+    },
+    {
+        name: t('paymentStats'),
+        layout: '/seller',
+        path: '/statistic',
+        icon: <Icon as={IoStatsChart} width="20px" height="20px" color="inherit"/>,
+        component: <OrderStats/>,
     },
     // {
     //     name: t('refund'),
