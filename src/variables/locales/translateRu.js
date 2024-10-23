@@ -141,5 +141,6 @@ export const TranslateRu = {
   completed: 'Завершен',
   interval: 'Интервал',
   downloadFile: 'Скачать файл',
-
+  rub: 'Руб',
+  uzs: 'Узс',
 };
