@@ -73,7 +73,7 @@ export default function Project(props) {
           <Button
             onClick={() =>
               globalPostFunction({
-                url: isRead_notification, 
+                url: isRead_notification,
                 postData: { ids: [item.id] },
                 setLoading: setLoading,
                 getFunction: getFunction,
