@@ -116,10 +116,9 @@ export default function Projects() {
 
   const handleSelectIsReadIds = async () => {
     if (notificationData.object) {
-      // isRead false bo'lgan elementlarning id larini olish
       const ids = await notificationData.object
-        .filter((item) => !item.isRead) // isRead false bo'lganlarni filtrlash
-        .map((item) => item.id); // ularning id larini olish
+        .filter((item) => !item.isRead)
+        .map((item) => item.id);
 
       globalPostFunction({
         url: isRead_notification,
