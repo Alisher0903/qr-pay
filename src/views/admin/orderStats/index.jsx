@@ -124,7 +124,7 @@ export default function OrderStats() {
                 >
                   <Option disabled value="">
                     {t('interval')}
-                  </Option>
+                  </Option> 
                   {intervalData &&
                     intervalData?.map((item) => (
                       <Option key={item.page} value={item.page}>
