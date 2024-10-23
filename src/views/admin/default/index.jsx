@@ -23,7 +23,6 @@ import { PiUserListDuotone } from "react-icons/pi";
 import { MdAttachMoney } from "react-icons/md";
 import TotalSpent from "views/admin/default/components/TotalSpent";
 import ComplexTable from "../dataTables/components/ComplexTable";
-
 export default function Dashboard() {
     const {
         setStatisticData,
@@ -146,8 +145,8 @@ export default function Dashboard() {
                         />
                     }
                     name={`${t("totalBalance")}`}
-                    value={`${statisticData?.paymentTotalBalance ? 
-                        (statisticData.paymentTotalBalance).toLocaleString('uz-UZ', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 
+                    value={`${statisticData?.paymentTotalBalance ?
+                        (statisticData.paymentTotalBalance).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
                         "0"} UZS`}
                 />
                 <MiniStatistics
@@ -182,9 +181,9 @@ export default function Dashboard() {
                 )}
             </SimpleGrid>
 
-            <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} mb='20px'>
-                <TotalSpent />
-            </SimpleGrid>
+             <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} mb='20px'>
+                 <TotalSpent />
+             </SimpleGrid>
 
             <SimpleGrid columns={{ base: 1 }} gap="20px" mb="20px">
                 <Box gridColumn={{ lg: "span 3" }}>

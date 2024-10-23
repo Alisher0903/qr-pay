@@ -81,7 +81,7 @@ export const TranslateUz = {
   table: 'jadvali',
   terminalSerialCode: 'Terminalning seriya kodi',
   optional: 'ixtiyory',
-  merchant: 'Savdogar',
+  merchant: 'Merchant',
   search_by: "bo'yicha qidirish",
   notification: 'Bildirishnoma',
 

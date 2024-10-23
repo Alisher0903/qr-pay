@@ -15,21 +15,19 @@ import { get_month_statistic } from "contexts/api";
 import { globalGetFunction } from "contexts/logic-function/globalFunktion";
 import { DashboardStore } from "contexts/state-management/dashboard/dashboardStore";
 import React, { useEffect } from "react";
-import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
+import { MdBarChart } from "react-icons/md";
 import { setConfig } from "contexts/token";
 import { useTranslation } from "react-i18next";
 
 export default function TotalSpent(props) {
   const {
     YearData,
-    MonthData = [], // Default to an empty array if MonthData is null
+    MonthData = [],
     setMonthData,
   } = DashboardStore();
 
   const { ...rest } = props;
-  const { t } = useTranslation()
-  const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
-  const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  const { t } = useTranslation();
   const iconColor = useColorModeValue("brand.500", "white");
   const bgButton = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   const bgHover = useColorModeValue(
@@ -42,7 +40,7 @@ export default function TotalSpent(props) {
   );
 
   useEffect(() => {
-    setConfig()
+    setConfig();
     getMonth(0);
   }, []);
 
@@ -53,94 +51,100 @@ export default function TotalSpent(props) {
     });
   };
 
-  // Create line chart data
-
-  const lineChartDataTotalSpent = useMemo(() => {
+  // Create line chart data for completed count and canceled count
+  const lineChartData = useMemo(() => {
     return [
       {
-        name: t("monthlyStatistic"),
-        data: MonthData ? MonthData.map((item) => item.paymentCount) : [],
+        name: t("completed"), // Completed count series (green)
+        data: MonthData ? MonthData.map((item) => item.completedCount) : [],
+      },
+      {
+        name: t("canceled"), // Canceled count series (red)
+        data: MonthData ? MonthData.map((item) => item.cancelCount) : [],
       },
     ];
   }, [MonthData]);
-  
 
   // Check if MonthData is populated for rendering
   const hasData = MonthData?.length > 0;
 
-  const lineChartOptionsTotalSpent = useMemo(() => ({
-    chart: {
-      toolbar: {
-        show: false,
-      },
-      dropShadow: {
-        enabled: true,
-        top: 13,
-        left: 0,
-        blur: 10,
-        opacity: 0.1,
-        color: "#4318FF",
-      },
-    },
-    colors: ["#4318FF", "#39B8FF"],
-    markers: {
-      size: 0,
-      colors: "white",
-      strokeColors: "#7551FF",
-      strokeWidth: 3,
-      strokeOpacity: 0.9,
-      strokeDashArray: 0,
-      fillOpacity: 1,
-      discrete: [],
-      shape: "circle",
-      radius: 2,
-      offsetX: 0,
-      offsetY: 0,
-      showNullDataPoints: true,
-    },
-    tooltip: {
-      theme: "dark",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-      type: "line",
-    },
-    xaxis: {
-      type: "numeric",
-      categories: MonthData ? MonthData.map((item) => item.monthName?.slice(0, 3)) : [],
-      labels: {
-        style: {
-          colors: "#A3AED0",
-          fontSize: "12px",
-          fontWeight: "500",
+  const lineChartOptions = useMemo(
+    () => ({
+      chart: {
+        toolbar: {
+          show: false,
+        },
+        dropShadow: {
+          enabled: true,
+          top: 13,
+          left: 0,
+          blur: 10,
+          opacity: 0.1,
+          color: "#4318FF",
         },
       },
-      axisBorder: {
+      colors: ["#00FF00", "#FF0000"], // Green for completed, Red for canceled
+      markers: {
+        size: 0,
+        colors: "white",
+        strokeColors: "#7551FF",
+        strokeWidth: 3,
+        strokeOpacity: 0.9,
+        strokeDashArray: 0,
+        fillOpacity: 1,
+        discrete: [],
+        shape: "circle",
+        radius: 2,
+        offsetX: 0,
+        offsetY: 0,
+        showNullDataPoints: true,
+      },
+      tooltip: {
+        theme: "dark",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+        type: "line",
+      },
+      xaxis: {
+        type: "numeric",
+        categories: MonthData
+          ? MonthData.map((item) => item.monthName?.slice(0, 3))
+          : [],
+        labels: {
+          style: {
+            colors: "#A3AED0",
+            fontSize: "12px",
+            fontWeight: "500",
+          },
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
         show: false,
       },
-      axisTicks: {
+      legend: {
+        show: true, // Display legend for both lines
+      },
+      grid: {
         show: false,
+        column: {
+          color: ["#7551FF", "#39B8FF"],
+          opacity: 0.5,
+        },
       },
-    },
-    yaxis: {
-      show: false,
-    },
-    legend: {
-      show: false,
-    },
-    grid: {
-      show: false,
-      column: {
-        color: ["#7551FF", "#39B8FF"],
-        opacity: 0.5,
-      },
-    },
-    color: ["#7551FF", "#39B8FF"],
-  }), [MonthData]);
-  
+      color: ["#00FF00", "#FF0000"],
+    }),
+    [MonthData]
+  );
 
   return (
     <Card
@@ -156,19 +160,17 @@ export default function TotalSpent(props) {
           <Stack spacing={3}>
             <Select
               onChange={(e) => {
-                getMonth(e.target.value); // Log the selected value
+                getMonth(e.target.value); 
               }}
               variant="filled"
             >
               {YearData &&
                 YearData.length > 0 &&
-                YearData.map(
-                  (item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ) // Added key prop for each option
-                )}
+                YearData.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
             </Select>
           </Stack>
           <Button
@@ -192,10 +194,7 @@ export default function TotalSpent(props) {
       <Flex w="100%" flexDirection={{ base: "column", lg: "row" }}>
         <Box minH="310px" minW="100%" mt="auto">
           {hasData ? (
-            <LineChart
-              chartData={lineChartDataTotalSpent}
-              chartOptions={lineChartOptionsTotalSpent}
-            />
+            <LineChart chartData={lineChartData} chartOptions={lineChartOptions} />
           ) : (
             <Box
               display="flex"
