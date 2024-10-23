@@ -25,7 +25,6 @@ import { MdNotifications } from 'react-icons/md';
 export default function Project(props) {
   const { item, image, getFunction, ...rest } = props;
   const [loading, setLoading] = useState(false);
-  // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const navbarIcon = useColorModeValue('#1B255A', 'white');
