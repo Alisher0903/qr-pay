@@ -12,8 +12,6 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-// Custom components
-import Card from 'components/card/Card.js';
 import { delete_notification } from 'contexts/api';
 import { isRead_notification } from 'contexts/api';
 import { globalPostFunction } from 'contexts/logic-function/globalFunktion';
@@ -49,7 +47,7 @@ export default function Project(props) {
           {item.isRead ? (
             <MdNotifications size={30} color="#686868" />
           ) : (
-            <MdNotificationsActive size={30} /> 
+            <MdNotificationsActive size={30} />
           )}
           <Box
             flex="1"
