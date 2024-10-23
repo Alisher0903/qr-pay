@@ -18,25 +18,23 @@ import { globalPostFunction } from 'contexts/logic-function/globalFunktion';
 import React, { useState } from 'react';
 import { IoCheckmarkSharp } from 'react-icons/io5';
 // Assets
-import { MdDelete, MdDoneAll, MdEdit } from 'react-icons/md';
+import { MdDelete, MdDoneAll } from 'react-icons/md';
 import { MdNotificationsActive } from 'react-icons/md';
 import { MdNotifications } from 'react-icons/md';
 
 export default function Project(props) {
-  const { item, image, getFunction, ...rest } = props;
+  const { item, image, getFunction } = props;
   const [loading, setLoading] = useState(false);
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const navbarIcon = useColorModeValue('#1B255A', 'white');
   const brandColor = useColorModeValue('brand.500', 'white');
   const textColor = useColorModeValue('black', 'white');
-  // const bg = useColorModeValue('#e4e5f1', 'navy.700');
   return (
     <Accordion
       border={item.isRead ? '1px solid #f8f8f8' : '1px solid #00c675'}
       outline={'none'}
       allowToggle
-      // border={item.isRead || '1px solid green'}
       borderRadius={item.isRead ? '20px' : '20px'}
       overflow={'hidden'}
       mb={'20px'}
@@ -81,7 +79,6 @@ export default function Project(props) {
                 getFunction: getFunction,
               })
             }
-            // hidden={item.isRead}
             variant="no-hover"
             bg="transparent"
           >
