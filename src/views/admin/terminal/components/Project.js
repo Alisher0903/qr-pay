@@ -104,7 +104,6 @@ export default function Project(props) {
             direction={{ base: 'column', md: 'row' }}
           >
             <Flex alignItems={'center'} p={'20px'}>
-              {/* <Image h="60px" w="60px" src={image} borderRadius="8px" me="20px" /> */}
               <Box mt={{ base: '10px', md: '0' }}>
                 <Text
                   color={textColorPrimary}
