@@ -87,83 +87,15 @@ export default function Dashboard() {
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
             <SimpleGrid
-                columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
+                columns={{ base: 1, "2xl": 2 }}
                 gap='20px'
                 mb='20px'
             >
-                <MiniStatistics
-                    startContent={
-                        <IconBox
-                            w='56px'
-                            h='56px'
-                            bg={boxBg}
-                            icon={
-                                <Icon w='32px' h='32px' as={BsCalculator} color={brandColor} />
-                            }
-                        />
-                    }
-                    name={`${t("terminals")}`}
-                    value={statisticData?.terminalCount || "0"}
-                />
-                <MiniStatistics
-                    startContent={
-                        <IconBox
-                            w='56px'
-                            h='56px'
-                            bg={boxBg}
-                            icon={
-                                <Icon w='32px' h='32px' as={FaUsers} color={brandColor} />
-                            }
-                        />
-                    }
-                    name={`${t("terminalUserCount")}`}
-                    value={statisticData?.userCount || "0"}
-                />
-                <MiniStatistics
-                    startContent={
-                        <IconBox
-                            w='56px'
-                            h='56px'
-                            bg={boxBg}
-                            icon={
-                                <Icon w='32px' h='32px' as={FaMoneyBillTransfer} color={brandColor} />
-                            }
-                        />
-                    }
-                    name={`${t("transactions")}`}
-                    value={statisticData?.transactionCountWaitOrCompleted || "0"}
-                />
-                <MiniStatistics
-                    startContent={
-                        <IconBox
-                            w='56px'
-                            h='56px'
-                            bg={boxBg}
-                            icon={
-                                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
-                            }
-                        />
-                    }
-                    name={`${t("totalBalance")}`}
-                    value={`${statisticData?.paymentTotalBalance ?
-                        (statisticData.paymentTotalBalance).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
-                        "0"} UZS`}
-                />
-                <MiniStatistics
-                    startContent={
-                        <IconBox
-                            w='56px'
-                            h='56px'
-                            bg={boxBg}
-                            icon={
-                                <Icon w='32px' h='32px' as={FaRegMoneyBillAlt} color={brandColor} />
-                            }
-                        />
-                    }
-                    name={`${t("canceledTransactions")}`}
-                    value={statisticData?.transactionCountCancel || "0"}
-                />
-                {role === "ROLE_SUPER_ADMIN" && (
+                <SimpleGrid
+                    columns={{ base: 1, md: 2, }}
+                    gap='20px'
+                    mb='20px'
+                >
                     <MiniStatistics
                         startContent={
                             <IconBox
@@ -171,19 +103,161 @@ export default function Dashboard() {
                                 h='56px'
                                 bg={boxBg}
                                 icon={
-                                    <Icon w='32px' h='32px' as={PiUserListDuotone} color={brandColor} />
+                                    <Icon w='32px' h='32px' as={BsCalculator} color={brandColor} />
                                 }
                             />
                         }
-                        name={`${t("requestOnWait")}`}
-                        value={statisticData?.requestWaitCount || "0"}
+                        name={`${t("terminals")}`}
+                        value={statisticData?.terminalCount || "0"}
                     />
-                )}
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={FaUsers} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("terminalUserCount")}`}
+                        value={statisticData?.userCount || "0"}
+                    />
+                </SimpleGrid>
+                <SimpleGrid
+                    columns={{ base: 1, md: 3, }}
+                    gap='20px'
+                    mb='20px'
+                >
+
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={FaMoneyBillTransfer} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("transactions")}`}
+                        value={statisticData?.completedCount || "0"}
+                    />
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={FaRegMoneyBillAlt} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("canceledTransactions")}`}
+                        value={statisticData?.waitCount || "0"}
+                    />
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={FaRegMoneyBillAlt} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("canceledTransactions")}`}
+                        value={statisticData?.cancelCount || "0"}
+                    />
+                </SimpleGrid>
+                <SimpleGrid
+                    columns={{ base: 1, md: 2, }}
+                    gap='20px'
+                    mb='20px'
+                >
+
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("totalBalance")}`}
+                        value={`${statisticData?.balanceCompleted ?
+                            (statisticData.balanceCompleted).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
+                            "0"} UZS`}
+                    />
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("totalBalance")}`}
+                        value={`${statisticData?.waitCount ?
+                            (statisticData.waitCount).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
+                            "0"} UZS`}
+                    />
+                </SimpleGrid>
+                <SimpleGrid
+                    columns={{ base: 1, md: 2, }}
+                    gap='20px'
+                    mb='20px'
+                >
+
+                    <MiniStatistics
+                        startContent={
+                            <IconBox
+                                w='56px'
+                                h='56px'
+                                bg={boxBg}
+                                icon={
+                                    <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
+                                }
+                            />
+                        }
+                        name={`${t("totalBalance")}`}
+                        value={`${statisticData?.cancelCount ?
+                            (statisticData.cancelCount).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
+                            "0"} UZS`}
+                    />
+
+                    {role === "ROLE_SUPER_ADMIN" && (
+                        <MiniStatistics
+                            startContent={
+                                <IconBox
+                                    w='56px'
+                                    h='56px'
+                                    bg={boxBg}
+                                    icon={
+                                        <Icon w='32px' h='32px' as={PiUserListDuotone} color={brandColor} />
+                                    }
+                                />
+                            }
+                            name={`${t("requestOnWait")}`}
+                            value={statisticData?.requestWaitCount || "0"}
+                        />
+                    )}
+                </SimpleGrid>
             </SimpleGrid>
 
-             <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} mb='20px'>
-                 <TotalSpent />
-             </SimpleGrid>
+            <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} mb='20px'>
+                <TotalSpent />
+            </SimpleGrid>
 
             <SimpleGrid columns={{ base: 1 }} gap="20px" mb="20px">
                 <Box gridColumn={{ lg: "span 3" }}>
