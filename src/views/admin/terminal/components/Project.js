@@ -107,8 +107,8 @@ export default function Project(props) {
               <Box mt={{ base: '10px', md: '0' }}>
                 <Text
                   color={textColorPrimary}
-                  fontWeight="500"
-                  fontSize="md"
+                  fontWeight="500"  
+                  fontSize="md" 
                   mb="4px"
                 >
                   {item.title ? item.title : 'Message for you!'}
