@@ -142,7 +142,7 @@ export default function Dashboard() {
                                 }
                             />
                         }
-                        name={`${t("transactions")}`}
+                        name={`${t("completedTransactions")}`}
                         value={statisticData?.completedCount || "0"}
                     />
                     <MiniStatistics
@@ -156,7 +156,7 @@ export default function Dashboard() {
                                 }
                             />
                         }
-                        name={`${t("canceledTransactions")}`}
+                        name={`${t("waitTransactions")}`}
                         value={statisticData?.waitCount || "0"}
                     />
                     <MiniStatistics
@@ -191,7 +191,7 @@ export default function Dashboard() {
                                 }
                             />
                         }
-                        name={`${t("totalBalance")}`}
+                        name={`${t("completedBalance")}`}
                         value={`${statisticData?.balanceCompleted ?
                             (statisticData.balanceCompleted).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
                             "0"} UZS`}
@@ -207,7 +207,7 @@ export default function Dashboard() {
                                 }
                             />
                         }
-                        name={`${t("totalBalance")}`}
+                        name={`${t("waitBalance")}`}
                         value={`${statisticData?.waitCount ?
                             (statisticData.waitCount).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
                             "0"} UZS`}
@@ -230,7 +230,7 @@ export default function Dashboard() {
                                 }
                             />
                         }
-                        name={`${t("totalBalance")}`}
+                        name={`${t("canceledBalance")}`}
                         value={`${statisticData?.cancelCount ?
                             (statisticData.cancelCount).toLocaleString('uz-UZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
                             "0"} UZS`}
