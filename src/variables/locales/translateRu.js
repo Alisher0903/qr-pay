@@ -138,7 +138,7 @@ export const TranslateRu = {
   paymentDateOrder: 'Дата платежа',
   statusOrder: 'Статус',
   resetOrder: 'Сбросить',
-  completed: 'Завершен',
+  confirmedOrder: 'Подтвержден',
   interval: 'Интервал',
   downloadFile: 'Скачать файл',
   rub: 'Руб',
