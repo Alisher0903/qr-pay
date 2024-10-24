@@ -144,7 +144,7 @@ export default function Project(props) {
                   fontSize="sm"
                   me="4px"
                 >
-                  Date • {item.createdAt.slice(0, 10)}
+                  {t('date')} • {item.createdAt.slice(0, 10)}
                   <Link fontWeight="500" fontSize="sm" ms={'7px'}>
                     {item.createdAt.slice(11, 16)}
                   </Link>
