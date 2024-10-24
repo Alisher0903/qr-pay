@@ -99,7 +99,12 @@ export const TranslateRu = {
   terminalUserCount: 'Количество пользователей терминалов',
   transactions: 'Транзакции',
   totalBalance: 'Общий баланс',
+  canceledBalance: 'Отмененные баланс',
+  completedBalance: 'Подтвержденный баланс',
+  waitBalance: 'Ожидающие баланс',
   canceledTransactions: 'Отмененные транзакции',
+  completedTransactions: 'Подтвержденные транзакции',
+  waitTransactions: 'Ожидающие транзакции',
 
   monthlyStatistic: 'Ежемесячная статистика',
   statistic: 'Cтатистика',
