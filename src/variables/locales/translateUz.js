@@ -143,7 +143,7 @@ export const TranslateUz = {
   paymentDateOrder: "To'langan sana",
   statusOrder: 'Status',
   resetOrder: 'Tozalash',
-  completed: 'Yakunlangan',
+  confirmedOrder: 'Tasdiqlangan',
   interval: 'Interval',
   downloadFile: 'Faylni yuklab olish',
 };

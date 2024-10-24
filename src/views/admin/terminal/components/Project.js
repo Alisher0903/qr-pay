@@ -115,25 +115,40 @@ export default function Project(props) {
                   {item.title ? item.title : 'Message for you!'}
                 </Text>
                 <Text
+                  color={textColorPrimary}
                   fontWeight="500"
-                  color={textColorSecondary}
+                  fontSize="md"
+                  mb="4px"
+                >
+                  {item.content}
+                </Text>
+                <Text
+                  color={textColorPrimary}
+                  fontWeight="500"
+                  fontSize="md"
+                  mb="4px"
+                >
+                  {item.priceRu || '0'} {t('rub')}
+                </Text>
+                <Text
+                  color={textColorPrimary}
+                  fontWeight="500"
+                  fontSize="md"
+                  mb="4px"
+                >
+                  {item.priceUz || '0'} {t('uzs')}{' '}
+                </Text>
+                <Text
+                  fontWeight="500"
+                  color={brandColor}
                   fontSize="sm"
                   me="4px"
                 >
                   Date • {item.createdAt.slice(0, 10)}
-                  <Link
-                    fontWeight="500"
-                    color={brandColor}
-                    fontSize="sm"
-                    ms={'7px'}
-                  >
+                  <Link fontWeight="500" fontSize="sm" ms={'7px'}>
                     {item.createdAt.slice(11, 16)}
                   </Link>
-
                 </Text>
-                <Text>{item.content}</Text>
-                <Text>{item.priceRu || '0'} {t('rub')}</Text>
-                <Text>{item.priceUz || '0'} {t('uzs')} </Text>
               </Box>
             </Flex>
           </Flex>

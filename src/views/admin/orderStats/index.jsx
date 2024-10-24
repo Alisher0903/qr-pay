@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Td, Tr, Text, Input, Flex } from '@chakra-ui/react';
+import { Box, SimpleGrid, Td, Tr, Text, Input, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Button, Pagination, Select } from 'antd';
 import { globalGetFunction } from 'contexts/logic-function/globalFunktion';
 import { PaymentStore } from 'contexts/state-management/payment/paymentStore';
@@ -44,7 +44,6 @@ export default function OrderStats() {
     t('paymentDate'),
     t('status'),
   ];
-
   useEffect(() => {
     setConfig();
     getFunction();
@@ -124,7 +123,7 @@ export default function OrderStats() {
                 >
                   <Option disabled value="">
                     {t('interval')}
-                  </Option> 
+                  </Option>
                   {intervalData &&
                     intervalData?.map((item) => (
                       <Option key={item.page} value={item.page}>
@@ -133,9 +132,19 @@ export default function OrderStats() {
                     ))}
                 </Select>
                 <Button
-                  style={{ height: '40px', width: '130px' }}
+                  style={{
+                    height: '40px',
+                    width: '130px',
+                    border: '1px solid #422AFB',
+                    borderRadius: '10px',
+                    background: '#422AFB',
+                    color: 'white',
+                  }}
                   disabled={!downloadInterval}
-                  onClick={handleDownloadFile}
+                  onClick={() => {
+                    handleDownloadFile();
+                    // setDownloadInterval('');
+                  }}
                 >
                   {t('downloadFile')}
                 </Button>
@@ -178,7 +187,7 @@ export default function OrderStats() {
                   <Option value="">{t('statusOrder')}</Option>{' '}
                   {/* Default empty value */}
                   <Option value="WAIT">{t('wait')}</Option>
-                  <Option value="COMPLETED">{t('completed')}</Option>
+                  <Option value="COMPLETED">{t('confirmedOrder')}</Option>
                   <Option value="CANCEL">{t('canceled')}</Option>
                 </Select>
                 <Input
